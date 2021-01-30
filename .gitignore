@@ -1,0 +1,6 @@
+[b]in
+[o]bj
+.vs/
+.vscode/
+.build
+*.sublime-workspace
