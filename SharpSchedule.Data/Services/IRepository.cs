@@ -41,6 +41,6 @@ namespace SharpSchedule.Data.Services
     /// <returns>
     /// Boolean value of successful delete
     /// </returns>
-    Task<bool> Delete(int id);
+    Task<bool> Delete(T item);
   }
 }

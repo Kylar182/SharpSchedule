@@ -40,10 +40,6 @@ namespace SharpSchedule.Persistence
     /// </summary>
     public DbSet<User> Users { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder builder)
-    {
-      builder.UseMySQL("server=wgudb.ucertify.com;port=3306;database=U06aOV;user=U06aOV;password=53688711604");
-      base.OnConfiguring(builder);
-    }
+    public SchedulingContext(DbContextOptions options) : base(options) { }
   }
 }
