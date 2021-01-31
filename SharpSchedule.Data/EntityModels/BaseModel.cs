@@ -10,13 +10,6 @@ namespace SharpSchedule.Data.EntityModels
   public abstract class BaseModel
   {
     /// <summary>
-    /// Database Unique Identifier - System Id
-    /// </summary>
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
-
-    /// <summary>
     /// User name of the user that created the Model
     /// </summary>
     /// <remarks>

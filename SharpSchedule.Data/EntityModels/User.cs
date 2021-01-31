@@ -8,8 +8,17 @@ namespace SharpSchedule.Data.EntityModels
   /// <summary>
   /// Person that Logs in and Makes Appointments
   /// </summary>
+  [Table("users")]
   public class User : BaseModel
   {
+    /// <summary>
+    /// Database Unique Identifier - System Id
+    /// </summary>
+    [Key]
+    [Column("userId")]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
     /// <summary>
     /// Username of the User, used for Login, must be Unique
     /// </summary>
