@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using SharpSchedule.Data.EntityModels.Location;
+using SharpSchedule.Data.EntityModels.Locations;
 
 namespace SharpSchedule.Data.EntityModels.Scheduling
 {
   /// <summary>
   /// Customer that the user Schedules Appointments with
   /// </summary>
-  [Table("customers")]
+  [Table("customer")]
   public class Customer : BaseModel
   {
     /// <summary>

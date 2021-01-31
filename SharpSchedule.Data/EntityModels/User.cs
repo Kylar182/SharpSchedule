@@ -8,7 +8,7 @@ namespace SharpSchedule.Data.EntityModels
   /// <summary>
   /// Person that Logs in and Makes Appointments
   /// </summary>
-  [Table("users")]
+  [Table("user")]
   public class User : BaseModel
   {
     /// <summary>

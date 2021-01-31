@@ -2,12 +2,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SharpSchedule.Data.EntityModels.Location
+namespace SharpSchedule.Data.EntityModels.Locations
 {
   /// <summary>
   /// Country with Cities, for Addresses
   /// </summary>
-  [Table("countries")]
+  [Table("country")]
   public class Country : BaseModel
   {
     /// <summary>

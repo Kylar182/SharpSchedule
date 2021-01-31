@@ -7,7 +7,7 @@ namespace SharpSchedule.Data.EntityModels.Scheduling
   /// <summary>
   /// Appointment that the user Schedules with Customers
   /// </summary>
-  [Table("appointments")]
+  [Table("appointment")]
   public class Appointment : BaseModel
   {
     /// <summary>

@@ -30,7 +30,7 @@ namespace SharpSchedule.Data.EntityModels
     /// <remarks>
     /// The Variable names are also a requirement
     /// </remarks>
-    [Column("createdDate")]
+    [Column("createDate")]
     public DateTime CreateDate { get; set; }
 
     /// <summary>
@@ -43,7 +43,7 @@ namespace SharpSchedule.Data.EntityModels
     /// I also understand it's bonkers to have different
     /// length requirements than the username as well.
     /// </remarks>
-    [Column("lastUpdatedBy")]
+    [Column("lastUpdateBy")]
     [Required]
     [MaxLength(40)]
     public string LastUpdatedBy { get; set; }
