@@ -14,7 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpSchedule.Persistence", "SharpSchedule.Persistence\SharpSchedule.Persistence.csproj", "{86FA994D-9429-4690-85D5-D90267A9862B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsoleApp", "ConsoleApp1\TestConsoleApp.csproj", "{C9692116-01EE-45B1-A874-9D5B3D48B2D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsoleApp", "ConsoleApp1\TestConsoleApp.csproj", "{C9692116-01EE-45B1-A874-9D5B3D48B2D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSchedule.WPF", "SharpSchedule.WPF\SharpSchedule.WPF.csproj", "{170D4EDA-FC32-4717-A35A-EC6F0C8BD2BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +36,10 @@ Global
 		{C9692116-01EE-45B1-A874-9D5B3D48B2D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9692116-01EE-45B1-A874-9D5B3D48B2D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9692116-01EE-45B1-A874-9D5B3D48B2D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{170D4EDA-FC32-4717-A35A-EC6F0C8BD2BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{170D4EDA-FC32-4717-A35A-EC6F0C8BD2BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{170D4EDA-FC32-4717-A35A-EC6F0C8BD2BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{170D4EDA-FC32-4717-A35A-EC6F0C8BD2BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
