@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Locations;
 using SharpSchedule.Data.EntityModels.Scheduling;
@@ -41,5 +45,75 @@ namespace SharpSchedule.Persistence
     public DbSet<User> Users { get; set; }
 
     public SchedulingContext(DbContextOptions options) : base(options) { }
+
+    /// <summary>
+    /// Applys all the configurations to setup all tables, columns, indexes, etc.
+    /// </summary>
+    /// <param name="builder">builder used to apply configurations</param>
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+      base.OnModelCreating(builder);
+
+      #region Set the UTC flag on dates
+      var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
+          v => v,
+          v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
+      var nullableDateTimeConverter = new ValueConverter<DateTime?, DateTime?>(
+          v => v,
+          v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : v);
+
+      foreach (var entityType in builder.Model.GetEntityTypes())
+      {
+        foreach (var property in entityType.GetProperties())
+        {
+          if (property.ClrType == typeof(DateTime))
+          {
+            property.SetValueConverter(dateTimeConverter);
+          }
+          else if (property.ClrType == typeof(DateTime?))
+          {
+            property.SetValueConverter(nullableDateTimeConverter);
+          }
+        }
+      }
+    }
+    #endregion
+
+    /// <summary>
+    /// Override to allow the add of Audit fields
+    /// </summary>
+    /// <returns></returns>
+    public override int SaveChanges()
+    {
+      AddAuditInfo();
+      return base.SaveChanges();
+    }
+
+    /// <summary>
+    /// Override to allow the add of Audit field when do async saves
+    /// </summary>
+    /// <returns></returns>
+    public async Task SaveChangesAsync()
+    {
+      AddAuditInfo();
+      await base.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// Sets the FirstUploadedAt and LastUploadedAt of BaseModel Inheritence
+    /// </summary>
+    private void AddAuditInfo()
+    {
+      var entries = ChangeTracker.Entries().Where(x => (x.Entity is BaseModel)
+                                                    && (x.State == EntityState.Added || x.State == EntityState.Modified));
+      foreach (var entry in entries)
+      {
+        if (entry.State == EntityState.Added)
+          ((BaseModel)entry.Entity).CreateDate = DateTime.UtcNow;
+
+        ((BaseModel)entry.Entity).LastUpdate = DateTime.UtcNow;
+      }
+    }
   }
 }
