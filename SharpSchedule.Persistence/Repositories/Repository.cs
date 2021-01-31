@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.Services;
 
@@ -15,7 +11,7 @@ namespace SharpSchedule.Persistence.Repositories
   /// <typeparam name="T">
   /// Database Model inherited from the BaseModel
   /// </typeparam>
-  public abstract class Repository<T> : IRepository<T> where T : BaseModel
+  public class Repository<T> : IRepository<T> where T : BaseModel
   {
     protected readonly DbContextFactory _contextFactory;
 
@@ -52,11 +48,11 @@ namespace SharpSchedule.Persistence.Repositories
       }
     }
 
-    public virtual async Task<bool> Delete(T item)
+    public virtual async Task<bool> Delete(int id)
     {
       using (SchedulingContext _context = _contextFactory.CreateDbContext())
       {
-        _context.Set<T>().Remove(item);
+        _context.Set<T>().Remove(await _context.Set<T>().FindAsync(id));
         await _context.SaveChangesAsync();
         return true;
       }
