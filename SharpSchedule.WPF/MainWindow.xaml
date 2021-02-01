@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="Sharp Schedule" Height="1920" Width="1080">
   <Grid>
-    <controls:NavBar />
+    <controls:NavBar DataContext="{Binding Navigator}" />
   </Grid>
 </Window>

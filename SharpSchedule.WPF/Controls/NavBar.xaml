@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SharpSchedule.Controls"
+             xmlns:nav="clr-namespace:SharpSchedule.State.Navigators"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="1920">
   <Grid>
@@ -24,9 +25,12 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <RadioButton Grid.Column="0" Content="Home" />
-      <RadioButton Grid.Column="1" Content="Customers" />
-      <RadioButton Grid.Column="2" Content="Appointments" />
+      <RadioButton Grid.Column="0" Content="Home" Command="{Binding UpdateVMCommand}" 
+                   CommandParameter="{x:Static nav:ViewType.Home}" />
+      <RadioButton Grid.Column="1" Content="Customers" Command="{Binding UpdateVMCommand}" 
+                   CommandParameter="{x:Static nav:ViewType.Customers}" />
+      <RadioButton Grid.Column="2" Content="Appointments" Command="{Binding UpdateVMCommand}" 
+                   CommandParameter="{x:Static nav:ViewType.Appointments}" />
     </Grid>
 
   </Grid>

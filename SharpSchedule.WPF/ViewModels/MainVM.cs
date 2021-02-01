@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SharpSchedule.State.Navigators;
 
 namespace SharpSchedule.ViewModels
 {
   public class MainVM : ViewModelBase
   {
+    public INavigator Navigator { get; set; } = new Navigator();
   }
 }
