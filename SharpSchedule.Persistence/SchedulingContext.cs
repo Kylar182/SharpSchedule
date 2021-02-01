@@ -77,13 +77,13 @@ namespace SharpSchedule.Persistence
           }
         }
       }
+      #endregion
     }
-    #endregion
 
+    #region Set the DateTimes on Save
     /// <summary>
     /// Override to allow the add of Audit fields
     /// </summary>
-    /// <returns></returns>
     public override int SaveChanges()
     {
       AddAuditInfo();
@@ -93,7 +93,6 @@ namespace SharpSchedule.Persistence
     /// <summary>
     /// Override to allow the add of Audit field when do async saves
     /// </summary>
-    /// <returns></returns>
     public async Task SaveChangesAsync()
     {
       AddAuditInfo();
@@ -115,5 +114,6 @@ namespace SharpSchedule.Persistence
         ((BaseModel)entry.Entity).LastUpdate = DateTime.UtcNow;
       }
     }
+    #endregion
   }
 }

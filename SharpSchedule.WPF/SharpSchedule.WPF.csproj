@@ -4,11 +4,16 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>net5.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
-        <RootNamespace>SharpSchedule.WPF</RootNamespace>
+        <RootNamespace>SharpSchedule</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\SharpSchedule.Persistence\SharpSchedule.Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="ViewModels\Validation\" />
+      <Folder Include="Views\" />
     </ItemGroup>
 
 </Project>

@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SharpSchedule.WPF"
+        xmlns:controls="clr-namespace:SharpSchedule.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="Sharp Schedule" Height="1920" Width="1080">
+  <Grid>
+    <controls:NavBar />
+  </Grid>
 </Window>

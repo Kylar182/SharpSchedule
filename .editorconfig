@@ -9,7 +9,7 @@ root = true
 indent_style = space
 
 # Code files
-[*.{cs,csx,vb,vbx,js,razor,html,css}]
+[*.{cs,csx,vb,vbx,js,razor,html,css,xaml}]
 indent_size = 2
 insert_final_newline = true
 charset = utf-8-bom
