@@ -6,8 +6,15 @@
         xmlns:local="clr-namespace:SharpSchedule.WPF"
         xmlns:controls="clr-namespace:SharpSchedule.Controls"
         mc:Ignorable="d"
-        Title="Sharp Schedule" Height="1920" Width="1080">
+        Title="Sharp Schedule" Height="1080" Width="1920">
   <Grid>
-    <controls:NavBar DataContext="{Binding Navigator}" />
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    
+    <controls:NavBar DataContext="{Binding Navigator}" Grid.Row="0" />
+
+    <ContentControl Grid.Row="1" Content="{Binding Navigator.CurrentVM}" />
   </Grid>
 </Window>

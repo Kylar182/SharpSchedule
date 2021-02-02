@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using SharpSchedule.WPF;
+using SharpSchedule.ViewModels;
 
 namespace SharpSchedule
 {
@@ -11,6 +12,7 @@ namespace SharpSchedule
     protected override void OnStartup(StartupEventArgs e)
     {
       Window window = new MainWindow();
+      window.DataContext = new MainVM();
       window.Show();
 
       base.OnStartup(e);

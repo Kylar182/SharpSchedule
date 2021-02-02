@@ -25,11 +25,11 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <RadioButton Grid.Column="0" Content="Home" Command="{Binding UpdateVMCommand}" 
+      <RadioButton Grid.Column="0" Content="Home" Command="{Binding UpdateCurrentVM}" 
                    CommandParameter="{x:Static nav:ViewType.Home}" />
-      <RadioButton Grid.Column="1" Content="Customers" Command="{Binding UpdateVMCommand}" 
+      <RadioButton Grid.Column="1" Content="Customers" Command="{Binding UpdateCurrentVM}" 
                    CommandParameter="{x:Static nav:ViewType.Customers}" />
-      <RadioButton Grid.Column="2" Content="Appointments" Command="{Binding UpdateVMCommand}" 
+      <RadioButton Grid.Column="2" Content="Appointments" Command="{Binding UpdateCurrentVM}" 
                    CommandParameter="{x:Static nav:ViewType.Appointments}" />
     </Grid>
 

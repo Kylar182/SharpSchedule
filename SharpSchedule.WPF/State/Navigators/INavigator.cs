@@ -3,6 +3,9 @@ using SharpSchedule.ViewModels;
 
 namespace SharpSchedule.State.Navigators
 {
+  /// <summary>
+  /// Enum of All Views to match VMs too
+  /// </summary>
   public enum ViewType
   {
     Home,

@@ -13,7 +13,7 @@ namespace SharpSchedule.Commands
   {
     public event EventHandler CanExecuteChanged;
 
-    private INavigator _navigator;
+    private readonly INavigator _navigator;
 
     public UpdateVMCommand(INavigator navigator)
     {
@@ -27,11 +27,9 @@ namespace SharpSchedule.Commands
 
     public void Execute(object parameter)
     {
-      if (parameter is ViewType)
+      if (parameter is ViewType type)
       {
-        ViewType viewType = (ViewType)parameter;
-
-        switch (viewType)
+        switch (type)
         {
           case ViewType.Home:
             _navigator.CurrentVM = new HomeVM();

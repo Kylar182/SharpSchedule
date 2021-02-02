@@ -1,12 +1,27 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel;
+using System.Windows.Input;
 using SharpSchedule.Commands;
+using SharpSchedule.Models;
 using SharpSchedule.ViewModels;
 
 namespace SharpSchedule.State.Navigators
 {
-  public class Navigator : INavigator
+  public class Navigator : ObservableObject, INavigator
   {
-    public ViewModelBase CurrentVM { get; set; }
+    private ViewModelBase _currentVM;
+
+    public ViewModelBase CurrentVM
+    {
+      get
+      {
+        return _currentVM;
+      }
+      set
+      {
+        _currentVM = value;
+        OnPropChanged(nameof(CurrentVM));
+      }
+    }
 
     public ICommand UpdateCurrentVM => new UpdateVMCommand(this);
   }
