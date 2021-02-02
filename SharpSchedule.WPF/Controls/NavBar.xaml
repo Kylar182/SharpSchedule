@@ -13,11 +13,14 @@
       <RowDefinition Height="auto"  />
     </Grid.RowDefinitions>
 
-    <TextBlock Background="{StaticResource WGU}">
-      <Label Content="Sharp Schedule" FontSize="30" FontWeight="SemiBold" Margin="0, 10" 
+    <TextBlock Background="{StaticResource WGU}" Padding="10">
+      <Label Content="Sharp Schedule" FontSize="30" FontWeight="SemiBold" Margin="10, 0" 
              HorizontalAlignment="Left" />
     </TextBlock>
-    <Grid Grid.Row="1" Background="{StaticResource Light}">
+    <Grid Grid.Row="1" RenderOptions.EdgeMode="Aliased" Background="{StaticResource Light}">
+      <Grid.Resources>
+        <Style TargetType="RadioButton" BasedOn="{StaticResource NavButton}" />
+      </Grid.Resources>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="auto" />
         <ColumnDefinition Width="auto" />
