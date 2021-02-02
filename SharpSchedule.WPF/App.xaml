@@ -1,6 +1,8 @@
 ﻿<Application x:Class="SharpSchedule.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vms="clr-namespace:SharpSchedule.ViewModels"
+             xmlns:views="clr-namespace:SharpSchedule.Views"
              xmlns:local="clr-namespace:SharpSchedule">
   <Application.Resources>
 
@@ -47,6 +49,15 @@
         <Setter Property="FontSize" Value="18" />
       </Style>
 
+      <DataTemplate DataType="{x:Type vms:HomeVM}">
+        <views:HomeView />
+      </DataTemplate>
+      <DataTemplate DataType="{x:Type vms:CustomersVM}">
+        <views:CustomersView />
+      </DataTemplate>
+      <DataTemplate DataType="{x:Type vms:AppointmentsVM}">
+        <views:AppointmentsView />
+      </DataTemplate>
     </ResourceDictionary>
   </Application.Resources>
 </Application>

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
-using SharpSchedule.WPF;
 using SharpSchedule.ViewModels;
+using SharpSchedule.WPF;
 
 namespace SharpSchedule
 {

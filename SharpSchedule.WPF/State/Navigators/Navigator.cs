@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using SharpSchedule.Commands;
 using SharpSchedule.Models;
 using SharpSchedule.ViewModels;
