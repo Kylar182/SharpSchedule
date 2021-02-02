@@ -5,16 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SharpSchedule.Controls"
              xmlns:nav="clr-namespace:SharpSchedule.State.Navigators"
+             xmlns:vms="clr-namespace:SharpSchedule.ViewModels"
+             xmlns:converters="clr-namespace:SharpSchedule.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="1920">
-  <Grid>
+
+  <UserControl.Resources>
+    <converters:EqualToParamConverter x:Key="EqualTo" />
+  </UserControl.Resources>
+
+  <Grid RenderOptions.EdgeMode="Aliased">
     <Grid.RowDefinitions>
       <RowDefinition Height="auto" />
       <RowDefinition Height="auto"  />
     </Grid.RowDefinitions>
 
-    <TextBlock Background="{StaticResource WGU}" Padding="10">
-      <Label Content="Sharp Schedule" FontSize="30" FontWeight="SemiBold" Margin="10, 0" 
+    <TextBlock Background="{StaticResource WGU}" Padding="10" RenderOptions.EdgeMode="Aliased">
+      <TextBlock.Resources>
+        <Style TargetType="Label" BasedOn="{StaticResource NavHeader}" />
+      </TextBlock.Resources>
+      <Label Content="SHARP SCHEDULE" FontSize="30" FontWeight="Bold" Margin="10, 0" 
              HorizontalAlignment="Left" />
     </TextBlock>
     <Grid Grid.Row="1" RenderOptions.EdgeMode="Aliased" Background="{StaticResource Light}">
@@ -29,11 +39,14 @@
       </Grid.ColumnDefinitions>
 
       <RadioButton Grid.Column="0" Content="Home" Command="{Binding UpdateCurrentVM}" 
-                   CommandParameter="{x:Static nav:ViewType.Home}" />
+                   CommandParameter="{x:Static nav:ViewType.Home}"
+                   IsChecked="{Binding CurrentVM, Mode=OneWay, Converter={StaticResource EqualTo}, ConverterParameter={x:Type vms:HomeVM}}" />
       <RadioButton Grid.Column="1" Content="Customers" Command="{Binding UpdateCurrentVM}" 
-                   CommandParameter="{x:Static nav:ViewType.Customers}" />
+                   CommandParameter="{x:Static nav:ViewType.Customers}"
+                   IsChecked="{Binding CurrentVM, Mode=OneWay, Converter={StaticResource EqualTo}, ConverterParameter={x:Type vms:CustomersVM}}" />
       <RadioButton Grid.Column="2" Content="Appointments" Command="{Binding UpdateCurrentVM}" 
-                   CommandParameter="{x:Static nav:ViewType.Appointments}" />
+                   CommandParameter="{x:Static nav:ViewType.Appointments}"
+                   IsChecked="{Binding CurrentVM, Mode=OneWay, Converter={StaticResource EqualTo}, ConverterParameter={x:Type vms:AppointmentsVM}}" />
     </Grid>
 
   </Grid>

@@ -9,7 +9,7 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Styles/Shared.xaml" />
-        <ResourceDictionary Source="/Styles/NavBar.xaml" />
+        <ResourceDictionary Source="/Styles/NavBarStyle.xaml" />
       </ResourceDictionary.MergedDictionaries>
       
       <Style TargetType="Button">
@@ -26,11 +26,7 @@
 
       <Style TargetType="Label">
         <Setter Property="FontSize" Value="16" />
-        <Setter Property="Foreground">
-          <Setter.Value>
-            <SolidColorBrush Color="White" />
-          </Setter.Value>
-        </Setter>
+        <Setter Property="Foreground" Value="White" />
       </Style>
 
       <!--<Style TargetType="TextBox">

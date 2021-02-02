@@ -8,6 +8,20 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="Styles\roboto-slab\RobotoSlab-Bold.ttf" />
+      <None Remove="Styles\roboto-slab\RobotoSlab-Light.ttf" />
+      <None Remove="Styles\roboto-slab\RobotoSlab-Regular.ttf" />
+      <None Remove="Styles\roboto-slab\RobotoSlab-Thin.ttf" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="Styles\roboto-slab\RobotoSlab-Bold.ttf" />
+      <Resource Include="Styles\roboto-slab\RobotoSlab-Light.ttf" />
+      <Resource Include="Styles\roboto-slab\RobotoSlab-Regular.ttf" />
+      <Resource Include="Styles\roboto-slab\RobotoSlab-Thin.ttf" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\SharpSchedule.Persistence\SharpSchedule.Persistence.csproj" />
     </ItemGroup>
 

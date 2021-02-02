@@ -27,7 +27,7 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Styles\NavBar.xaml">
+    <Page Update="Styles\NavBarStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\Shared.xaml">
