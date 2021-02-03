@@ -29,4 +29,17 @@
       <Folder Include="ViewModels\Validation\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Views\AddressesView.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Views\AddressesView.xaml">
+        <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
 </Project>

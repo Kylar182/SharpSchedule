@@ -10,7 +10,8 @@ namespace SharpSchedule.State.Navigators
   {
     Home,
     Customers,
-    Appointments
+    Appointments,
+    Addresses
   }
 
   /// <summary>

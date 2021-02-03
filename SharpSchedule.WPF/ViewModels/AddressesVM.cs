@@ -1,6 +1,6 @@
 ﻿namespace SharpSchedule.ViewModels
 {
-  public class HomeVM : ViewModelBase
+  public class AddressesVM : ViewModelBase
   {
 
   }

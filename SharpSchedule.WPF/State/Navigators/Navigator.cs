@@ -2,6 +2,7 @@
 using SharpSchedule.Commands;
 using SharpSchedule.Models;
 using SharpSchedule.ViewModels;
+using SharpSchedule.ViewModels.Factories;
 
 namespace SharpSchedule.State.Navigators
 {
@@ -22,6 +23,11 @@ namespace SharpSchedule.State.Navigators
       }
     }
 
-    public ICommand UpdateCurrentVM => new UpdateVMCommand(this);
+    public ICommand UpdateCurrentVM { get; set; }
+
+    public Navigator(IVMAbstractFactory vmFactory)
+    {
+      UpdateCurrentVM = new UpdateVMCommand(this, vmFactory);
+    }
   }
 }

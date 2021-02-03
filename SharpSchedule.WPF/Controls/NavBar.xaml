@@ -35,6 +35,7 @@
         <ColumnDefinition Width="auto" />
         <ColumnDefinition Width="auto" />
         <ColumnDefinition Width="auto" />
+        <ColumnDefinition Width="auto" />
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
@@ -47,6 +48,9 @@
       <RadioButton Grid.Column="2" Content="Appointments" Command="{Binding UpdateCurrentVM}" 
                    CommandParameter="{x:Static nav:ViewType.Appointments}"
                    IsChecked="{Binding CurrentVM, Mode=OneWay, Converter={StaticResource EqualTo}, ConverterParameter={x:Type vms:AppointmentsVM}}" />
+      <RadioButton Grid.Column="3" Content="Addresses" Command="{Binding UpdateCurrentVM}" 
+                   CommandParameter="{x:Static nav:ViewType.Addresses}"
+                   IsChecked="{Binding CurrentVM, Mode=OneWay, Converter={StaticResource EqualTo}, ConverterParameter={x:Type vms:AddressesVM}}" />
     </Grid>
 
   </Grid>

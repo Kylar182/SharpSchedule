@@ -60,6 +60,9 @@
       <DataTemplate DataType="{x:Type vms:AppointmentsVM}">
         <views:AppointmentsView />
       </DataTemplate>
+      <DataTemplate DataType="{x:Type vms:AddressesVM}">
+        <views:AddressesView />
+      </DataTemplate>
     </ResourceDictionary>
   </Application.Resources>
 </Application>

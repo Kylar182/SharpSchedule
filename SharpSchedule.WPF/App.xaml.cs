@@ -1,5 +1,14 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
+using SharpSchedule.Data.EntityModels.Locations;
+using SharpSchedule.Data.EntityModels.Scheduling;
+using SharpSchedule.Data.Services;
+using SharpSchedule.Persistence;
+using SharpSchedule.Persistence.Repositories;
+using SharpSchedule.State.Navigators;
 using SharpSchedule.ViewModels;
+using SharpSchedule.ViewModels.Factories;
 using SharpSchedule.WPF;
 
 namespace SharpSchedule
@@ -11,11 +20,37 @@ namespace SharpSchedule
   {
     protected override void OnStartup(StartupEventArgs e)
     {
-      Window window = new MainWindow();
-      window.DataContext = new MainVM();
+      IServiceProvider serviceProvider = CreateServiceProvider();
+
+      Window window = serviceProvider.GetRequiredService<MainWindow>();
       window.Show();
 
       base.OnStartup(e);
+    }
+
+    private static IServiceProvider CreateServiceProvider()
+    {
+      IServiceCollection services = new ServiceCollection();
+
+      services.AddSingleton<DbContextFactory>();
+      services.AddScoped<IRepository<Address>, Repository<Address>>();
+      services.AddScoped<IRepository<City>, Repository<City>>();
+      services.AddScoped<IRepository<Country>, Repository<Country>>();
+      services.AddScoped<IRepository<Appointment>, Repository<Appointment>>();
+      services.AddScoped<IRepository<Customer>, Repository<Customer>>();
+
+      services.AddSingleton<IVMAbstractFactory, VMAbstractFactory>();
+      services.AddSingleton<IVMFactory<HomeVM>, HomeVMFactory>();
+      services.AddSingleton<IVMFactory<CustomersVM>, CustomersVMFactory>();
+      services.AddSingleton<IVMFactory<AppointmentsVM>, AppointmentsVMFactory>();
+      services.AddSingleton<IVMFactory<AddressesVM>, AddressesVMFactory>();
+
+      services.AddScoped<INavigator, Navigator>();
+      services.AddScoped<MainVM>();
+
+      services.AddScoped(s => new MainWindow(s.GetRequiredService<MainVM>()));
+
+      return services.BuildServiceProvider();
     }
   }
 }

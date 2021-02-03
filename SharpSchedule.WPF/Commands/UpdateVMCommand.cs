@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using SharpSchedule.State.Navigators;
-using SharpSchedule.ViewModels;
+using SharpSchedule.ViewModels.Factories;
 
 namespace SharpSchedule.Commands
 {
@@ -14,10 +14,12 @@ namespace SharpSchedule.Commands
     public event EventHandler CanExecuteChanged;
 
     private readonly INavigator _navigator;
+    private readonly IVMAbstractFactory _vmFactory;
 
-    public UpdateVMCommand(INavigator navigator)
+    public UpdateVMCommand(INavigator navigator, IVMAbstractFactory vmFactory)
     {
       _navigator = navigator;
+      _vmFactory = vmFactory;
     }
 
     public bool CanExecute(object parameter)
@@ -29,18 +31,7 @@ namespace SharpSchedule.Commands
     {
       if (parameter is ViewType type)
       {
-        switch (type)
-        {
-          case ViewType.Home:
-            _navigator.CurrentVM = new HomeVM();
-            break;
-          case ViewType.Customers:
-            _navigator.CurrentVM = new CustomersVM();
-            break;
-          case ViewType.Appointments:
-            _navigator.CurrentVM = new AppointmentsVM();
-            break;
-        }
+        _navigator.CurrentVM = _vmFactory.CreateVM(type);
       }
     }
   }

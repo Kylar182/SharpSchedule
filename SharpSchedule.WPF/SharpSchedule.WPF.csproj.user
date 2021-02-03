@@ -33,6 +33,9 @@
     <Page Update="Styles\Shared.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\AddressesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\AppointmentsView.xaml">
       <SubType>Designer</SubType>
     </Page>
