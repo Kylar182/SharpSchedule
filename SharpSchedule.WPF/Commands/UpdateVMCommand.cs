@@ -6,8 +6,8 @@ using SharpSchedule.ViewModels.Factories;
 namespace SharpSchedule.Commands
 {
   /// <summary>
-  /// Command run in Navigator to update 
-  /// the Currently selected View Model
+  /// Command that's run in the Navigator to 
+  /// update the Currently selected View Model
   /// </summary>
   public class UpdateVMCommand : ICommand
   {
@@ -16,6 +16,10 @@ namespace SharpSchedule.Commands
     private readonly INavigator _navigator;
     private readonly IVMAbstractFactory _vmFactory;
 
+    /// <summary>
+    /// Command that's run in the Navigator to 
+    /// update the Currently selected View Model
+    /// </summary>
     public UpdateVMCommand(INavigator navigator, IVMAbstractFactory vmFactory)
     {
       _navigator = navigator;

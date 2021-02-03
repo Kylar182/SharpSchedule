@@ -1,5 +1,5 @@
 ﻿using SharpSchedule.Data.EntityModels;
-using SharpSchedule.Data.Services;
+using SharpSchedule.Data.Repositories;
 using SharpSchedule.Persistence;
 using SharpSchedule.Persistence.Repositories;
 

@@ -3,7 +3,7 @@ using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using SharpSchedule.Data.EntityModels.Locations;
 using SharpSchedule.Data.EntityModels.Scheduling;
-using SharpSchedule.Data.Services;
+using SharpSchedule.Data.Repositories;
 using SharpSchedule.Persistence;
 using SharpSchedule.Persistence.Repositories;
 using SharpSchedule.State.Navigators;
@@ -33,8 +33,8 @@ namespace SharpSchedule
       IServiceCollection services = new ServiceCollection();
 
       services.AddSingleton<DbContextFactory>();
-      services.AddScoped<IRepository<Address>, Repository<Address>>();
-      services.AddScoped<IRepository<City>, Repository<City>>();
+      services.AddScoped<IAddressRepository, AddressRepository>();
+      services.AddScoped<ICityRepository, CityRepository>();
       services.AddScoped<IRepository<Country>, Repository<Country>>();
       services.AddScoped<IRepository<Appointment>, Repository<Appointment>>();
       services.AddScoped<IRepository<Customer>, Repository<Customer>>();

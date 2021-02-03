@@ -1,7 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using SharpSchedule.Data.EntityModels;
 
-namespace SharpSchedule.Data.Services
+namespace SharpSchedule.Data.Repositories
 {
   /// <summary>
   /// Base Repo with Generic Crud Methods
@@ -11,6 +12,11 @@ namespace SharpSchedule.Data.Services
   /// </typeparam>
   public interface IRepository<T> where T : BaseModel
   {
+    /// <summary>
+    /// Gets all T Entities in the Database
+    /// </summary>
+    Task<List<T>> GetAll();
+
     /// <summary>
     /// Gets an Item in the Database with this Id
     /// </summary>

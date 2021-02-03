@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SharpSchedule.Data.EntityModels;
-using SharpSchedule.Data.Services;
+using SharpSchedule.Data.Repositories;
 
 namespace SharpSchedule.Persistence.Repositories
 {
@@ -13,11 +15,19 @@ namespace SharpSchedule.Persistence.Repositories
   /// </typeparam>
   public class Repository<T> : IRepository<T> where T : BaseModel
   {
-    protected readonly DbContextFactory _contextFactory;
+    protected DbContextFactory _contextFactory;
 
     public Repository(DbContextFactory _contextFactor)
     {
       _contextFactory = _contextFactor;
+    }
+
+    public virtual async Task<List<T>> GetAll()
+    {
+      using (SchedulingContext _context = _contextFactory.CreateDbContext())
+      {
+        return await _context.Set<T>().ToListAsync();
+      }
     }
 
     public virtual async Task<T> GetById(int id)
