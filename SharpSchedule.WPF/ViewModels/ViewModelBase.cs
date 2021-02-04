@@ -1,6 +1,8 @@
-﻿namespace SharpSchedule.ViewModels
+﻿using SharpSchedule.Models;
+
+namespace SharpSchedule.ViewModels
 {
-  public abstract class ViewModelBase
+  public abstract class ViewModelBase : ObservableObject
   {
   }
 }

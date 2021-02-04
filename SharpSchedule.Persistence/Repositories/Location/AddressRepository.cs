@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SharpSchedule.Data.EntityModels.Locations;
-using SharpSchedule.Data.Repositories;
+using SharpSchedule.Data.Repositories.Location;
 
-namespace SharpSchedule.Persistence.Repositories
+namespace SharpSchedule.Persistence.Repositories.Location
 {
   public class AddressRepository : Repository<Address>, IAddressRepository
   {

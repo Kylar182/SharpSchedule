@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SharpSchedule.Data.EntityModels.Locations;
 using SharpSchedule.Data.Repositories;
 
-namespace SharpSchedule.Persistence.Repositories
+namespace SharpSchedule.Persistence.Repositories.Location
 {
   public class CityRepository : Repository<City>, ICityRepository
   {
