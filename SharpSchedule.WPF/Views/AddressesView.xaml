@@ -6,23 +6,38 @@
              xmlns:local="clr-namespace:SharpSchedule.Views"
              mc:Ignorable="d" 
              d:DesignHeight="880" d:DesignWidth="1920">
-  <Grid>
+  <Grid Background="{StaticResource Grey30}">
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width=".5*" />
-      <ColumnDefinition Width="4*" />
+      <ColumnDefinition Width=".3*" />
+      <ColumnDefinition Width="6*" />
       <ColumnDefinition Width="3*" />
-      <ColumnDefinition Width=".5*" />
-      <ColumnDefinition Width="4*" />
+      <ColumnDefinition Width=".4*" />
+      <ColumnDefinition Width="2*" />
       <ColumnDefinition Width="3*" />
-      <ColumnDefinition Width=".5*" />
+      <ColumnDefinition Width=".3*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height=".75*" />
-      <RowDefinition Height="1.5*" />
       <RowDefinition Height="4*" />
-      <RowDefinition Height="1*" />
-      <RowDefinition Height="1*" />
+      <RowDefinition Height=".75*" />
     </Grid.RowDefinitions>
-    <TextBlock Text="Addresses" />  
+    <Label Grid.Column="1" Content="Addresses" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+           FontSize="30" Margin="0, 5" FontWeight="SemiBold"/>
+
+    <Button Grid.Column="1" Content="Search" 
+            VerticalAlignment="Center" HorizontalAlignment="Right">
+    </Button>
+
+    <TextBox Name="Addresses_Search" Grid.Column="2" Margin="38" FontSize="32" />
+    
+    <Label Grid.Column="4" Content="Cities" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+           FontSize="30" Margin="0, 5" />
+
+    <Button Grid.Column="4" Content="Search" 
+            VerticalAlignment="Center" HorizontalAlignment="Right">
+    </Button>
+
+    <TextBox Name="Cities_Search" Grid.Column="5" Margin="38" FontSize="32" />
+    
   </Grid>
 </UserControl>
