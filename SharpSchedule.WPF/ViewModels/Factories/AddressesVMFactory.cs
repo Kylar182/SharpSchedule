@@ -13,7 +13,6 @@ namespace SharpSchedule.ViewModels.Factories
 
     public AddressesVM CreateVM()
     {
-
       return new AddressesVM(_repository);
     }
   }

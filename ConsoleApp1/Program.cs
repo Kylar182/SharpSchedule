@@ -1,4 +1,9 @@
-﻿using SharpSchedule.Data.EntityModels;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using SharpSchedule.Data.EntityModels;
+using SharpSchedule.Data.EntityModels.Locations;
 using SharpSchedule.Data.Repositories;
 using SharpSchedule.Persistence;
 using SharpSchedule.Persistence.Repositories;
@@ -9,15 +14,33 @@ namespace TestConsoleApp
   {
     static void Main(string[] args)
     {
-      IRepository<User> Repo = new Repository<User>(new DbContextFactory());
-      Repo.Create(new User
+      IRepository<Country> Repo = new Repository<Country>(new DbContextFactory());
+      List<Country> Countries = new List<Country>();
+      Repo.GetAll().ContinueWith(c =>
       {
-        Active = true,
-        CreatedBy = "test",
-        LastUpdatedBy = "test",
-        Password = "test",
-        Username = "test"
-      }).Wait();
+        if (c.Exception == null)
+          Countries = c.Result;
+      });
+      CultureInfo[] getCultureInfo = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
+      List<string> CultureList = Countries.Select(c => c.Name).ToList();
+
+      foreach (CultureInfo getCulture in getCultureInfo)
+      {
+        RegionInfo GetRegionInfo = new RegionInfo(getCulture.LCID);
+        if (!(CultureList.Contains(GetRegionInfo.EnglishName)))
+        {
+          CultureList.Add(GetRegionInfo.EnglishName);
+
+          Repo.Create(new Country 
+          {
+            Name = GetRegionInfo.EnglishName,
+            CreatedBy = "test",
+            CreateDate = DateTime.UtcNow,
+            LastUpdatedBy = "test",
+            LastUpdate = DateTime.UtcNow
+          }).Wait();
+        }
+      }
     }
   }
 }
