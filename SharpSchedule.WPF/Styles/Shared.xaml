@@ -4,6 +4,7 @@
 
   <Color x:Key="WGUBlue">#002f51</Color>
   <Color x:Key="WGULight">#006b8d</Color>
+  <SolidColorBrush x:Key="Grey60" Color="#60868E96"/>
   <SolidColorBrush x:Key="Grey30" Color="#30868E96"/>
   <SolidColorBrush x:Key="AppGrey" Color="#868E96"/>
 

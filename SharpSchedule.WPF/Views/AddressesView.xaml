@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:SharpSchedule.Views"
              mc:Ignorable="d" 
              d:DesignHeight="880" d:DesignWidth="1920">
-  <Grid Background="{StaticResource Grey30}">
+  
+  <Grid Background="{StaticResource Grey60}">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width=".3*" />
       <ColumnDefinition Width="6*" />
@@ -22,22 +23,85 @@
       <RowDefinition Height=".75*" />
     </Grid.RowDefinitions>
     <Label Grid.Column="1" Content="Addresses" HorizontalAlignment="Left" VerticalAlignment="Bottom"
-           FontSize="30" Margin="0, 5" FontWeight="SemiBold"/>
+           FontSize="30" Margin="0, 5"/>
 
-    <Button Grid.Column="1" Content="Search" 
+    <Button Grid.Column="1" Content="SEARCH" 
             VerticalAlignment="Center" HorizontalAlignment="Right">
     </Button>
 
     <TextBox Name="Addresses_Search" Grid.Column="2" Margin="38" FontSize="32" />
+
+    <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" AutoGenerateColumns="False" 
+              x:Name="AddressGrid" IsReadOnly="True" SelectionMode="Single"
+              ItemsSource="{Binding Addresses}">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="ID" Width=".25*" Binding="{Binding Id}" />
+        <DataGridTextColumn Header="Street Address" Width="*" Binding="{Binding StreetAddress}" />
+        <DataGridTextColumn Header="PO/APT" Width=".75*" Binding="{Binding Address2}" />
+        <DataGridTextColumn Header="City" Width=".75*" Binding="{Binding City.Name}" />
+        <DataGridTextColumn Header="Postal" Width=".5*" Binding="{Binding PostalCode}" />
+        <DataGridTextColumn Header="Country" Width=".75*" Binding="{Binding City.Country.Name}" />
+      </DataGrid.Columns>
+    </DataGrid>
+
+    <Grid Grid.Column="2" Grid.Row="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Button Grid.Column="0" Content="Add" VerticalAlignment="Center" 
+              HorizontalAlignment="Center">
+      </Button>
+
+      <Button Grid.Column="1" Content="Modify" VerticalAlignment="Center" 
+              HorizontalAlignment="Center">
+      </Button>
+
+      <Button Grid.Column="2" Grid.Row="3" Content="Delete" VerticalAlignment="Center"
+              HorizontalAlignment="Center">
+      </Button>
+    </Grid>
     
     <Label Grid.Column="4" Content="Cities" HorizontalAlignment="Left" VerticalAlignment="Bottom"
            FontSize="30" Margin="0, 5" />
 
-    <Button Grid.Column="4" Content="Search" 
+    <Button Grid.Column="4" Content="SEARCH" 
             VerticalAlignment="Center" HorizontalAlignment="Right">
     </Button>
 
     <TextBox Name="Cities_Search" Grid.Column="5" Margin="38" FontSize="32" />
+
+    <DataGrid Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" AutoGenerateColumns="False" 
+              Name="CityGrid" IsReadOnly="True" SelectionMode="Single"
+              ItemsSource="{Binding Cities}">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="ID" Width=".25*" Binding="{Binding Id}" />
+        <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" />
+        <DataGridTextColumn Header="Country" Width=".75*" Binding="{Binding Country.Name}" />
+      </DataGrid.Columns>
+    </DataGrid>
+
+    <Grid Grid.Column="5" Grid.Row="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Button Grid.Column="0" Content="Add" VerticalAlignment="Center"
+              HorizontalAlignment="Center">
+      </Button>
+
+      <Button Grid.Column="1" Content="Modify" VerticalAlignment="Center"
+              HorizontalAlignment="Center">
+      </Button>
+
+      <Button Grid.Column="2" Grid.Row="3" Content="Delete" VerticalAlignment="Center" 
+              HorizontalAlignment="Center">
+      </Button>
+    </Grid>
     
   </Grid>
 </UserControl>
