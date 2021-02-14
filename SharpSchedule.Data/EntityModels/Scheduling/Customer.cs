@@ -44,7 +44,8 @@ namespace SharpSchedule.Data.EntityModels.Scheduling
     public int AddressId { get; set; }
 
     /// <summary>
-    /// List of Appointments that scheduled with this Customer
+    /// List of Appointments that 
+    /// scheduled with this Customer
     /// </summary>
     public List<Appointment> Appointments { get; set; }
   }

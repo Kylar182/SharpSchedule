@@ -41,9 +41,9 @@ namespace SharpSchedule
       services.AddScoped<ICityRepository, CityRepository>();
       services.AddScoped<IRepository<Country>, Repository<Country>>();
       services.AddScoped<IAppointmentRepository, AppointmentRepository>();
-      services.AddScoped<IRepository<Customer>, Repository<Customer>>();
+      services.AddScoped<ICustomerRepository, CustomerRepository>();
 
-      services.AddSingleton<IVMAbstractFactory, VMAbstractFactory>();
+      services.AddSingleton<IRootVMFactory, RootVMFactory>();
       services.AddSingleton<IVMFactory<HomeVM>, HomeVMFactory>();
       services.AddSingleton<IVMFactory<CustomersVM>, CustomersVMFactory>();
       services.AddSingleton<IVMFactory<AppointmentsVM>, AppointmentsVMFactory>();

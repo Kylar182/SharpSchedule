@@ -25,7 +25,7 @@ namespace SharpSchedule.State.Navigators
 
     public ICommand UpdateCurrentVM { get; set; }
 
-    public Navigator(IVMAbstractFactory vmFactory)
+    public Navigator(IRootVMFactory vmFactory)
     {
       UpdateCurrentVM = new UpdateVMCommand(this, vmFactory);
     }

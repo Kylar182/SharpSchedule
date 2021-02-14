@@ -3,14 +3,14 @@ using SharpSchedule.State.Navigators;
 
 namespace SharpSchedule.ViewModels.Factories
 {
-  public class VMAbstractFactory : IVMAbstractFactory
+  public class RootVMFactory : IRootVMFactory
   {
     private readonly IVMFactory<HomeVM> _homeFactory;
     private readonly IVMFactory<CustomersVM> _customersFactory;
     private readonly IVMFactory<AppointmentsVM> _appointmentsFactory;
     private readonly IVMFactory<AddressesVM> _addressesFactory;
 
-    public VMAbstractFactory(
+    public RootVMFactory(
       IVMFactory<HomeVM> homeFactory,
       IVMFactory<CustomersVM> customersFactory,
       IVMFactory<AppointmentsVM> appointmentsFactory,
@@ -23,21 +23,19 @@ namespace SharpSchedule.ViewModels.Factories
       _addressesFactory = addressesFactory;
     }
 
+    /// <summary>
+    /// Creates the appropriate View Model for the selected View Type
+    /// </summary>
     public ViewModelBase CreateVM(ViewType type)
     {
-      switch (type)
+      return type switch
       {
-        case ViewType.Home:
-          return _homeFactory.CreateVM();
-        case ViewType.Customers:
-          return _customersFactory.CreateVM();
-        case ViewType.Appointments:
-          return _appointmentsFactory.CreateVM();
-        case ViewType.Addresses:
-          return _addressesFactory.CreateVM();
-        default:
-          throw new ArgumentException("View Type doesn't match a VM");
-      }
+        ViewType.Home => _homeFactory.CreateVM(),
+        ViewType.Customers => _customersFactory.CreateVM(),
+        ViewType.Appointments => _appointmentsFactory.CreateVM(),
+        ViewType.Addresses => _addressesFactory.CreateVM(),
+        _ => throw new ArgumentException("View Type doesn't match a VM"),
+      };
     }
   }
 }

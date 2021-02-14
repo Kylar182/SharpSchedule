@@ -14,13 +14,13 @@ namespace SharpSchedule.Commands
     public event EventHandler CanExecuteChanged;
 
     private readonly INavigator _navigator;
-    private readonly IVMAbstractFactory _vmFactory;
+    private readonly IRootVMFactory _vmFactory;
 
     /// <summary>
     /// Command that's run in the Navigator to 
     /// update the Currently selected View Model
     /// </summary>
-    public UpdateVMCommand(INavigator navigator, IVMAbstractFactory vmFactory)
+    public UpdateVMCommand(INavigator navigator, IRootVMFactory vmFactory)
     {
       _navigator = navigator;
       _vmFactory = vmFactory;
@@ -34,9 +34,7 @@ namespace SharpSchedule.Commands
     public void Execute(object parameter)
     {
       if (parameter is ViewType type)
-      {
         _navigator.CurrentVM = _vmFactory.CreateVM(type);
-      }
     }
   }
 }
