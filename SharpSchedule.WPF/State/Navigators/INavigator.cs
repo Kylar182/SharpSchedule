@@ -8,6 +8,7 @@ namespace SharpSchedule.State.Navigators
   /// </summary>
   public enum ViewType
   {
+    Login,
     Home,
     Customers,
     Appointments,

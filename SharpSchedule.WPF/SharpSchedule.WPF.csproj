@@ -26,10 +26,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ViewModels\Validation\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Update="Views\AddressesView.xaml.cs">
         <SubType>Code</SubType>
       </Compile>

@@ -23,5 +23,7 @@ namespace SharpSchedule.Persistence.Repositories
                                 && q.Password == dto.Password).FirstOrDefaultAsync();
       }
     }
+
+    public void Dispose() => GC.SuppressFinalize(this);
   }
 }

@@ -51,6 +51,7 @@ namespace SharpSchedule
       services.AddSingleton<IVMFactory<CustomersVM>, CustomersVMFactory>();
       services.AddSingleton<IVMFactory<AppointmentsVM>, AppointmentsVMFactory>();
       services.AddSingleton<IVMFactory<AddressesVM>, AddressesVMFactory>();
+      services.AddSingleton<IVMFactory<LoginVM>, LoginVMFactory>();
 
       services.AddSingleton<IAuthService, AuthService>();
       services.AddScoped<INavigator, Navigator>();

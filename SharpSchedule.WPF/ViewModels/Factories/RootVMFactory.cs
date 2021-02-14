@@ -5,18 +5,20 @@ namespace SharpSchedule.ViewModels.Factories
 {
   public class RootVMFactory : IRootVMFactory
   {
+    private readonly IVMFactory<LoginVM> _loginFactory;
     private readonly IVMFactory<HomeVM> _homeFactory;
     private readonly IVMFactory<CustomersVM> _customersFactory;
     private readonly IVMFactory<AppointmentsVM> _appointmentsFactory;
     private readonly IVMFactory<AddressesVM> _addressesFactory;
 
     public RootVMFactory(
-      IVMFactory<HomeVM> homeFactory,
-      IVMFactory<CustomersVM> customersFactory,
-      IVMFactory<AppointmentsVM> appointmentsFactory,
-      IVMFactory<AddressesVM> addressesFactory
-      )
+      IVMFactory<LoginVM> loginFactory, 
+      IVMFactory<HomeVM> homeFactory, 
+      IVMFactory<CustomersVM> customersFactory, 
+      IVMFactory<AppointmentsVM> appointmentsFactory, 
+      IVMFactory<AddressesVM> addressesFactory)
     {
+      _loginFactory = loginFactory;
       _homeFactory = homeFactory;
       _customersFactory = customersFactory;
       _appointmentsFactory = appointmentsFactory;
@@ -30,6 +32,7 @@ namespace SharpSchedule.ViewModels.Factories
     {
       return type switch
       {
+        ViewType.Login => _loginFactory.CreateVM(),
         ViewType.Home => _homeFactory.CreateVM(),
         ViewType.Customers => _customersFactory.CreateVM(),
         ViewType.Appointments => _appointmentsFactory.CreateVM(),
