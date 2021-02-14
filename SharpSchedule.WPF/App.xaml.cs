@@ -10,6 +10,8 @@ using SharpSchedule.Persistence;
 using SharpSchedule.Persistence.Repositories;
 using SharpSchedule.Persistence.Repositories.Location;
 using SharpSchedule.Persistence.Repositories.Scheduling;
+using SharpSchedule.Services;
+using SharpSchedule.Services.Interfaces;
 using SharpSchedule.State.Navigators;
 using SharpSchedule.ViewModels;
 using SharpSchedule.ViewModels.Factories;
@@ -37,6 +39,7 @@ namespace SharpSchedule
       IServiceCollection services = new ServiceCollection();
 
       services.AddSingleton<DbContextFactory>();
+      services.AddScoped<IUserRepository, UserRepository>();
       services.AddScoped<IAddressRepository, AddressRepository>();
       services.AddScoped<ICityRepository, CityRepository>();
       services.AddScoped<IRepository<Country>, Repository<Country>>();
@@ -49,6 +52,7 @@ namespace SharpSchedule
       services.AddSingleton<IVMFactory<AppointmentsVM>, AppointmentsVMFactory>();
       services.AddSingleton<IVMFactory<AddressesVM>, AddressesVMFactory>();
 
+      services.AddSingleton<IAuthService, AuthService>();
       services.AddScoped<INavigator, Navigator>();
       services.AddScoped<MainVM>();
 
