@@ -12,7 +12,7 @@ namespace SharpSchedule.ViewModels
     public MainVM(INavigator navigator)
     {
       Navigator = navigator;
-      Navigator.UpdateCurrentVM.Execute(ViewType.Home);
+      Navigator.UpdateCurrentVM.Execute(ViewType.Login);
     }
   }
 }

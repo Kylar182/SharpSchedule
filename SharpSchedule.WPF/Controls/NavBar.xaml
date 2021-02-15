@@ -52,6 +52,5 @@
                    CommandParameter="{x:Static nav:ViewType.Addresses}"
                    IsChecked="{Binding CurrentVM, Mode=OneWay, Converter={StaticResource EqualTo}, ConverterParameter={x:Type vms:AddressesVM}}" />
     </Grid>
-
   </Grid>
 </UserControl>

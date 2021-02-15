@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Windows.Input;
+using SharpSchedule.Commands;
 using SharpSchedule.Services.Interfaces;
+using SharpSchedule.State.Navigators;
 using SharpSchedule.ViewModels.Validation;
 
 namespace SharpSchedule.ViewModels
@@ -23,14 +26,14 @@ namespace SharpSchedule.ViewModels
         ValidateProp(value);
         username = value;
         OnPropChanged(nameof(Username));
-        OnPropChanged(nameof(UsernameValidity));
+        OnPropChanged(nameof(UsernameValid));
       }
     }
 
     /// <summary>
     /// Bool to determine Username Validity
     /// </summary>
-    public bool UsernameValidity => PropertyHasErrors(nameof(Username));
+    public bool UsernameValid => PropertyHasErrors(nameof(Username));
 
     private string password;
     /// <summary>
@@ -46,18 +49,38 @@ namespace SharpSchedule.ViewModels
         ValidateProp(value);
         password = value;
         OnPropChanged(nameof(Password));
+        OnPropChanged(nameof(PasswordValid));
       }
     }
+
+    private string message;
+    /// <summary>
+    /// Password of the User
+    /// </summary>
+    public string Message
+    {
+      get => message;
+      set
+      {
+        message = value;
+        OnPropChanged(nameof(Message));
+      }
+    }
+
+    public ICommand LoginCommand { get; }
 
     /// <summary>
     /// Bool to determine Username Validity
     /// </summary>
-    public bool PasswordValidity => PropertyHasErrors(nameof(Password));
+    public bool PasswordValid => PropertyHasErrors(nameof(Password));
 
     private readonly IAuthService _authService;
-    public LoginVM(IAuthService authService)
+    private readonly INavigator _navigator;
+    public LoginVM(IAuthService authService, INavigator navigator)
     {
       _authService = authService;
+      _navigator = navigator;
+      LoginCommand = new LoginCommand(this, _authService, _navigator);
     }
   }
 }

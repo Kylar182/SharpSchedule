@@ -7,6 +7,12 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Controls\BindableInput.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\BindablePasswordInput.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\NavBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -24,6 +30,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Controls\BindableInput.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\BindablePasswordInput.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\NavBar.xaml">
       <SubType>Designer</SubType>
     </Page>
