@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using SharpSchedule.Converters;
 
 namespace SharpSchedule.Controls
 {
@@ -52,6 +43,22 @@ namespace SharpSchedule.Controls
         helperText.UpdateHelperText();
     }
 
+    public bool Valid
+    {
+      get { return (bool)GetValue(ValidProperty); }
+      set { SetValue(ValidProperty, value); }
+    }
+
+    public static readonly DependencyProperty ValidProperty =
+        DependencyProperty.Register(nameof(Valid), typeof(bool), typeof(BindableInput), 
+          new PropertyMetadata(false, ValidPropChanged));
+
+    private static void ValidPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+      if (d is BindableInput helperText)
+        helperText.UpdateValidColor();
+    }
+
     public BindableInput()
     {
       InitializeComponent();
@@ -70,6 +77,12 @@ namespace SharpSchedule.Controls
     private void UpdateHelperText()
     {
       helperText.Text = HelperText;
+    }
+
+    private void UpdateValidColor()
+    {
+      helperText.Foreground = Valid ? (SolidColorBrush)(new BrushConverter().ConvertFrom("#002f51")) :
+        (SolidColorBrush)(new BrushConverter().ConvertFrom("#840028"));
     }
   }
 }

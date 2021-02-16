@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using SharpSchedule.Data.Extensions;
 
 namespace SharpSchedule.ViewModels.Validation
 {
@@ -29,7 +30,7 @@ namespace SharpSchedule.ViewModels.Validation
 
     public IEnumerable GetErrors(string propertyName)
     {
-      if (!string.IsNullOrEmpty(propertyName))
+      if (!propertyName.IsEmpty())
       {
         if (_errors.ContainsKey(propertyName) && (_errors[propertyName].Any()))
           return _errors[propertyName].ToList();
@@ -40,9 +41,9 @@ namespace SharpSchedule.ViewModels.Validation
         return _errors.SelectMany(err => err.Value.ToList()).ToList();
     }
 
-    public bool PropertyHasErrors(string propertyName)
+    public bool PropHasErrors(string propertyName)
     {
-      if (!string.IsNullOrEmpty(propertyName))
+      if (!propertyName.IsEmpty())
       {
         if (_errors.ContainsKey(propertyName) && (_errors[propertyName].Any()))
           return true;

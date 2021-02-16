@@ -1,6 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Windows.Input;
 using SharpSchedule.Commands;
+using SharpSchedule.Data.Extensions;
 using SharpSchedule.Services.Interfaces;
 using SharpSchedule.State.Navigators;
 using SharpSchedule.ViewModels.Validation;
@@ -26,14 +29,25 @@ namespace SharpSchedule.ViewModels
         ValidateProp(value);
         username = value;
         OnPropChanged(nameof(Username));
+        OnPropChanged(nameof(UsernameText));
         OnPropChanged(nameof(UsernameValid));
       }
     }
 
     /// <summary>
-    /// Bool to determine Username Validity
+    /// Helpertext for the user's Username
     /// </summary>
-    public bool UsernameValid => PropertyHasErrors(nameof(Username));
+    /// <remarks>
+    /// If Username is invalid, returns the first Error message, 
+    /// otherwise it returns the designated Helpertext
+    /// </remarks>
+    public string UsernameText => PropHasErrors(nameof(Username)) ?
+      GetErrors(nameof(Username)).OfType<string>().First() : "Username Input";
+
+    /// <summary>
+    /// Bool to determine if Username is Valid or not
+    /// </summary>
+    public bool UsernameValid => !PropHasErrors(nameof(Username));
 
     private string password;
     /// <summary>
@@ -49,9 +63,24 @@ namespace SharpSchedule.ViewModels
         ValidateProp(value);
         password = value;
         OnPropChanged(nameof(Password));
-        OnPropChanged(nameof(PasswordValid));
+        OnPropChanged(nameof(PasswordText));
       }
     }
+
+    /// <summary>
+    /// Helpertext for the user's Password
+    /// </summary>
+    /// <remarks>
+    /// If Password is invalid, returns the first Error message, 
+    /// otherwise it returns the designated Helpertext
+    /// </remarks>
+    public string PasswordText => PropHasErrors(nameof(Password)) ? 
+      GetErrors(nameof(Password)).OfType<string>().First() : "Password Input";
+
+    /// <summary>
+    /// Bool to determine if Password is Valid or not
+    /// </summary>
+    public bool PasswordValid => !PropHasErrors(nameof(Password));
 
     private string message;
     /// <summary>
@@ -68,11 +97,6 @@ namespace SharpSchedule.ViewModels
     }
 
     public ICommand LoginCommand { get; }
-
-    /// <summary>
-    /// Bool to determine Username Validity
-    /// </summary>
-    public bool PasswordValid => PropertyHasErrors(nameof(Password));
 
     private readonly IAuthService _authService;
     private readonly INavigator _navigator;
