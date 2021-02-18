@@ -42,6 +42,9 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Styles\LoginStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Styles\InputStyle.xaml">
       <SubType>Designer</SubType>
     </Page>

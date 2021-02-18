@@ -9,6 +9,7 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Styles/Shared.xaml" />
+        <ResourceDictionary Source="/Styles/LoginStyle.xaml" />
         <ResourceDictionary Source="/Styles/InputStyle.xaml" />
         <ResourceDictionary Source="/Styles/NavBarStyle.xaml" />
       </ResourceDictionary.MergedDictionaries>

@@ -32,6 +32,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Page Update="Styles\LoginStyle.xaml">
+        <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
       <Page Update="Styles\InputStyle.xaml">
         <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
         <SubType>Designer</SubType>
