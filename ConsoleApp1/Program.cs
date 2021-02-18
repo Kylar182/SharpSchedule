@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Locations;
 using SharpSchedule.Data.Repositories;
 using SharpSchedule.Persistence;
@@ -31,7 +30,7 @@ namespace TestConsoleApp
         {
           CultureList.Add(GetRegionInfo.EnglishName);
 
-          Repo.Create(new Country 
+          Repo.Create(new Country
           {
             Name = GetRegionInfo.EnglishName,
             CreatedBy = "test",

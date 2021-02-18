@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.DTOs;
-using SharpSchedule.Services.Interfaces;
+using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.Repositories;
 using SharpSchedule.Persistence;
 using SharpSchedule.Persistence.Repositories;
+using SharpSchedule.Services.Interfaces;
 
 namespace SharpSchedule.Services
 {
@@ -29,7 +29,7 @@ namespace SharpSchedule.Services
     {
       try
       {
-        using (IUserRepository _repository =  new UserRepository(_contextFactory))
+        using (IUserRepository _repository = new UserRepository(_contextFactory))
         {
           User user = await _repository.Login(dto);
           if (user != null)

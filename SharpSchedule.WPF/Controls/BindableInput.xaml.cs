@@ -1,8 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Media;
-using SharpSchedule.Converters;
 
 namespace SharpSchedule.Controls
 {
@@ -18,7 +16,7 @@ namespace SharpSchedule.Controls
     }
 
     public static readonly DependencyProperty InputProperty =
-        DependencyProperty.Register(nameof(Input), typeof(string), typeof(BindableInput), 
+        DependencyProperty.Register(nameof(Input), typeof(string), typeof(BindableInput),
           new PropertyMetadata(string.Empty, InputPropChanged));
 
     private static void InputPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -34,7 +32,7 @@ namespace SharpSchedule.Controls
     }
 
     public static readonly DependencyProperty HelperTextProperty =
-        DependencyProperty.Register(nameof(HelperText), typeof(string), typeof(BindableInput), 
+        DependencyProperty.Register(nameof(HelperText), typeof(string), typeof(BindableInput),
           new PropertyMetadata(string.Empty, HelperTextPropChanged));
 
     private static void HelperTextPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -50,7 +48,7 @@ namespace SharpSchedule.Controls
     }
 
     public static readonly DependencyProperty ValidProperty =
-        DependencyProperty.Register(nameof(Valid), typeof(bool), typeof(BindableInput), 
+        DependencyProperty.Register(nameof(Valid), typeof(bool), typeof(BindableInput),
           new PropertyMetadata(false, ValidPropChanged));
 
     private static void ValidPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -64,7 +62,7 @@ namespace SharpSchedule.Controls
       InitializeComponent();
     }
 
-    private void InputBind_SourceUpdated(object sender, DataTransferEventArgs e)
+    private void InputBind_TextChanged(object sender, TextChangedEventArgs e)
     {
       Input = inputBind.Text;
     }
@@ -81,8 +79,8 @@ namespace SharpSchedule.Controls
 
     private void UpdateValidColor()
     {
-      helperText.Foreground = Valid ? (SolidColorBrush)(new BrushConverter().ConvertFrom("#002f51")) :
-        (SolidColorBrush)(new BrushConverter().ConvertFrom("#840028"));
+      helperText.Foreground = Valid ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF002f51")) :
+        new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF840028"));
     }
   }
 }

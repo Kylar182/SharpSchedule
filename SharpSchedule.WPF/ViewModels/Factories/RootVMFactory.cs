@@ -12,10 +12,10 @@ namespace SharpSchedule.ViewModels.Factories
     private readonly IVMFactory<AddressesVM> _addressesFactory;
 
     public RootVMFactory(
-      IVMFactory<LoginVM> loginFactory, 
-      IVMFactory<HomeVM> homeFactory, 
-      IVMFactory<CustomersVM> customersFactory, 
-      IVMFactory<AppointmentsVM> appointmentsFactory, 
+      IVMFactory<LoginVM> loginFactory,
+      IVMFactory<HomeVM> homeFactory,
+      IVMFactory<CustomersVM> customersFactory,
+      IVMFactory<AppointmentsVM> appointmentsFactory,
       IVMFactory<AddressesVM> addressesFactory)
     {
       _loginFactory = loginFactory;

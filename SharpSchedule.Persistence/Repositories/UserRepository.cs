@@ -19,7 +19,7 @@ namespace SharpSchedule.Persistence.Repositories
     {
       using (SchedulingContext _context = _contextFactory.CreateDbContext())
       {
-        return await _context.Users.Where(q => q.Username == dto.Username 
+        return await _context.Users.Where(q => q.Username == dto.Username
                                 && q.Password == dto.Password).FirstOrDefaultAsync();
       }
     }

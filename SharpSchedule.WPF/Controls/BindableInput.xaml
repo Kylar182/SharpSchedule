@@ -11,7 +11,7 @@
       <RowDefinition Height="auto" />
     </Grid.RowDefinitions>
 
-    <TextBox x:Name="inputBind" Binding.SourceUpdated="InputBind_SourceUpdated" />
+    <TextBox x:Name="inputBind" TextChanged="InputBind_TextChanged" />
     <TextBlock Grid.Row="1" x:Name="helperText" />
   </Grid>
 </UserControl>

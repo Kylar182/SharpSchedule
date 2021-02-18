@@ -1,6 +1,6 @@
-﻿using SharpSchedule.Data.EntityModels;
+﻿using System.Threading.Tasks;
 using SharpSchedule.Data.DTOs;
-using System.Threading.Tasks;
+using SharpSchedule.Data.EntityModels;
 
 namespace SharpSchedule.Services.Interfaces
 {

@@ -2,7 +2,6 @@
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using SharpSchedule.Data.EntityModels.Locations;
-using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Repositories;
 using SharpSchedule.Data.Repositories.Location;
 using SharpSchedule.Data.Repositories.Scheduling;

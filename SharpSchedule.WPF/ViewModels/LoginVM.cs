@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows.Input;
 using SharpSchedule.Commands;
-using SharpSchedule.Data.Extensions;
 using SharpSchedule.Services.Interfaces;
-using SharpSchedule.State.Navigators;
 using SharpSchedule.ViewModels.Validation;
 
 namespace SharpSchedule.ViewModels
@@ -42,7 +39,7 @@ namespace SharpSchedule.ViewModels
     /// otherwise it returns the designated Helpertext
     /// </remarks>
     public string UsernameText => PropHasErrors(nameof(Username)) ?
-      GetErrors(nameof(Username)).OfType<string>().First() : "Username Input";
+      GetErrors(nameof(Username)).OfType<string>().First() : "Input Username";
 
     /// <summary>
     /// Bool to determine if Username is Valid or not
@@ -64,6 +61,7 @@ namespace SharpSchedule.ViewModels
         password = value;
         OnPropChanged(nameof(Password));
         OnPropChanged(nameof(PasswordText));
+        OnPropChanged(nameof(PasswordValid));
       }
     }
 
@@ -74,8 +72,8 @@ namespace SharpSchedule.ViewModels
     /// If Password is invalid, returns the first Error message, 
     /// otherwise it returns the designated Helpertext
     /// </remarks>
-    public string PasswordText => PropHasErrors(nameof(Password)) ? 
-      GetErrors(nameof(Password)).OfType<string>().First() : "Password Input";
+    public string PasswordText => PropHasErrors(nameof(Password)) ?
+      GetErrors(nameof(Password)).OfType<string>().First() : "Input Password";
 
     /// <summary>
     /// Bool to determine if Password is Valid or not
@@ -99,12 +97,10 @@ namespace SharpSchedule.ViewModels
     public ICommand LoginCommand { get; }
 
     private readonly IAuthService _authService;
-    private readonly INavigator _navigator;
-    public LoginVM(IAuthService authService, INavigator navigator)
+    public LoginVM(IAuthService authService)
     {
       _authService = authService;
-      _navigator = navigator;
-      LoginCommand = new LoginCommand(this, _authService, _navigator);
+      LoginCommand = new LoginCommand(this, _authService);
     }
   }
 }

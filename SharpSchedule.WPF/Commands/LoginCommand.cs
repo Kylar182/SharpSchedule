@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using SharpSchedule.Data.DTOs;
 using SharpSchedule.Services.Interfaces;
-using SharpSchedule.State.Navigators;
 using SharpSchedule.ViewModels;
 
 namespace SharpSchedule.Commands
@@ -11,16 +10,13 @@ namespace SharpSchedule.Commands
   {
     private readonly LoginVM _loginVM;
     private readonly IAuthService _authService;
-    private readonly INavigator _navigator;
 
     public LoginCommand(
-      LoginVM loginVM, 
-      IAuthService authService, 
-      INavigator navigator)
+      LoginVM loginVM,
+      IAuthService authService)
     {
       _loginVM = loginVM;
-      _authService = authService;
-      _navigator = navigator;
+      _authService = authService; ;
     }
 
     public event EventHandler CanExecuteChanged;
@@ -45,7 +41,8 @@ namespace SharpSchedule.Commands
             _loginVM.Message = "Database could not be reached";
             break;
           case true:
-            _navigator.UpdateCurrentVM.Execute(ViewType.Home);
+            _loginVM.Message = "Success";
+            //_navigator.UpdateCurrentVM.Execute(ViewType.Home);
             break;
         }
       }

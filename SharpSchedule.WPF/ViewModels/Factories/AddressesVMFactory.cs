@@ -8,7 +8,7 @@ namespace SharpSchedule.ViewModels.Factories
     private readonly ICityRepository _cityRepository;
 
     public AddressesVMFactory(
-      IAddressRepository repository, 
+      IAddressRepository repository,
       ICityRepository cityRepository)
     {
       _repository = repository;
