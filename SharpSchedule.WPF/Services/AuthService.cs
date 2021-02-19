@@ -3,13 +3,14 @@ using System.Threading.Tasks;
 using SharpSchedule.Data.DTOs;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.Repositories;
+using SharpSchedule.Models;
 using SharpSchedule.Persistence;
 using SharpSchedule.Persistence.Repositories;
 using SharpSchedule.Services.Interfaces;
 
 namespace SharpSchedule.Services
 {
-  public class AuthService : IAuthService
+  public class AuthService : ObservableObject, IAuthService
   {
     /// <summary>
     /// Since Auth Service needs to be a Singleton I 
@@ -23,7 +24,6 @@ namespace SharpSchedule.Services
       _contextFactory = contextFactory;
     }
 
-    private User current { get; set; }
 
     public async Task<bool?> Login(LoginDTO dto)
     {
@@ -34,7 +34,7 @@ namespace SharpSchedule.Services
           User user = await _repository.Login(dto);
           if (user != null)
           {
-            current = user;
+            Current = user;
             return true;
           }
           else
@@ -49,11 +49,25 @@ namespace SharpSchedule.Services
       }
     }
 
-    public User GetCurrent() => current;
+    private User _current;
+    public User Current
+    {
+      get => _current;
+      private set
+      {
+        _current = value;
+        OnPropChanged(nameof(Current));
+        OnPropChanged(nameof(IsLoggedIn));
+      }
+    }
+
+    public User GetCurrent() => Current;
 
     public void Logout()
     {
-      current = null;
+      Current = null;
     }
+
+    public bool IsLoggedIn => Current != null;
   }
 }

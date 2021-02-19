@@ -18,6 +18,11 @@ namespace SharpSchedule.Services.Interfaces
     public Task<bool?> Login(LoginDTO dto);
 
     /// <summary>
+    /// Returns True if a User is Currently Logged in
+    /// </summary>
+    public bool IsLoggedIn { get; }
+
+    /// <summary>
     /// Gets the Currently Logged in User from Memory
     /// </summary>
     /// <remarks>

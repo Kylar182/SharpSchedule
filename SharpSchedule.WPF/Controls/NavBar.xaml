@@ -10,11 +10,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="1920">
 
+  <Validation.ErrorTemplate>
+    <ControlTemplate />
+  </Validation.ErrorTemplate>
+
   <UserControl.Resources>
     <converters:EqualToParamConverter x:Key="EqualTo" />
   </UserControl.Resources>
 
-  <Grid RenderOptions.EdgeMode="Aliased">
+  <Grid RenderOptions.EdgeMode="Aliased" Validation.ErrorTemplate="{x:Null}">
     <Grid.RowDefinitions>
       <RowDefinition Height="auto" />
       <RowDefinition Height="auto"  />
@@ -27,7 +31,8 @@
       <Label Content="SHARP SCHEDULE" FontSize="30" FontWeight="Bold" Margin="10, 0" 
              HorizontalAlignment="Left" />
     </TextBlock>
-    <Grid Grid.Row="1" RenderOptions.EdgeMode="Aliased" Background="{StaticResource Light}">
+    <Grid Grid.Row="1" RenderOptions.EdgeMode="Aliased" Background="{StaticResource Light}" 
+          Validation.ErrorTemplate="{x:Null}">
       <Grid.Resources>
         <Style TargetType="RadioButton" BasedOn="{StaticResource NavButton}" />
       </Grid.Resources>

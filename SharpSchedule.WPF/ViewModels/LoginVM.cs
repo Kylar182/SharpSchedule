@@ -99,6 +99,7 @@ namespace SharpSchedule.ViewModels
     private readonly IAuthService _authService;
     public LoginVM(IAuthService authService)
     {
+      Message = "Login to start Scheduling";
       _authService = authService;
       LoginCommand = new LoginCommand(this, _authService);
     }

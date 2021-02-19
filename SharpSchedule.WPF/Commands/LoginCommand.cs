@@ -42,7 +42,6 @@ namespace SharpSchedule.Commands
             break;
           case true:
             _loginVM.Message = "Success";
-            //_navigator.UpdateCurrentVM.Execute(ViewType.Home);
             break;
         }
       }
