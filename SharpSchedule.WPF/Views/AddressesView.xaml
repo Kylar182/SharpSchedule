@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SharpSchedule.Views"
              mc:Ignorable="d" 
              d:DesignHeight="880" d:DesignWidth="1920">
-  
+
   <Grid Background="{StaticResource Grey60}">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width=".3*" />
@@ -25,7 +25,8 @@
     <Label Grid.Column="1" Content="Addresses" HorizontalAlignment="Left" VerticalAlignment="Bottom"
            FontSize="30" Margin="0, 5"/>
 
-    <Button Grid.Column="1" Content="SEARCH" HorizontalAlignment="Right" />
+    <Button Grid.Column="1" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchAddresses}"
+            CommandParameter="{Binding Text, ElementName=Addresses_Search}" />
 
     <TextBox Name="Addresses_Search" Grid.Column="2" Margin="38" FontSize="32" />
 
@@ -59,7 +60,8 @@
     <Label Grid.Column="4" Content="Cities" HorizontalAlignment="Left" VerticalAlignment="Bottom"
            FontSize="30" Margin="0, 5" />
 
-    <Button Grid.Column="4" Content="SEARCH" HorizontalAlignment="Right" />
+    <Button Grid.Column="4" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchCities}"
+            CommandParameter="{Binding Text, ElementName=Cities_Search}" />
  
     <TextBox Name="Cities_Search" Grid.Column="5" Margin="38" FontSize="32" />
 

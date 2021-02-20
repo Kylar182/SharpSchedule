@@ -12,6 +12,9 @@
       <RowDefinition Height="auto" />
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
+    <Grid.Effect>
+      <DropShadowEffect BlurRadius="15" Color="{StaticResource Grey15Color}" Direction="270" />
+    </Grid.Effect>
 
     <Grid Grid.Row="0">
       <Grid.Style>

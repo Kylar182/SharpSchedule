@@ -1,4 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
+using SharpSchedule.Commands.AddressVMCommands;
 using SharpSchedule.Data.EntityModels.Locations;
 using SharpSchedule.Data.Repositories.Location;
 
@@ -13,14 +17,28 @@ namespace SharpSchedule.ViewModels
     private readonly ICityRepository _cityRepository;
 
     /// <summary>
-    /// All addresses currently in the System
+    /// Filtered Addresses
     /// </summary>
     public ObservableCollection<Address> Addresses { get; set; }
 
     /// <summary>
-    /// All cities currently in the System
+    /// All Addresses currently in the System
+    /// </summary>
+    public List<Address> AllAddresses { get; set; }
+
+    /// <summary>
+    /// Filtered Cities
     /// </summary>
     public ObservableCollection<City> Cities { get; set; }
+
+    /// <summary>
+    /// All Cities currently in the System
+    /// </summary>
+    public List<City> AllCities { get; set; }
+
+    public ICommand SearchCities { get; }
+
+    public ICommand SearchAddresses { get; }
 
     public AddressesVM(
       IAddressRepository repository,
@@ -31,6 +49,8 @@ namespace SharpSchedule.ViewModels
       Addresses = new ObservableCollection<Address>();
       Cities = new ObservableCollection<City>();
       Load();
+      SearchCities = new SearchCitiesCommand(this);
+      SearchAddresses = new SearchAddressesCommand(this);
     }
 
     /// <summary>
@@ -42,19 +62,16 @@ namespace SharpSchedule.ViewModels
       {
         if (a.Exception == null)
         {
+          AllAddresses = a.Result;
+          AllCities = AllAddresses.Select(pr => pr.City).Distinct().ToList();
           Addresses.Clear();
-          foreach (Address address in a.Result)
-            Addresses.Add(address);
-        }
-      });
 
-      _cityRepository.GetAll().ContinueWith(a =>
-      {
-        if (a.Exception == null)
-        {
           Cities.Clear();
-          foreach (City city in a.Result)
+          foreach (City city in AllCities)
             Cities.Add(city);
+
+          foreach (Address address in AllAddresses)
+            Addresses.Add(address);
         }
       });
     }

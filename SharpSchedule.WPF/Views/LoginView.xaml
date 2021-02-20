@@ -22,9 +22,6 @@
 
     <Border Grid.Row="1" Grid.Column="1" BorderBrush="{StaticResource AppGrey}" 
             Background="{StaticResource Grey30}" BorderThickness="2.5" CornerRadius="10">
-      <Border.Effect>
-        <DropShadowEffect BlurRadius="5" Color="{StaticResource Grey60Color}" />
-      </Border.Effect>
       <Grid Margin="20, 10">
         <Grid.RowDefinitions>
           <RowDefinition Height="*" />
@@ -50,7 +47,7 @@
         HelperText="{Binding PasswordText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
         Valid="{Binding PasswordValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 
-        <Button  Grid.Row="3" HorizontalAlignment="Center" Command="{Binding LoginCommand}" Content="LOGIN" />
+        <Button Grid.Row="3" HorizontalAlignment="Center" Command="{Binding LoginCommand}" Content="LOGIN" />
       </Grid>
     </Border>
   </Grid>

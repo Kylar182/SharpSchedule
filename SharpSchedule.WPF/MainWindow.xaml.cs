@@ -10,6 +10,7 @@ namespace SharpSchedule.WPF
     public MainWindow(object dataContext)
     {
       InitializeComponent();
+      WindowStartupLocation = WindowStartupLocation.CenterScreen;
       DataContext = dataContext;
     }
   }
