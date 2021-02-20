@@ -10,18 +10,21 @@
   
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height=".5*" />
-      <RowDefinition Height="auto" />
-      <RowDefinition Height="*" />
+      <RowDefinition Height=".75*" />
+      <RowDefinition Height=".75*" />
+      <RowDefinition Height="1.5*" />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*" />
-      <ColumnDefinition Width=".5*" />
+      <ColumnDefinition Width=".75*" />
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
 
     <Border Grid.Row="1" Grid.Column="1" BorderBrush="{StaticResource AppGrey}" 
             Background="{StaticResource Grey30}" BorderThickness="2.5" CornerRadius="10">
+      <Border.Effect>
+        <DropShadowEffect BlurRadius="5" Color="{StaticResource Grey60Color}" />
+      </Border.Effect>
       <Grid Margin="20, 10">
         <Grid.RowDefinitions>
           <RowDefinition Height="*" />

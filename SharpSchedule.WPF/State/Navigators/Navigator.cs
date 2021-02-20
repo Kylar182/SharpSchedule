@@ -1,8 +1,5 @@
-﻿using System.Windows.Input;
-using SharpSchedule.Commands;
-using SharpSchedule.Models;
+﻿using SharpSchedule.Models;
 using SharpSchedule.ViewModels;
-using SharpSchedule.ViewModels.Factories;
 
 namespace SharpSchedule.State.Navigators
 {
@@ -21,13 +18,6 @@ namespace SharpSchedule.State.Navigators
         _currentVM = value;
         OnPropChanged(nameof(CurrentVM));
       }
-    }
-
-    public ICommand UpdateCurrentVM { get; set; }
-
-    public Navigator(IRootVMFactory vmFactory)
-    {
-      UpdateCurrentVM = new UpdateVMCommand(this, vmFactory);
     }
   }
 }

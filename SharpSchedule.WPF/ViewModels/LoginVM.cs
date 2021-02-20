@@ -3,6 +3,8 @@ using System.Linq;
 using System.Windows.Input;
 using SharpSchedule.Commands;
 using SharpSchedule.Services.Interfaces;
+using SharpSchedule.State.Navigators;
+using SharpSchedule.ViewModels.Factories;
 using SharpSchedule.ViewModels.Validation;
 
 namespace SharpSchedule.ViewModels
@@ -97,11 +99,17 @@ namespace SharpSchedule.ViewModels
     public ICommand LoginCommand { get; }
 
     private readonly IAuthService _authService;
-    public LoginVM(IAuthService authService)
+    private readonly INavigator _navigator;
+    private readonly IVMFactory<HomeVM> _homeFactory;
+
+    public LoginVM(IAuthService authService, INavigator navigator, IVMFactory<HomeVM> homeFactory)
     {
-      Message = "Login to start Scheduling";
       _authService = authService;
-      LoginCommand = new LoginCommand(this, _authService);
+      _navigator = navigator;
+      _homeFactory = homeFactory;
+
+      Message = "Login to start Scheduling";
+      LoginCommand = new LoginCommand(this, _authService, _navigator, _homeFactory);
     }
   }
 }

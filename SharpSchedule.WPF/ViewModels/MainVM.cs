@@ -1,5 +1,8 @@
-﻿using SharpSchedule.Services.Interfaces;
+﻿using System.Windows.Input;
+using SharpSchedule.Commands;
+using SharpSchedule.Services.Interfaces;
 using SharpSchedule.State.Navigators;
+using SharpSchedule.ViewModels.Factories;
 
 namespace SharpSchedule.ViewModels
 {
@@ -10,12 +13,18 @@ namespace SharpSchedule.ViewModels
   {
     public INavigator Navigator { get; set; }
     public IAuthService AuthService { get; }
+    public ICommand UpdateCurrentVM { get; }
+    public ICommand LogoutCommand { get; }
 
-    public MainVM(INavigator navigator, IAuthService authService)
+    public MainVM(INavigator navigator, IAuthService authService, IRootVMFactory vmFactory)
     {
       Navigator = navigator;
       AuthService = authService;
-      Navigator.UpdateCurrentVM.Execute(ViewType.Login);
+
+      UpdateCurrentVM = new UpdateVMCommand(navigator, vmFactory);
+      LogoutCommand = new LogoutCommand(authService, navigator, vmFactory);
+
+      UpdateCurrentVM.Execute(ViewType.Login);
     }
   }
 }

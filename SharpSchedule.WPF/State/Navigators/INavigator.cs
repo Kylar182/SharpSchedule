@@ -24,9 +24,5 @@ namespace SharpSchedule.State.Navigators
     /// Current View Model of the Current View
     /// </summary>
     ViewModelBase CurrentVM { get; set; }
-    /// <summary>
-    /// Command to update the Current View Model
-    /// </summary>
-    ICommand UpdateCurrentVM { get; }
   }
 }

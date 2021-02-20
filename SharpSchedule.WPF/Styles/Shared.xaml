@@ -2,12 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:SharpSchedule.Styles">
 
+  <Color x:Key="Grey60Color">#60868E96</Color>
+  <Color x:Key="Grey30Color">#30868E96</Color>
+  <Color x:Key="AppGreyColor">#868E96</Color>
   <Color x:Key="WGUBlue">#002f51</Color>
   <Color x:Key="WGULight">#82bcd4</Color>
   <Color x:Key="WGURed">#840028</Color>
-  <SolidColorBrush x:Key="Grey60" Color="#60868E96"/>
-  <SolidColorBrush x:Key="Grey30" Color="#30868E96"/>
-  <SolidColorBrush x:Key="AppGrey" Color="#868E96"/>
+  <SolidColorBrush x:Key="Grey60" Color="{StaticResource Grey60Color}"/>
+  <SolidColorBrush x:Key="Grey30" Color="{StaticResource Grey30Color}"/>
+  <SolidColorBrush x:Key="AppGrey" Color="{StaticResource AppGreyColor}"/>
 
   <SolidColorBrush x:Key="WGU" Color="{StaticResource WGUBlue}" />
   <SolidColorBrush x:Key="Light" Color="{StaticResource WGULight}" />
