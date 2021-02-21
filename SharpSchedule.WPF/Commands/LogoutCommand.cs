@@ -9,14 +9,14 @@ namespace SharpSchedule.Commands
   public class LogoutCommand : ICommand
   {
     private readonly IAuthService _authService;
-    private readonly INavigator _navigator; 
+    private readonly INavigator _navigator;
     private readonly IRootVMFactory _vmFactory;
 
     public LogoutCommand(
       IAuthService authService,
       INavigator navigator,
       IRootVMFactory vmFactory)
-    { 
+    {
       _authService = authService;
       _navigator = navigator;
       _vmFactory = vmFactory;

@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using SharpSchedule.ViewModels;
+﻿using SharpSchedule.ViewModels;
 
 namespace SharpSchedule.State.Navigators
 {

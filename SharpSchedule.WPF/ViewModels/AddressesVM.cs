@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Input;
 using SharpSchedule.Commands.AddressVMCommands;
 using SharpSchedule.Data.EntityModels.Locations;
+using SharpSchedule.Data.Repositories;
 using SharpSchedule.Data.Repositories.Location;
 
 namespace SharpSchedule.ViewModels
@@ -15,6 +16,7 @@ namespace SharpSchedule.ViewModels
   {
     private readonly IAddressRepository _repository;
     private readonly ICityRepository _cityRepository;
+    private readonly IRepository<Country> _countryRepository;
 
     /// <summary>
     /// Filtered Addresses
@@ -40,17 +42,22 @@ namespace SharpSchedule.ViewModels
 
     public ICommand SearchAddresses { get; }
 
+    public ICommand NewCity { get; }
+
     public AddressesVM(
       IAddressRepository repository,
-      ICityRepository cityRepository)
+      ICityRepository cityRepository, 
+      IRepository<Country> countryRepository)
     {
       _repository = repository;
       _cityRepository = cityRepository;
+      _countryRepository = countryRepository;
       Addresses = new ObservableCollection<Address>();
       Cities = new ObservableCollection<City>();
       Load();
       SearchCities = new SearchCitiesCommand(this);
       SearchAddresses = new SearchAddressesCommand(this);
+      NewCity = new NewCityCommand(this, _cityRepository, _countryRepository);
     }
 
     /// <summary>
@@ -58,18 +65,34 @@ namespace SharpSchedule.ViewModels
     /// </summary>
     private void Load()
     {
-      _repository.GetAll().ContinueWith(a =>
+      CityUpdate();
+      AddressUpdate();
+    }
+
+    public void CityUpdate()
+    {
+      _cityRepository.GetAll().ContinueWith(t =>
       {
-        if (a.Exception == null)
+        if (t.Exception == null)
         {
-          AllAddresses = a.Result;
-          AllCities = AllAddresses.Select(pr => pr.City).Distinct().ToList();
-          Addresses.Clear();
+          AllCities = t.Result;
 
           Cities.Clear();
           foreach (City city in AllCities)
             Cities.Add(city);
+        }
+      });
+    }
 
+    public void AddressUpdate()
+    {
+      _repository.GetAll().ContinueWith(t =>
+      {
+        if (t.Exception == null)
+        {
+          AllAddresses = t.Result;
+
+          Addresses.Clear();
           foreach (Address address in AllAddresses)
             Addresses.Add(address);
         }

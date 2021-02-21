@@ -50,9 +50,9 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <Button Grid.Column="0" Content="ADD" />
+      <Button Grid.Column="0" Content="CREATE" />
 
-      <Button Grid.Column="1" Content="MODIFY" />
+      <Button Grid.Column="1" Content="UPDATE" />
 
       <Button Grid.Column="2" Grid.Row="3" Content="DELETE" />
     </Grid>
@@ -82,11 +82,13 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <Button Grid.Column="0" Content="ADD" />
+      <Button Grid.Column="0" Content="CREATE" Command="{Binding NewCity}" />
 
-      <Button Grid.Column="1" Content="MODIFY" />
+      <Button Grid.Column="1" Content="UPDATE" Command="{Binding UpdateDialog}" 
+                    CommandParameter="{Binding SelectedItem, ElementName=CityGrid}" />
 
-      <Button Grid.Column="2" Grid.Row="3" Content="DELETE" />
+      <Button Grid.Column="2" Grid.Row="3" Content="DELETE" Command="{Binding CityDelete}" 
+                    CommandParameter="{Binding SelectedItem, ElementName=CityGrid}" />
     </Grid>
     
   </Grid>

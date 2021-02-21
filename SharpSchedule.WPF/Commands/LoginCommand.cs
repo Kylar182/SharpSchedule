@@ -18,7 +18,7 @@ namespace SharpSchedule.Commands
     public LoginCommand(
       LoginVM loginVM,
       IAuthService authService,
-      INavigator navigator, 
+      INavigator navigator,
       IVMFactory<HomeVM> homeFactory)
     {
       _loginVM = loginVM;

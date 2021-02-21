@@ -37,8 +37,8 @@ namespace SharpSchedule.Controls
 
     private static void HelperTextPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-      if (d is BindableInput helperText)
-        helperText.UpdateHelperText();
+      if (d is BindableInput inputBind)
+        inputBind.UpdateHelperText();
     }
 
     public bool Valid
@@ -53,13 +53,31 @@ namespace SharpSchedule.Controls
 
     private static void ValidPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-      if (d is BindableInput helperText)
-        helperText.UpdateValidColor();
+      if (d is BindableInput inputBind)
+        inputBind.UpdateValidColor();
+    }
+
+    public bool Enabled
+    {
+      get { return (bool)GetValue(DisabledProperty); }
+      set { SetValue(DisabledProperty, value); }
+    }
+
+    public static readonly DependencyProperty DisabledProperty =
+        DependencyProperty.Register(nameof(Enabled), typeof(bool), typeof(BindableInput),
+          new PropertyMetadata(true, EnabledPropChanged));
+
+    private static void EnabledPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+      if (d is BindableInput inputBind)
+        inputBind.DisableInput();
     }
 
     public BindableInput()
     {
       InitializeComponent();
+      Valid = false;
+      UpdateValidColor();
     }
 
     private void InputBind_TextChanged(object sender, TextChangedEventArgs e)
@@ -81,6 +99,11 @@ namespace SharpSchedule.Controls
     {
       helperText.Foreground = Valid ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF002f51")) :
         new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF840028"));
+    }
+
+    private void DisableInput()
+    {
+      inputBind.IsEnabled = Enabled;
     }
   }
 }

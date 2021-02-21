@@ -23,6 +23,7 @@
         <Setter Property="Padding" Value="10 5" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Typography.Capitals" Value="AllSmallCaps" />
         <Style.Resources>
           <Style TargetType="Border">
             <Setter Property="CornerRadius" Value="7.5"/>

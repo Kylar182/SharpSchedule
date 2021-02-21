@@ -6,8 +6,8 @@
         xmlns:controls="clr-namespace:SharpSchedule.Controls"
         xmlns:local="clr-namespace:SharpSchedule.Views.Dialogs"
         mc:Ignorable="d" 
-        d:DesignHeight="500" d:DesignWidth="800"
-        Title="City">
+        Height="500" Width="800"
+        Title="{Binding WindowLabel}">
 
   <Grid Background="{StaticResource Grey15}">
     <Grid.ColumnDefinitions>
@@ -15,16 +15,20 @@
       <ColumnDefinition Width="2*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
-      <RowDefinition Height="4*" />
-      <RowDefinition Height="*" />
+      <RowDefinition Height=".75*" />
+      <RowDefinition Height="3.75*" />
+      <RowDefinition Height=".5*" />
     </Grid.RowDefinitions>
     <Grid.Effect>
       <DropShadowEffect BlurRadius="15" Color="{StaticResource Grey15Color}" Direction="270" />
     </Grid.Effect>
 
-    <Grid>
+    <Label Content="{Binding WindowLabel}" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+           FontSize="24" Margin="0, 5" />
+
+    <Grid Grid.Row="1">
       <Grid.RowDefinitions>
-        <RowDefinition Height="*" />
+        <RowDefinition Height="auto" />
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
@@ -34,9 +38,37 @@
         Valid="{Binding NameValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:BindableInput>
 
-      <Button Grid.Row="1" HorizontalAlignment="Center" Command="{Binding LoginCommand}" 
-              Content="{Binding CUDString}" />
+      <Grid Grid.Row="2">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Button HorizontalAlignment="Center" Command="{Binding CityCRUDCommand}"
+                Content="{Binding CUDString}" Click="Dialog_True" />
+
+        <Button Grid.Column="1" HorizontalAlignment="Center" Content="CANCEL" 
+                Background="{StaticResource Light}" Click="Dialog_False" />
+      </Grid>
     </Grid>
+
+    <Button Grid.Column="1" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchCountries}"
+            CommandParameter="{Binding Text, ElementName=Country_Search}" />
+
+    <TextBox Name="Country_Search" Grid.Column="1" Margin="75, 5, 0, 5" FontSize="16" 
+             HorizontalAlignment="Center" Width="200" />
+
+    <Label Grid.Column="1" Content="Countries" HorizontalAlignment="Left" 
+           VerticalAlignment="Bottom" FontSize="24" Margin="0, 5" />
+
+    <DataGrid Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" x:Name="CountryGrid" 
+              IsReadOnly="True" SelectionMode="Single" ItemsSource="{Binding Countries}"
+              SelectedItem="{Binding CountrySelected, Mode=TwoWay}">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="ID" Width=".25*" Binding="{Binding Id}" />
+        <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" />
+      </DataGrid.Columns>
+    </DataGrid>
 
   </Grid>
 </Window>
