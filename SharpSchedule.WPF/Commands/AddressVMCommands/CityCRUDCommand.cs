@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Input;
 using SharpSchedule.ViewModels;
 
@@ -11,6 +12,8 @@ namespace SharpSchedule.Commands.AddressVMCommands
     public CityCRUDCommand(CityVM cityVM)
     {
       _cityVM = cityVM;
+
+      _cityVM.PropertyChanged += ErrorsChanged;
     }
 
     public event EventHandler CanExecuteChanged;
@@ -33,6 +36,12 @@ namespace SharpSchedule.Commands.AddressVMCommands
           return;
         }
       }
+    }
+
+    private void ErrorsChanged(object sender, PropertyChangedEventArgs e)
+    {
+      if (e.PropertyName == nameof(_cityVM.HasErrors))
+        CanExecuteChanged?.Invoke(this, new EventArgs());
     }
   }
 }

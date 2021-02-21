@@ -49,15 +49,22 @@ namespace SharpSchedule.ViewModels
     public string WindowLabel => cudString + " City";
 
     private Country country;
+    [Required(ErrorMessage = "Country is Required")]
     public Country CountrySelected
     {
       get => country;
       set
       {
+        ValidateProp(value);
         country = value;
-        City.CountryId = value.Id;
-        City.Country = value;
+
         OnPropChanged(nameof(CountrySelected));
+
+        if (!PropHasErrors(nameof(CountrySelected)))
+        {
+          City.CountryId = value.Id;
+          City.Country = value;
+        }
       }
     }
 
@@ -115,17 +122,6 @@ namespace SharpSchedule.ViewModels
 
     public Action CloseAction { get; set; }
 
-    private bool? dialogResult;
-    public bool? DialogResult
-    {
-      get { return dialogResult; }
-      set
-      {
-        dialogResult = value;
-        OnPropChanged(nameof(DialogResult));
-      }
-    }
-
     public ICommand CRUDCommand { get; }
 
     /// <summary>
@@ -155,6 +151,7 @@ namespace SharpSchedule.ViewModels
       {
         City = new City();
         Name = string.Empty;
+        CountrySelected = null;
       }
 
       CRUDCommand = new CityCRUDCommand(this);

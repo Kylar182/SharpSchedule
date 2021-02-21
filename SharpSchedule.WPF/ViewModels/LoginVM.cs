@@ -107,9 +107,11 @@ namespace SharpSchedule.ViewModels
       _authService = authService;
       _navigator = navigator;
       _homeFactory = homeFactory;
+      Username = string.Empty;
+      Password = string.Empty;
+      LoginCommand = new LoginCommand(this, _authService, _navigator, _homeFactory);
 
       Message = "Login to start Scheduling";
-      LoginCommand = new LoginCommand(this, _authService, _navigator, _homeFactory);
     }
   }
 }

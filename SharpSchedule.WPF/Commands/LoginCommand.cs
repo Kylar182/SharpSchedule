@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Input;
 using SharpSchedule.Data.DTOs;
 using SharpSchedule.Services.Interfaces;
@@ -25,6 +26,8 @@ namespace SharpSchedule.Commands
       _authService = authService; ;
       _navigator = navigator;
       _homeFactory = homeFactory;
+
+      _loginVM.PropertyChanged += ErrorsChanged;
     }
 
     public event EventHandler CanExecuteChanged;
@@ -54,6 +57,12 @@ namespace SharpSchedule.Commands
             break;
         }
       }
+    }
+
+    private void ErrorsChanged(object sender, PropertyChangedEventArgs e)
+    {
+      if (e.PropertyName == nameof(_loginVM.HasErrors))
+        CanExecuteChanged?.Invoke(this, new EventArgs());
     }
   }
 }

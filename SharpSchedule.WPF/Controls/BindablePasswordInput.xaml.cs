@@ -54,6 +54,8 @@ namespace SharpSchedule.Controls
     public BindablePasswordInput()
     {
       InitializeComponent();
+      Valid = false;
+      UpdateValidColor();
     }
 
     private void PasswordInput_PasswordChanged(object sender, RoutedEventArgs e)
