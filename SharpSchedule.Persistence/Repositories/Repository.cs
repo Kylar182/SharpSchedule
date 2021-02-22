@@ -42,7 +42,7 @@ namespace SharpSchedule.Persistence.Repositories
     {
       using (SchedulingContext _context = _contextFactory.CreateDbContext())
       {
-        await _context.Set<T>().AddAsync(item);
+        _context.Set<T>().Add(item);
         await _context.SaveChangesAsync();
         return item;
       }

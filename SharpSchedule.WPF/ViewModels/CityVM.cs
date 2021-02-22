@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using SharpSchedule.Commands.AddressVMCommands;
+using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Locations;
 using SharpSchedule.Data.Repositories;
 using SharpSchedule.Data.Repositories.Location;
@@ -130,7 +131,7 @@ namespace SharpSchedule.ViewModels
     public City City { get; set; }
 
     public CityVM(ICityRepository cityRepository, IRepository<Country> countryRepository,
-                    CUD cud, Action action, City city = null)
+                    CUD cud, Action action, User user, City city = null)
     {
       _repository = cityRepository;
       _countryRepository = countryRepository;
@@ -144,12 +145,20 @@ namespace SharpSchedule.ViewModels
       if (city != null)
       {
         City = city;
+        City.LastUpdatedBy = user.Username;
         Name = City.Name;
         CountrySelected = AllCountries.Where(pr => pr.Id == City.CountryId).First();
       }
       else
       {
-        City = new City();
+        City = new City
+        {
+          CreatedBy = user.Username,
+          CreateDate = DateTime.UtcNow,
+          LastUpdatedBy = user.Username,
+          LastUpdate = DateTime.UtcNow
+        };
+
         Name = string.Empty;
         CountrySelected = null;
       }
@@ -175,20 +184,23 @@ namespace SharpSchedule.ViewModels
 
     public async Task DBUpdate()
     {
+      City.LastUpdate = DateTime.UtcNow;
+
       switch (_cud)
       {
         case CUD.Create:
           await _repository.Create(City);
+          Close();
           break;
         case CUD.Update:
           await _repository.Update(City);
+          Close();
           break;
         case CUD.Delete:
           await _repository.Delete(City.Id);
+          Close();
           break;
       };
-
-      Close();
     }
 
     public void Close()

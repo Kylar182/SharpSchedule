@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
 using SharpSchedule.Commands.AddressVMCommands;
+using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Locations;
 using SharpSchedule.Data.Repositories;
 using SharpSchedule.Data.Repositories.Location;
@@ -17,6 +17,7 @@ namespace SharpSchedule.ViewModels
     private readonly IAddressRepository _repository;
     private readonly ICityRepository _cityRepository;
     private readonly IRepository<Country> _countryRepository;
+    private readonly User _user;
 
     /// <summary>
     /// Filtered Addresses
@@ -46,18 +47,20 @@ namespace SharpSchedule.ViewModels
 
     public AddressesVM(
       IAddressRepository repository,
-      ICityRepository cityRepository, 
-      IRepository<Country> countryRepository)
+      ICityRepository cityRepository,
+      IRepository<Country> countryRepository,
+      User user)
     {
       _repository = repository;
       _cityRepository = cityRepository;
       _countryRepository = countryRepository;
+      _user = user;
       Addresses = new ObservableCollection<Address>();
       Cities = new ObservableCollection<City>();
       Load();
       SearchCities = new SearchCitiesCommand(this);
       SearchAddresses = new SearchAddressesCommand(this);
-      NewCity = new NewCityCommand(this, _cityRepository, _countryRepository);
+      NewCity = new NewCityCommand(this, _cityRepository, _countryRepository, _user);
     }
 
     /// <summary>

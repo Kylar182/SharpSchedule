@@ -45,7 +45,7 @@
         </Grid.ColumnDefinitions>
 
         <Button HorizontalAlignment="Center" Command="{Binding CRUDCommand, UpdateSourceTrigger=PropertyChanged}"
-                Content="{Binding CUDString}" Click="Dialog_True" />
+                 Click="Dialog_True" Content="{Binding CUDString}" />
 
         <Button Grid.Column="1" HorizontalAlignment="Center" Content="CANCEL" 
                 Background="{StaticResource Light}" Click="Dialog_False" />
