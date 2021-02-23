@@ -105,14 +105,10 @@ namespace SharpSchedule.Persistence
     private void AddAuditInfo()
     {
       var entries = ChangeTracker.Entries().Where(x => (x.Entity is BaseModel)
-                                                    && (x.State == EntityState.Added || x.State == EntityState.Modified));
-      foreach (var entry in entries)
-      {
-        if (entry.State == EntityState.Added)
-          ((BaseModel)entry.Entity).CreateDate = DateTime.UtcNow;
+                                                    && (x.State == EntityState.Added));
 
-        ((BaseModel)entry.Entity).LastUpdate = DateTime.UtcNow;
-      }
+      foreach (var entry in entries)
+          ((BaseModel)entry.Entity).CreateDate = DateTime.UtcNow;
     }
     #endregion
   }

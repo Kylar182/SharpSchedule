@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using SharpSchedule.Commands.AddressVMCommands;
 using SharpSchedule.Data.EntityModels;
@@ -57,24 +59,16 @@ namespace SharpSchedule.ViewModels
       _user = user;
       Addresses = new ObservableCollection<Address>();
       Cities = new ObservableCollection<City>();
-      Load();
+      CityUpdate().ConfigureAwait(true);
+      AddressUpdate().ConfigureAwait(true);
       SearchCities = new SearchCitiesCommand(this);
       SearchAddresses = new SearchAddressesCommand(this);
       NewCity = new NewCityCommand(this, _cityRepository, _countryRepository, _user);
     }
 
-    /// <summary>
-    /// Loads all Addresses and Cities
-    /// </summary>
-    private void Load()
+    public async Task CityUpdate()
     {
-      CityUpdate();
-      AddressUpdate();
-    }
-
-    public void CityUpdate()
-    {
-      _cityRepository.GetAll().ContinueWith(t =>
+      await _cityRepository.GetAll().ContinueWith(t =>
       {
         if (t.Exception == null)
         {
@@ -87,9 +81,9 @@ namespace SharpSchedule.ViewModels
       });
     }
 
-    public void AddressUpdate()
+    public async Task AddressUpdate()
     {
-      _repository.GetAll().ContinueWith(t =>
+      await _repository.GetAll().ContinueWith(t =>
       {
         if (t.Exception == null)
         {

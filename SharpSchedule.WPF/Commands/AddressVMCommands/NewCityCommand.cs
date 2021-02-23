@@ -43,7 +43,7 @@ namespace SharpSchedule.Commands.AddressVMCommands
       dialog.DataContext = VM;
       bool? result = dialog.ShowDialog();
       if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
-        _addressVM.CityUpdate();
+        _addressVM.CityUpdate().ConfigureAwait(true);
     }
   }
 }

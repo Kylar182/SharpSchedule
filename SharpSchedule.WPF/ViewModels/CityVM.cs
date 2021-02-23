@@ -45,8 +45,6 @@ namespace SharpSchedule.ViewModels
     /// </summary>
     public List<Country> AllCountries { get; set; }
 
-    public ICommand SearchCountries { get; }
-
     public string WindowLabel => cudString + " City";
 
     private Country country;
@@ -62,10 +60,7 @@ namespace SharpSchedule.ViewModels
         OnPropChanged(nameof(CountrySelected));
 
         if (!PropHasErrors(nameof(CountrySelected)))
-        {
           City.CountryId = value.Id;
-          City.Country = value;
-        }
       }
     }
 
@@ -125,6 +120,8 @@ namespace SharpSchedule.ViewModels
 
     public ICommand CRUDCommand { get; }
 
+    public ICommand SearchCountries { get; }
+
     /// <summary>
     /// The City this VM is performing CRUD ops on
     /// </summary>
@@ -155,8 +152,7 @@ namespace SharpSchedule.ViewModels
         {
           CreatedBy = user.Username,
           CreateDate = DateTime.UtcNow,
-          LastUpdatedBy = user.Username,
-          LastUpdate = DateTime.UtcNow
+          LastUpdatedBy = user.Username
         };
 
         Name = string.Empty;
@@ -164,6 +160,7 @@ namespace SharpSchedule.ViewModels
       }
 
       CRUDCommand = new CityCRUDCommand(this);
+      SearchCountries = new SearchCountriesCommand(this);
     }
 
     /// <summary>
@@ -185,6 +182,7 @@ namespace SharpSchedule.ViewModels
     public async Task DBUpdate()
     {
       City.LastUpdate = DateTime.UtcNow;
+      City.Country = null;
 
       switch (_cud)
       {
