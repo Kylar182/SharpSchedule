@@ -108,7 +108,7 @@ namespace SharpSchedule.Persistence
                                                     && (x.State == EntityState.Added));
 
       foreach (var entry in entries)
-          ((BaseModel)entry.Entity).CreateDate = DateTime.UtcNow;
+        ((BaseModel)entry.Entity).CreateDate = DateTime.UtcNow;
     }
     #endregion
   }

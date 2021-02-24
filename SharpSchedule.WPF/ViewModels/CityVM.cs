@@ -38,12 +38,12 @@ namespace SharpSchedule.ViewModels
     /// <summary>
     /// Filtered Countries
     /// </summary>
-    public ObservableCollection<Country> Countries { get; set; }
+    public ObservableCollection<Country> Countries { get; set; } = new ObservableCollection<Country>();
 
     /// <summary>
     /// All Countries currently in the System
     /// </summary>
-    public List<Country> AllCountries { get; set; }
+    public List<Country> AllCountries { get; set; } = new List<Country>();
 
     public string WindowLabel => cudString + " City";
 
@@ -176,7 +176,7 @@ namespace SharpSchedule.ViewModels
           foreach (Country country in AllCountries)
             Countries.Add(country);
         }
-      });
+      }).ConfigureAwait(true);
     }
 
     public async Task DBUpdate()
