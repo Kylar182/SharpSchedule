@@ -5,31 +5,31 @@ using SharpSchedule.ViewModels;
 
 namespace SharpSchedule.Commands.AddressVMCommands
 {
-  public class CityCRUDCommand : ICommand
+  public class AddressCRUDCommand : ICommand
   {
-    private readonly CityVM _cityVM;
+    private readonly AddressVM _addressVM;
 
-    public CityCRUDCommand(CityVM cityVM)
+    public AddressCRUDCommand(AddressVM addressVM)
     {
-      _cityVM = cityVM;
+      _addressVM = addressVM;
 
-      _cityVM.PropertyChanged += ErrorsChanged;
+      _addressVM.PropertyChanged += ErrorsChanged;
     }
 
     public event EventHandler CanExecuteChanged;
 
     public bool CanExecute(object parameter)
     {
-      return !_cityVM.HasErrors;
+      return !_addressVM.HasErrors;
     }
 
     public async void Execute(object parameter)
     {
-      if (!_cityVM.HasErrors)
+      if (!_addressVM.HasErrors)
       {
         try
         {
-          await _cityVM.DBUpdate().ConfigureAwait(true);
+          await _addressVM.DBUpdate().ConfigureAwait(true);
         }
         catch (Exception)
         {
@@ -40,7 +40,7 @@ namespace SharpSchedule.Commands.AddressVMCommands
 
     private void ErrorsChanged(object sender, PropertyChangedEventArgs e)
     {
-      if (e.PropertyName == nameof(_cityVM.HasErrors))
+      if (e.PropertyName == nameof(_addressVM.HasErrors))
         CanExecuteChanged?.Invoke(this, new EventArgs());
     }
   }

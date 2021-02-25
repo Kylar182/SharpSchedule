@@ -32,6 +32,18 @@ namespace SharpSchedule.ViewModels
       }
     }
 
+    private Address address;
+    [Required(ErrorMessage = "Address is Required")]
+    public Address AddressSelected
+    {
+      get => address;
+      set
+      {
+        address = value;
+        OnPropChanged(nameof(AddressSelected));
+      }
+    }
+
     /// <summary>
     /// Filtered Addresses
     /// </summary>
@@ -81,10 +93,15 @@ namespace SharpSchedule.ViewModels
       CityUpdate();
       AddressUpdate();
       CitySelected = null;
+      AddressSelected = null;
       SearchCities = new SearchCitiesCommand(this);
       SearchAddresses = new SearchAddressesCommand(this);
       NewCity = new NewCityCommand(this, _cityRepository, _countryRepository, _user);
       UpdateCity = new UpdateCityCommand(this, _cityRepository, _countryRepository, _user);
+      DeleteCity = new DeleteCityCommand(this, _cityRepository, _countryRepository, _user);
+      NewAddress = new NewAddressCommand(this, _repository, _cityRepository, _user);
+      UpdateAddress = new UpdateAddressCommand(this, _repository, _cityRepository, _user);
+      DeleteAddress = new DeleteAddressCommand(this, _repository, _cityRepository, _user);
     }
 
     public void CityUpdate()

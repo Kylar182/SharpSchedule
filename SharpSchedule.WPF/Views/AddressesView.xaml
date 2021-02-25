@@ -34,7 +34,8 @@
               x:Name="AddressGrid" IsReadOnly="True" SelectionMode="Single"
               ItemsSource="{Binding Addresses}" ScrollViewer.CanContentScroll="True"
               ScrollViewer.VerticalScrollBarVisibility="Auto" MaxHeight="640"
-              ScrollViewer.HorizontalScrollBarVisibility="Auto">
+              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+              SelectedItem="{Binding AddressSelected, Mode=TwoWay}">
       <DataGrid.Columns>
         <DataGridTextColumn Header="ID" Width=".25*" Binding="{Binding Id}" />
         <DataGridTextColumn Header="Street Address" Width="*" Binding="{Binding StreetAddress}" />
@@ -52,11 +53,13 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <Button Grid.Column="0" Content="CREATE" />
+      <Button Grid.Column="0" Content="CREATE" Command="{Binding NewAddress}" />
 
-      <Button Grid.Column="1" Content="UPDATE" />
+      <Button Grid.Column="1" Content="UPDATE" 
+              Command="{Binding UpdateAddress, UpdateSourceTrigger=PropertyChanged}" />
 
-      <Button Grid.Column="2" Grid.Row="3" Content="DELETE" />
+      <Button Grid.Column="2" Grid.Row="3" Content="DELETE" 
+              Command="{Binding DeleteAddress, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
     
     <Label Grid.Column="4" Content="Cities" HorizontalAlignment="Left" VerticalAlignment="Bottom"
@@ -93,7 +96,7 @@
               Command="{Binding UpdateCity, UpdateSourceTrigger=PropertyChanged}" />
 
       <Button Grid.Column="2" Grid.Row="3" Content="DELETE" 
-              Command="{Binding CityDelete, UpdateSourceTrigger=PropertyChanged}" />
+              Command="{Binding DeleteCity, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
     
   </Grid>

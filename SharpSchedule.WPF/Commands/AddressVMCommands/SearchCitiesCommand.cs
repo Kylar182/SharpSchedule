@@ -8,11 +8,17 @@ namespace SharpSchedule.Commands.AddressVMCommands
 {
   public class SearchCitiesCommand : ICommand
   {
-    private readonly AddressesVM _addressVM;
+    private readonly AddressesVM _addressesVM;
+    private readonly AddressVM _addressVM;
 
     public SearchCitiesCommand(AddressesVM addressVM)
     {
-      _addressVM = addressVM;
+      _addressesVM = addressVM;
+    }
+
+    public SearchCitiesCommand(AddressVM addresVM)
+    {
+      _addressVM = addresVM;
     }
 
     public event EventHandler CanExecuteChanged;
@@ -24,12 +30,22 @@ namespace SharpSchedule.Commands.AddressVMCommands
 
     public void Execute(object parameter)
     {
-      if (parameter is string)
+      if (parameter is string input)
       {
-        _addressVM.Cities.Clear();
+        if (_addressesVM != null)
+        {
+          _addressesVM.Cities.Clear();
 
-        foreach (City city in _addressVM.AllCities.Where(pr => pr.Name.Contains((string)parameter)))
-          _addressVM.Cities.Add(city);
+          foreach (City city in _addressesVM.AllCities.Where(pr => pr.Name.Contains(input)))
+            _addressesVM.Cities.Add(city);
+        }
+        else
+        {
+          _addressVM.Cities.Clear();
+
+          foreach (City city in _addressVM.AllCities.Where(pr => pr.Name.Contains(input)))
+            _addressVM.Cities.Add(city);
+        }
       }
     }
   }

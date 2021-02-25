@@ -29,6 +29,9 @@
       <Compile Update="Views\AddressesView.xaml.cs">
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Views\Dialogs\AddressDialog.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -41,6 +44,10 @@
         <SubType>Designer</SubType>
       </Page>
       <Page Update="Views\AddressesView.xaml">
+        <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="Views\Dialogs\AddressDialog.xaml">
         <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>

@@ -137,7 +137,7 @@ namespace SharpSchedule.ViewModels
       CUDString = cud.ToString();
       CloseAction = action;
       Countries = new ObservableCollection<Country>();
-      Load();
+      Load(); 
 
       if (city != null)
       {
@@ -187,15 +187,15 @@ namespace SharpSchedule.ViewModels
       switch (_cud)
       {
         case CUD.Create:
-          await _repository.Create(City);
+          await _repository.Create(City).ConfigureAwait(true);
           Close();
           break;
         case CUD.Update:
-          await _repository.Update(City);
+          await _repository.Update(City).ConfigureAwait(true);
           Close();
           break;
         case CUD.Delete:
-          await _repository.Delete(City.Id);
+          await _repository.Delete(City.Id).ConfigureAwait(true);
           Close();
           break;
       };
