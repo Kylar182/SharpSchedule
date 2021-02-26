@@ -6,22 +6,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using SharpSchedule.Commands.AddressVMCommands;
+using SharpSchedule.Commands.CustomersVMCommands;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Locations;
-using SharpSchedule.Data.Repositories;
+using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Repositories.Location;
+using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.Models;
 using SharpSchedule.ViewModels.Validation;
 
 namespace SharpSchedule.ViewModels
 {
   /// <summary>
-  /// View Model for City CRUD in the City Dialog
+  /// View Model for Customer CRUD in the Customer Dialog
   /// </summary>
-  public class CityVM : ValidationBase
+  public class CustomerVM : ValidationBase
   {
-    private readonly ICityRepository _repository;
-    private readonly IRepository<Country> _countryRepository;
+    private readonly ICustomerRepository _repository;
+    private readonly IAddressRepository _addressRepository;
     private readonly CUD _cud;
 
     private bool enabled;
@@ -35,11 +37,24 @@ namespace SharpSchedule.ViewModels
       }
     }
 
+    private bool active;
+    public bool Active
+    {
+      get => active;
+      set
+      {
+        active = value;
+        OnPropChanged(nameof(Active));
+
+        Customer.Active = value;
+      }
+    }
+
     private string name;
     /// <summary>
-    /// Name of the City
+    /// Name of the Customer
     /// </summary>
-    [Required(ErrorMessage = "City's Name is required")]
+    [Required(ErrorMessage = "Customer's Name is required")]
     [MaxLength(50, ErrorMessage = "Max Length 50 Characters")]
     public string Name
     {
@@ -53,19 +68,19 @@ namespace SharpSchedule.ViewModels
         OnPropChanged(nameof(NameValid));
 
         if (NameValid)
-          City.Name = value;
+          Customer.Name = value;
       }
     }
 
     /// <summary>
-    /// Helpertext for the city's Name
+    /// Helpertext for the customer's Name
     /// </summary>
     /// <remarks>
     /// If Name is invalid, returns the first Error message, 
     /// otherwise it returns the designated Helpertext
     /// </remarks>
     public string NameText => PropHasErrors(nameof(Name)) ?
-      GetErrors(nameof(Name)).OfType<string>().First() : "Input City's Name";
+      GetErrors(nameof(Name)).OfType<string>().First() : "Input Customer's Name";
 
     /// <summary>
     /// Bool to determine if Name is Valid or not
@@ -73,31 +88,31 @@ namespace SharpSchedule.ViewModels
     public bool NameValid => !PropHasErrors(nameof(Name));
 
     /// <summary>
-    /// Filtered Countries
+    /// Filtered Addresses
     /// </summary>
-    public ObservableCollection<Country> Countries { get; set; } = new ObservableCollection<Country>();
+    public ObservableCollection<Address> Addresses { get; set; } = new ObservableCollection<Address>();
 
     /// <summary>
-    /// All Countries currently in the System
+    /// All Addresses currently in the System
     /// </summary>
-    public List<Country> AllCountries { get; set; } = new List<Country>();
+    public List<Address> AllAddresses { get; set; } = new List<Address>();
 
-    public string WindowLabel => cudString + " City";
+    public string WindowLabel => cudString + " Customer";
 
-    private Country country;
-    [Required(ErrorMessage = "Country is Required")]
-    public Country CountrySelected
+    private Address address;
+    [Required(ErrorMessage = "Address is Required")]
+    public Address AddressSelected
     {
-      get => country;
+      get => address;
       set
       {
         ValidateProp(value);
-        country = value;
+        address = value;
 
-        OnPropChanged(nameof(CountrySelected));
+        OnPropChanged(nameof(AddressSelected));
 
-        if (!PropHasErrors(nameof(CountrySelected)))
-          City.CountryId = value.Id;
+        if (!PropHasErrors(nameof(AddressSelected)))
+          Customer.AddressId = value.Id;
       }
     }
 
@@ -120,18 +135,18 @@ namespace SharpSchedule.ViewModels
 
     public ICommand CRUDCommand { get; }
 
-    public ICommand SearchCountries { get; }
+    public ICommand SearchAddresses { get; }
 
     /// <summary>
-    /// The City this VM is performing CRUD ops on
+    /// The Customer this VM is performing CRUD ops on
     /// </summary>
-    public City City { get; set; }
+    public Customer Customer { get; set; }
 
-    public CityVM(ICityRepository cityRepository, IRepository<Country> countryRepository,
-                    CUD cud, Action action, User user, City city = null)
+    public CustomerVM(ICustomerRepository customerRepository, IAddressRepository addressRepository,
+                    CUD cud, Action action, User user, Customer customer = null)
     {
-      _repository = cityRepository;
-      _countryRepository = countryRepository;
+      _repository = customerRepository;
+      _addressRepository = addressRepository;
 
       _cud = cud;
       Enabled = cud != CUD.Delete;
@@ -140,16 +155,17 @@ namespace SharpSchedule.ViewModels
 
       Load().ConfigureAwait(true);
 
-      if (city != null)
+      if (customer != null)
       {
-        City = city;
-        City.LastUpdatedBy = user.Username;
-        Name = City.Name;
-        CountrySelected = AllCountries.Where(pr => pr.Id == city.CountryId).First();
+        Customer = customer;
+        Customer.LastUpdatedBy = user.Username;
+        Name = Customer.Name;
+        Active = Customer.Active;
+        AddressSelected = AllAddresses.Where(pr => pr.Id == customer.AddressId).First();
       }
       else
       {
-        City = new City
+        Customer = new Customer
         {
           CreatedBy = user.Username,
           CreateDate = DateTime.UtcNow,
@@ -157,11 +173,12 @@ namespace SharpSchedule.ViewModels
         };
 
         Name = string.Empty;
-        CountrySelected = null;
+        Active = true;
+        AddressSelected = null;
       }
 
-      CRUDCommand = new CityCRUDCommand(this);
-      SearchCountries = new SearchCountriesCommand(this);
+      CRUDCommand = new CustomerCRUDCommand(this);
+      SearchAddresses = new SearchAddressesCommand(this);
     }
 
     /// <summary>
@@ -169,34 +186,34 @@ namespace SharpSchedule.ViewModels
     /// </summary>
     private async Task Load()
     {
-      await _countryRepository.GetAll().ContinueWith(t =>
+      await _addressRepository.GetAll().ContinueWith(t =>
       {
         if (t.Exception == null)
         {
-          AllCountries = t.Result;
-          foreach (Country country in AllCountries)
-            Countries.Add(country);
+          AllAddresses = t.Result;
+          foreach (Address address in AllAddresses)
+            Addresses.Add(address);
         }
       }).ConfigureAwait(true);
     }
 
     public async Task DBUpdate()
     {
-      City.LastUpdate = DateTime.UtcNow;
-      City.Country = null;
+      Customer.LastUpdate = DateTime.UtcNow;
+      Customer.Address = null;
 
       switch (_cud)
       {
         case CUD.Create:
-          await _repository.Create(City).ConfigureAwait(true);
+          await _repository.Create(Customer).ConfigureAwait(true);
           Close();
           break;
         case CUD.Update:
-          await _repository.Update(City).ConfigureAwait(true);
+          await _repository.Update(Customer).ConfigureAwait(true);
           Close();
           break;
         case CUD.Delete:
-          await _repository.Delete(City.Id).ConfigureAwait(true);
+          await _repository.Delete(Customer.Id).ConfigureAwait(true);
           Close();
           break;
       };

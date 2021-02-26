@@ -41,6 +41,12 @@ namespace SharpSchedule.ViewModels
 
     public ICommand SearchCustomers { get; }
 
+    public ICommand NewCustomer { get; }
+
+    public ICommand UpdateCustomer { get; }
+
+    public ICommand DeleteCustomer { get; }
+
     public CustomersVM(ICustomerRepository repository,
       IAddressRepository addressRepository, User user)
     {
@@ -58,7 +64,7 @@ namespace SharpSchedule.ViewModels
     /// <summary>
     /// Loads DB Data for View
     /// </summary>
-    private async Task Load()
+    public async Task Load()
     {
       await _repository.GetAll().ContinueWith(t =>
       {

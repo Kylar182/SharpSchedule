@@ -9,10 +9,16 @@ namespace SharpSchedule.Commands.AddressVMCommands
   public class SearchAddressesCommand : ICommand
   {
     private readonly AddressesVM _addressVM;
+    private readonly CustomerVM _customerVM;
 
     public SearchAddressesCommand(AddressesVM addressVM)
     {
       _addressVM = addressVM;
+    }
+
+    public SearchAddressesCommand(CustomerVM customerVM)
+    {
+      _customerVM = customerVM;
     }
 
     public event EventHandler CanExecuteChanged;
@@ -23,10 +29,20 @@ namespace SharpSchedule.Commands.AddressVMCommands
     {
       if (parameter is string street)
       {
-        _addressVM.Addresses.Clear();
+        if (_addressVM != null)
+        {
+          _addressVM.Addresses.Clear();
 
-        foreach (Address address in _addressVM.AllAddresses.Where(pr => pr.StreetAddress.Contains(street)))
-          _addressVM.Addresses.Add(address);
+          foreach (Address address in _addressVM.AllAddresses.Where(pr => pr.StreetAddress.Contains(street)))
+            _addressVM.Addresses.Add(address);
+        }
+        else
+        {
+          _customerVM.Addresses.Clear();
+
+          foreach (Address address in _customerVM.AllAddresses.Where(pr => pr.StreetAddress.Contains(street)))
+            _customerVM.Addresses.Add(address);
+        }
       }
     }
   }

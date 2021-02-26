@@ -1,0 +1,88 @@
+﻿<Window x:Class="SharpSchedule.Views.Dialogs.CustomerDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:controls="clr-namespace:SharpSchedule.Controls"
+        xmlns:local="clr-namespace:SharpSchedule.Views.Dialogs"
+        mc:Ignorable="d" 
+        Height="500" Width="1200"
+        Title="{Binding WindowLabel}">
+
+  <Grid Background="{StaticResource Grey15}">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width=".5*" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height=".75*" />
+      <RowDefinition Height="3.75*" />
+      <RowDefinition Height=".5*" />
+    </Grid.RowDefinitions>
+    <Grid.Effect>
+      <DropShadowEffect BlurRadius="15" Color="{StaticResource Grey15Color}" Direction="270" />
+    </Grid.Effect>
+
+    <Label Content="{Binding WindowLabel}" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+           FontSize="24" Margin="0, 5" />
+
+    <Grid Grid.Row="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <controls:BindableInput Margin="25" 
+        Input="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        HelperText="{Binding NameText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+        Valid="{Binding NameValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+      </controls:BindableInput>
+
+      <controls:BindableInput Margin="25" Grid.Column="1"
+        Input="{Binding Address2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        HelperText="{Binding Address2Text, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+        Valid="{Binding Address2Valid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+      </controls:BindableInput>
+
+
+      <Grid Grid.Row="4" Grid.ColumnSpan="2">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Button HorizontalAlignment="Center" Command="{Binding CRUDCommand, UpdateSourceTrigger=PropertyChanged}"
+                 Click="Dialog_True" Content="{Binding CUDString}" />
+
+        <Button Grid.Column="1" HorizontalAlignment="Center" Content="CANCEL" 
+                Background="{StaticResource Light}" Click="Dialog_False" />
+      </Grid>
+    </Grid>
+
+    <Button Grid.Column="1" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchAddresses}"
+            CommandParameter="{Binding Text, ElementName=Address_Search}" />
+
+    <TextBox Name="Address_Search" Grid.Column="1" Margin="75, 5, 0, 5" FontSize="16" 
+             HorizontalAlignment="Center" Width="200" />
+
+    <Label Grid.Column="1" Content="Addresses" HorizontalAlignment="Left" 
+           VerticalAlignment="Bottom" FontSize="24" Margin="0, 5" />
+
+    <DataGrid Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" x:Name="AddressGrid" 
+              IsReadOnly="True" SelectionMode="Single" ItemsSource="{Binding Addresses}"
+              SelectedItem="{Binding AddressSelected, Mode=TwoWay}">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="ID" Width=".25*" Binding="{Binding Address.Id}" />
+        <DataGridTextColumn Header="Street Address" Width="*" Binding="{Binding Address.StreetAddress}" />
+        <DataGridTextColumn Header="PO/APT" Width=".75*" Binding="{Binding Address.Address2}" />
+        <DataGridTextColumn Header="City" Width=".75*" Binding="{Binding Address.City.Name}" />
+        <DataGridTextColumn Header="Country" Width=".75*" Binding="{Binding Address.City.Country.Name}" />
+      </DataGrid.Columns>
+    </DataGrid>
+
+  </Grid>
+</Window>
