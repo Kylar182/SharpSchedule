@@ -5,8 +5,58 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SharpSchedule.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-  <Grid>
-    <TextBlock Text="Customers" />
+             d:DesignHeight="880" d:DesignWidth="1920">
+
+  <Grid Background="{StaticResource Grey60}">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width=".3*" />
+      <ColumnDefinition Width="6*" />
+      <ColumnDefinition Width="1.5*" />
+      <ColumnDefinition Width=".3*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height=".75*" />
+      <RowDefinition Height="4*" />
+      <RowDefinition Height=".75*" />
+    </Grid.RowDefinitions>
+    <Label Grid.Column="1" Content="Customers" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+           FontSize="30" Margin="0, 5"/>
+
+    <Button Grid.Column="1" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchCustomers}"
+            CommandParameter="{Binding Text, ElementName=Customers_Search}" />
+
+    <TextBox Name="Customers_Search" Grid.Column="2" Margin="38" FontSize="32" />
+
+    <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" AutoGenerateColumns="False" 
+              x:Name="CustomerGrid" IsReadOnly="True" SelectionMode="Single"
+              ItemsSource="{Binding Customers}" ScrollViewer.CanContentScroll="True"
+              ScrollViewer.VerticalScrollBarVisibility="Auto" MaxHeight="640"
+              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+              SelectedItem="{Binding CustomerSelected, Mode=TwoWay}">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="ID" Width=".25*" Binding="{Binding Id}" />
+        <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" />
+        <DataGridTextColumn Header="Phone" Width=".55*" Binding="{Binding Address.Phone}" />
+        <DataGridTextColumn Header="City" Width=".75*" Binding="{Binding Address.City.Name}" />
+        <DataGridTextColumn Header="Country" Width=".75*" Binding="{Binding Address.City.Country.Name}" />
+        <DataGridTextColumn Header="Active" Width=".25*" Binding="{Binding Active}" />
+      </DataGrid.Columns>
+    </DataGrid>
+
+    <Grid Grid.Column="2" Grid.Row="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Button Grid.Column="0" Content="CREATE" Command="{Binding NewCustomer}" />
+
+      <Button Grid.Column="1" Content="UPDATE" 
+              Command="{Binding UpdateCustomer, UpdateSourceTrigger=PropertyChanged}" />
+
+      <Button Grid.Column="2" Grid.Row="3" Content="DELETE" 
+              Command="{Binding DeleteCustomer, UpdateSourceTrigger=PropertyChanged}" />
+    </Grid>
   </Grid>
 </UserControl>

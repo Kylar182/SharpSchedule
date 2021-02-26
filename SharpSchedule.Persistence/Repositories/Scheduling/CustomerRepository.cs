@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SharpSchedule.Data.EntityModels.Scheduling;
@@ -15,10 +16,10 @@ namespace SharpSchedule.Persistence.Repositories.Scheduling
 
     public override async Task<List<Customer>> GetAll()
     {
-      using (SchedulingContext _context = _contextFactory.CreateDbContext())
-      {
-        return await _context.Customers.ToListAsync();
-      }
+      using SchedulingContext _context = _contextFactory.CreateDbContext();
+      return await _context.Customers.Include(pr => pr.Address)
+                                      .ThenInclude(pr => pr.City)
+                                        .ThenInclude(pr => pr.Country).ToListAsync();
     }
   }
 }

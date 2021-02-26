@@ -22,7 +22,7 @@ namespace SharpSchedule.Data.EntityModels.Scheduling
     /// <summary>
     /// Name of the Customer
     /// </summary>
-    [Column("customer")]
+    [Column("customerName")]
     [Required]
     [MaxLength(45, ErrorMessage = "Max Length 50 Characters")]
     public string Name { get; set; }

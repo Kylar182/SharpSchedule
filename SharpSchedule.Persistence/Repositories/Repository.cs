@@ -24,48 +24,38 @@ namespace SharpSchedule.Persistence.Repositories
 
     public virtual async Task<List<T>> GetAll()
     {
-      using (SchedulingContext _context = _contextFactory.CreateDbContext())
-      {
-        return await _context.Set<T>().ToListAsync();
-      }
+      using SchedulingContext _context = _contextFactory.CreateDbContext();
+      return await _context.Set<T>().ToListAsync();
     }
 
     public virtual async Task<T> GetById(int id)
     {
-      using (SchedulingContext _context = _contextFactory.CreateDbContext())
-      {
-        return await _context.Set<T>().FindAsync(id);
-      }
+      using SchedulingContext _context = _contextFactory.CreateDbContext();
+      return await _context.Set<T>().FindAsync(id);
     }
 
     public virtual async Task<T> Create(T item)
     {
-      using (SchedulingContext _context = _contextFactory.CreateDbContext())
-      {
-        _context.Set<T>().Add(item);
-        await _context.SaveChangesAsync();
-        return item;
-      }
+      using SchedulingContext _context = _contextFactory.CreateDbContext();
+      _context.Set<T>().Add(item);
+      await _context.SaveChangesAsync();
+      return item;
     }
 
     public virtual async Task<T> Update(T item)
     {
-      using (SchedulingContext _context = _contextFactory.CreateDbContext())
-      {
-        _context.Set<T>().Update(item);
-        await _context.SaveChangesAsync();
-        return item;
-      }
+      using SchedulingContext _context = _contextFactory.CreateDbContext();
+      _context.Set<T>().Update(item);
+      await _context.SaveChangesAsync();
+      return item;
     }
 
     public virtual async Task<bool> Delete(int id)
     {
-      using (SchedulingContext _context = _contextFactory.CreateDbContext())
-      {
-        _context.Set<T>().Remove(await _context.Set<T>().FindAsync(id));
-        await _context.SaveChangesAsync();
-        return true;
-      }
+      using SchedulingContext _context = _contextFactory.CreateDbContext();
+      _context.Set<T>().Remove(await _context.Set<T>().FindAsync(id));
+      await _context.SaveChangesAsync();
+      return true;
     }
   }
 }

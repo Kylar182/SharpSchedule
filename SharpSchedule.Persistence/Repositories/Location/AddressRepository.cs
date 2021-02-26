@@ -15,11 +15,9 @@ namespace SharpSchedule.Persistence.Repositories.Location
 
     public override async Task<List<Address>> GetAll()
     {
-      using (SchedulingContext _context = _contextFactory.CreateDbContext())
-      {
-        return await _context.Addresses.Include(pr => pr.City)
-                        .ThenInclude(pr => pr.Country).ToListAsync();
-      }
+      using SchedulingContext _context = _contextFactory.CreateDbContext();
+      return await _context.Addresses.Include(pr => pr.City)
+                      .ThenInclude(pr => pr.Country).ToListAsync();
     }
   }
 }

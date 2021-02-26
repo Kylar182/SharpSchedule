@@ -15,14 +15,12 @@ namespace SharpSchedule.Persistence.Repositories.Scheduling
 
     public override async Task<List<Appointment>> GetAll()
     {
-      using (SchedulingContext _context = _contextFactory.CreateDbContext())
-      {
-        return await _context.Appointments.Include(pr => pr.Customer)
-                        .ThenInclude(pr => pr.Address)
-                        .ThenInclude(pr => pr.City)
-                        .ThenInclude(pr => pr.Country)
-                        .Include(pr => pr.User).ToListAsync();
-      }
+      using SchedulingContext _context = _contextFactory.CreateDbContext();
+      return await _context.Appointments.Include(pr => pr.Customer)
+                      .ThenInclude(pr => pr.Address)
+                      .ThenInclude(pr => pr.City)
+                      .ThenInclude(pr => pr.Country)
+                      .Include(pr => pr.User).ToListAsync();
     }
   }
 }

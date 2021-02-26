@@ -22,6 +22,9 @@ namespace SharpSchedule.ViewModels
     private readonly User _user;
 
     private City city;
+    /// <summary>
+    /// Currently Selected City in City Grid
+    /// </summary>
     [Required(ErrorMessage = "City is Required")]
     public City CitySelected
     {
@@ -34,6 +37,9 @@ namespace SharpSchedule.ViewModels
     }
 
     private Address address;
+    /// <summary>
+    /// Currently Selected Address in Address Grid
+    /// </summary>
     [Required(ErrorMessage = "Address is Required")]
     public Address AddressSelected
     {

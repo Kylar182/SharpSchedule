@@ -17,18 +17,15 @@ namespace SharpSchedule.Commands.AddressVMCommands
 
     public event EventHandler CanExecuteChanged;
 
-    public bool CanExecute(object parameter)
-    {
-      return true;
-    }
+    public bool CanExecute(object parameter) => true;
 
     public void Execute(object parameter)
     {
-      if (parameter is string)
+      if (parameter is string street)
       {
         _addressVM.Addresses.Clear();
 
-        foreach (Address address in _addressVM.AllAddresses.Where(pr => pr.StreetAddress.Contains((string)parameter)))
+        foreach (Address address in _addressVM.AllAddresses.Where(pr => pr.StreetAddress.Contains(street)))
           _addressVM.Addresses.Add(address);
       }
     }

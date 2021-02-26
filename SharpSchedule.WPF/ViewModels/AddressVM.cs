@@ -237,10 +237,12 @@ namespace SharpSchedule.ViewModels
     {
       _repository = repository;
       _cityRepository = cityRepository;
+
       _cud = cud;
       Enabled = cud != CUD.Delete;
       CUDString = cud.ToString();
       CloseAction = action;
+
       Load().ConfigureAwait(true);
 
       if (address != null)

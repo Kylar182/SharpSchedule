@@ -132,11 +132,12 @@ namespace SharpSchedule.ViewModels
     {
       _repository = cityRepository;
       _countryRepository = countryRepository;
+
       _cud = cud;
       Enabled = cud != CUD.Delete;
       CUDString = cud.ToString();
       CloseAction = action;
-      Countries = new ObservableCollection<Country>();
+
       Load().ConfigureAwait(true);
 
       if (city != null)
