@@ -2,8 +2,6 @@
 using System.ComponentModel;
 using System.Windows.Input;
 using SharpSchedule.Data.EntityModels;
-using SharpSchedule.Data.EntityModels.Locations;
-using SharpSchedule.Data.Repositories;
 using SharpSchedule.Data.Repositories.Location;
 using SharpSchedule.Models;
 using SharpSchedule.ViewModels;
@@ -50,7 +48,7 @@ namespace SharpSchedule.Commands.AddressVMCommands
 
         if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
         {
-          _addressVM.AddressUpdate();
+          _addressVM.AddressUpdate().ConfigureAwait(true);
 
           _addressVM.SearchAddresses.Execute(string.Empty);
         }

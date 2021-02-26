@@ -43,7 +43,7 @@ namespace SharpSchedule.Commands.AddressVMCommands
 
       if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
       {
-        _addressVM.AddressUpdate();
+        _addressVM.AddressUpdate().ConfigureAwait(true);
 
         _addressVM.SearchAddresses.Execute(string.Empty);
       }

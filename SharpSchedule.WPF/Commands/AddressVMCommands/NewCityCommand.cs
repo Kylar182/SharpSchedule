@@ -45,7 +45,7 @@ namespace SharpSchedule.Commands.AddressVMCommands
 
       if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
       {
-        _addressVM.CityUpdate();
+        _addressVM.CityUpdate().ConfigureAwait(true);
 
         _addressVM.SearchCities.Execute(string.Empty);
       }

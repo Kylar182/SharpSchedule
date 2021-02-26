@@ -241,8 +241,7 @@ namespace SharpSchedule.ViewModels
       Enabled = cud != CUD.Delete;
       CUDString = cud.ToString();
       CloseAction = action;
-      Cities = new ObservableCollection<City>();
-      Load(); 
+      Load().ConfigureAwait(true);
 
       if (address != null)
       {
@@ -252,7 +251,7 @@ namespace SharpSchedule.ViewModels
         PostalCode = address.PostalCode;
         Phone = address.Phone;
         Address.LastUpdatedBy = user.Username;
-        CitySelected = AllCities.Where(pr => pr.Id == Address.CityId).First();
+        CitySelected = AllCities.Where(pr => pr.Id == address.CityId).First();
       }
       else
       {
@@ -278,9 +277,9 @@ namespace SharpSchedule.ViewModels
     /// <summary>
     /// Loads DB Data for Dialog
     /// </summary>
-    private void Load()
+    private async Task Load()
     {
-      _cityRepository.GetAll().ContinueWith(t =>
+      await _cityRepository.GetAll().ContinueWith(t =>
       {
         if (t.Exception == null)
         {

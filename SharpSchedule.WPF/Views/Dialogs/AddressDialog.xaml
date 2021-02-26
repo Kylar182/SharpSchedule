@@ -86,7 +86,7 @@
            VerticalAlignment="Bottom" FontSize="24" Margin="0, 5" />
 
     <DataGrid Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" x:Name="CityGrid" 
-              IsReadOnly="True" SelectionMode="Single" ItemsSource="{Binding Countries}"
+              IsReadOnly="True" SelectionMode="Single" ItemsSource="{Binding Cities}"
               SelectedItem="{Binding CitySelected, Mode=TwoWay}">
       <DataGrid.Columns>
         <DataGridTextColumn Header="ID" Width=".25*" Binding="{Binding Id}" />

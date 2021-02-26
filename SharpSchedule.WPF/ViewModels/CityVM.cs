@@ -137,14 +137,14 @@ namespace SharpSchedule.ViewModels
       CUDString = cud.ToString();
       CloseAction = action;
       Countries = new ObservableCollection<Country>();
-      Load(); 
+      Load().ConfigureAwait(true);
 
       if (city != null)
       {
         City = city;
         City.LastUpdatedBy = user.Username;
         Name = City.Name;
-        CountrySelected = AllCountries.Where(pr => pr.Id == City.CountryId).First();
+        CountrySelected = AllCountries.Where(pr => pr.Id == city.CountryId).First();
       }
       else
       {
@@ -166,9 +166,9 @@ namespace SharpSchedule.ViewModels
     /// <summary>
     /// Loads DB Data for Dialog
     /// </summary>
-    private void Load()
+    private async Task Load()
     {
-      _countryRepository.GetAll().ContinueWith(t =>
+      await _countryRepository.GetAll().ContinueWith(t =>
       {
         if (t.Exception == null)
         {
