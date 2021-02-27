@@ -39,7 +39,7 @@ namespace SharpSchedule.ViewModels
     /// <summary>
     /// Street Address
     /// </summary>
-    [Required]
+    [Required(ErrorMessage = "Street Address is Required")]
     [MaxLength(50, ErrorMessage = "Max Length 50 Characters")]
     public string StreetAddress
     {
@@ -76,6 +76,7 @@ namespace SharpSchedule.ViewModels
     /// <summary>
     /// Address line 2, PO/Apt Number
     /// </summary>
+    [MaxLength(50, ErrorMessage = "Max Length 50 Characters")]
     public string Address2
     {
       get => address2;
@@ -111,6 +112,8 @@ namespace SharpSchedule.ViewModels
     /// <summary>
     /// Zip/Postal Code as a string
     /// </summary>
+    [Required(ErrorMessage = "Postal Code is Required")]
+    [MaxLength(10, ErrorMessage = "Max Length 10 Characters")]
     public string PostalCode
     {
       get => postalCode;
@@ -146,6 +149,8 @@ namespace SharpSchedule.ViewModels
     /// <summary>
     /// Phone Number as a string
     /// </summary>
+    [Required(ErrorMessage = "Phone Number is Required")]
+    [MaxLength(20, ErrorMessage = "Max Length 10 Characters")]
     public string Phone
     {
       get => phone;

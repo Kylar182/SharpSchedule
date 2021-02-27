@@ -7,7 +7,7 @@
   <Color x:Key="Grey15Color">#15868E96</Color>
   <Color x:Key="AppGreyColor">#868E96</Color>
   <Color x:Key="WGUBlue">#002f51</Color>
-  <Color x:Key="WGULight">#82bcd4</Color>
+  <Color x:Key="WGULight">#82BCD4</Color>
   <Color x:Key="WGURed">#840028</Color>
   <SolidColorBrush x:Key="Grey15" Color="{StaticResource Grey15Color}"/>
   <SolidColorBrush x:Key="Grey30" Color="{StaticResource Grey30Color}"/>

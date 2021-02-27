@@ -59,6 +59,8 @@ namespace SharpSchedule.ViewModels
       CustomerSelected = null;
 
       SearchCustomers = new SearchCustomersCommand(this);
+      NewCustomer = new NewCustomerCommand(this, _repository, _addressRepository, _user);
+
     }
 
     /// <summary>

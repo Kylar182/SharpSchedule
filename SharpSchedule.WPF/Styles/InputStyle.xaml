@@ -12,4 +12,8 @@
     <Setter Property="Padding" Value="2" />
   </Style>
 
+  <Style TargetType="TextBlock" x:Key="helperText">
+    <Setter Property="HorizontalAlignment" Value="Center" />
+  </Style>
+
 </ResourceDictionary>

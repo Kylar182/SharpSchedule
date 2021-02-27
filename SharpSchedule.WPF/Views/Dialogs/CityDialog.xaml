@@ -35,7 +35,8 @@
       <controls:BindableInput Margin="25" 
         Input="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding NameText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        Valid="{Binding NameValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+        Valid="{Binding NameValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:BindableInput>
 
       <Grid Grid.Row="2">
@@ -53,17 +54,20 @@
     </Grid>
 
     <Button Grid.Column="1" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchCountries}"
-            CommandParameter="{Binding Text, ElementName=Country_Search}" />
+            CommandParameter="{Binding Text, ElementName=Country_Search}" 
+            IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
 
     <TextBox Name="Country_Search" Grid.Column="1" Margin="75, 5, 0, 5" FontSize="16" 
-             HorizontalAlignment="Center" Width="200" />
+             HorizontalAlignment="Center" Width="200"
+             IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 
     <Label Grid.Column="1" Content="Countries" HorizontalAlignment="Left" 
            VerticalAlignment="Bottom" FontSize="24" Margin="0, 5" />
 
     <DataGrid Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" x:Name="CountryGrid" 
               IsReadOnly="True" SelectionMode="Single" ItemsSource="{Binding Countries}"
-              SelectedItem="{Binding CountrySelected, Mode=TwoWay}">
+              SelectedItem="{Binding CountrySelected, Mode=TwoWay}" 
+              IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       <DataGrid.Columns>
         <DataGridTextColumn Header="ID" Width=".25*" Binding="{Binding Id}" />
         <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" />

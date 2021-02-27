@@ -31,7 +31,6 @@ namespace SharpSchedule.Data.EntityModels.Locations
     /// Address line 2, PO/Apt Number
     /// </summary>
     [Column("address2")]
-    [Required]
     [MaxLength(50, ErrorMessage = "Max Length 50 Characters")]
     public string Address2 { get; set; }
 

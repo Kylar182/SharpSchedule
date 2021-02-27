@@ -40,25 +40,29 @@
       <controls:BindableInput Margin="25" 
         Input="{Binding StreetAddress, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding StreetAddressText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        Valid="{Binding StreetAddressValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+        Valid="{Binding StreetAddressValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:BindableInput>
 
       <controls:BindableInput Margin="25" Grid.Column="1"
         Input="{Binding Address2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding Address2Text, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        Valid="{Binding Address2Valid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+        Valid="{Binding Address2Valid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:BindableInput>
 
       <controls:BindableInput Margin="25" Grid.Row="1"
         Input="{Binding PostalCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding PostalCodeText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        Valid="{Binding PostalCodeValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+        Valid="{Binding PostalCodeValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:BindableInput>
 
       <controls:BindableInput Margin="25" Grid.Column="1" Grid.Row="1"
         Input="{Binding Phone, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding PhoneText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        Valid="{Binding PhoneValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+        Valid="{Binding PhoneValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:BindableInput>
 
 
@@ -77,17 +81,20 @@
     </Grid>
 
     <Button Grid.Column="1" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchCities}"
-            CommandParameter="{Binding Text, ElementName=City_Search}" />
+            CommandParameter="{Binding Text, ElementName=City_Search}"
+            IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 
     <TextBox Name="City_Search" Grid.Column="1" Margin="75, 5, 0, 5" FontSize="16" 
-             HorizontalAlignment="Center" Width="200" />
+             HorizontalAlignment="Center" Width="200"
+             IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
 
     <Label Grid.Column="1" Content="Cities" HorizontalAlignment="Left" 
            VerticalAlignment="Bottom" FontSize="24" Margin="0, 5" />
 
     <DataGrid Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" x:Name="CityGrid" 
               IsReadOnly="True" SelectionMode="Single" ItemsSource="{Binding Cities}"
-              SelectedItem="{Binding CitySelected, Mode=TwoWay}">
+              SelectedItem="{Binding CitySelected, Mode=TwoWay}"
+              IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       <DataGrid.Columns>
         <DataGridTextColumn Header="ID" Width=".25*" Binding="{Binding Id}" />
         <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" />

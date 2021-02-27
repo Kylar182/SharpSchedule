@@ -97,7 +97,7 @@ namespace SharpSchedule.Controls
 
     private void UpdateValidColor()
     {
-      helperText.Foreground = Valid ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF002f51")) :
+      helperText.Foreground = Valid ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF002F51")) :
         new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF840028"));
     }
 

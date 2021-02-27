@@ -11,8 +11,10 @@
 
   <Grid Background="{StaticResource Grey15}">
     <Grid.ColumnDefinitions>
+      <ColumnDefinition Width=".05*" />
       <ColumnDefinition Width=".5*" />
       <ColumnDefinition Width="*" />
+      <ColumnDefinition Width=".05*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height=".75*" />
@@ -24,9 +26,9 @@
     </Grid.Effect>
 
     <Label Content="{Binding WindowLabel}" HorizontalAlignment="Left" VerticalAlignment="Bottom"
-           FontSize="24" Margin="0, 5" />
+           FontSize="24" Margin="0, 5" Grid.Column="1" />
 
-    <Grid Grid.Row="1">
+    <Grid Grid.Row="1" Grid.Column="1">
       <Grid.RowDefinitions>
         <RowDefinition Height="auto" />
         <RowDefinition Height="*" />
@@ -36,18 +38,18 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <controls:BindableInput Margin="25" 
+      <controls:BindableInput Margin="5,25,5,5" 
         Input="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding NameText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        Valid="{Binding NameValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+        Valid="{Binding NameValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:BindableInput>
 
-      <controls:BindableInput Margin="25" Grid.Column="1"
-        Input="{Binding Address2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-        HelperText="{Binding Address2Text, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        Valid="{Binding Address2Valid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
-      </controls:BindableInput>
-
+      <controls:ToggleSwitch Margin="5,25,5,5" Grid.Column="1" 
+                             Input="{Binding Active, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                             HelperText="{Binding ActiveText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                             IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+      </controls:ToggleSwitch>
 
       <Grid Grid.Row="4" Grid.ColumnSpan="2">
         <Grid.ColumnDefinitions>
@@ -63,24 +65,27 @@
       </Grid>
     </Grid>
 
-    <Button Grid.Column="1" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchAddresses}"
-            CommandParameter="{Binding Text, ElementName=Address_Search}" />
+    <Button Grid.Column="2" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchAddresses}"
+            CommandParameter="{Binding Text, ElementName=Address_Search}"
+            IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 
-    <TextBox Name="Address_Search" Grid.Column="1" Margin="75, 5, 0, 5" FontSize="16" 
-             HorizontalAlignment="Center" Width="200" />
+    <TextBox Name="Address_Search" Grid.Column="2" Margin="75, 5, 0, 5" FontSize="16" 
+             HorizontalAlignment="Center" Width="200"
+             IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 
-    <Label Grid.Column="1" Content="Addresses" HorizontalAlignment="Left" 
+    <Label Grid.Column="2" Content="Addresses" HorizontalAlignment="Left" 
            VerticalAlignment="Bottom" FontSize="24" Margin="0, 5" />
 
-    <DataGrid Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" x:Name="AddressGrid" 
+    <DataGrid Grid.Row="1" Grid.Column="2" AutoGenerateColumns="False" x:Name="AddressGrid" 
               IsReadOnly="True" SelectionMode="Single" ItemsSource="{Binding Addresses}"
-              SelectedItem="{Binding AddressSelected, Mode=TwoWay}">
+              SelectedItem="{Binding AddressSelected, Mode=TwoWay}"
+              IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       <DataGrid.Columns>
-        <DataGridTextColumn Header="ID" Width=".25*" Binding="{Binding Address.Id}" />
-        <DataGridTextColumn Header="Street Address" Width="*" Binding="{Binding Address.StreetAddress}" />
-        <DataGridTextColumn Header="PO/APT" Width=".75*" Binding="{Binding Address.Address2}" />
-        <DataGridTextColumn Header="City" Width=".75*" Binding="{Binding Address.City.Name}" />
-        <DataGridTextColumn Header="Country" Width=".75*" Binding="{Binding Address.City.Country.Name}" />
+        <DataGridTextColumn Header="ID" Width=".25*" Binding="{Binding Id}" />
+        <DataGridTextColumn Header="Street Address" Width="*" Binding="{Binding StreetAddress}" />
+        <DataGridTextColumn Header="PO/APT" Width=".75*" Binding="{Binding Address2}" />
+        <DataGridTextColumn Header="City" Width=".75*" Binding="{Binding City.Name}" />
+        <DataGridTextColumn Header="Country" Width=".75*" Binding="{Binding City.Country.Name}" />
       </DataGrid.Columns>
     </DataGrid>
 

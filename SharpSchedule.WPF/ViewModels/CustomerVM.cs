@@ -50,6 +50,11 @@ namespace SharpSchedule.ViewModels
       }
     }
 
+    /// <summary>
+    /// Helpertext for the Customer's Active Status
+    /// </summary>
+    public static string ActiveText => "Toggle Customer's Status";
+
     private string name;
     /// <summary>
     /// Name of the Customer
@@ -73,7 +78,7 @@ namespace SharpSchedule.ViewModels
     }
 
     /// <summary>
-    /// Helpertext for the customer's Name
+    /// Helpertext for the Customer's Name
     /// </summary>
     /// <remarks>
     /// If Name is invalid, returns the first Error message, 
@@ -176,6 +181,8 @@ namespace SharpSchedule.ViewModels
         Active = true;
         AddressSelected = null;
       }
+
+      OnPropChanged(nameof(ActiveText));
 
       CRUDCommand = new CustomerCRUDCommand(this);
       SearchAddresses = new SearchAddressesCommand(this);

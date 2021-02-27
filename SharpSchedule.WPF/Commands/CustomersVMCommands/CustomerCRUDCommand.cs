@@ -44,6 +44,4 @@ namespace SharpSchedule.Commands.CustomersVMCommands
         CanExecuteChanged?.Invoke(this, new EventArgs());
     }
   }
-  {
-  }
 }
