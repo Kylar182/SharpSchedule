@@ -60,7 +60,8 @@ namespace SharpSchedule.ViewModels
 
       SearchCustomers = new SearchCustomersCommand(this);
       NewCustomer = new NewCustomerCommand(this, _repository, _addressRepository, _user);
-
+      UpdateCustomer = new UpdateCustomerCommand(this, _repository, _addressRepository, _user);
+      DeleteCustomer = new DeleteCustomerCommand(this, _repository, _addressRepository, _user);
     }
 
     /// <summary>
