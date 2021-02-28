@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using SharpSchedule.Commands.CustomersVMCommands;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Repositories.Scheduling;
@@ -314,6 +315,26 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     /// </summary>
     public bool EndValid => !PropHasErrors(nameof(End));
 
+    private Customer customer;
+    /// <summary>
+    /// Customer of the Appointment
+    /// </summary>
+    [Required(ErrorMessage = "Customer is Required")]
+    public Customer CustomerSelected
+    {
+      get => customer;
+      set
+      {
+        ValidateProp(value);
+        customer = value;
+
+        OnPropChanged(nameof(CustomerSelected));
+
+        if (!PropHasErrors(nameof(CustomerSelected)))
+          Appointment.CustomerId = value.Id;
+      }
+    }
+
     /// <summary>
     /// Filtered Customers
     /// </summary>
@@ -348,7 +369,42 @@ namespace SharpSchedule.ViewModels.DialogViewModels
 
       Load().ConfigureAwait(true);
 
+      if (appointment != null)
+      {
+        Appointment = appointment;
+        Appointment.LastUpdatedBy = user.Username;
+        Title = Appointment.Title;
+        Description = Appointment.Description;
+        Location = Appointment.Location;
+        Contact = Appointment.Contact;
+        Type = Appointment.Type;
+        URL = Appointment.URL;
+        Start = Appointment.Start;
+        End = Appointment.End;
+        CustomerSelected = AllCustomers.Where(pr => pr.Id == appointment.CustomerId).First();
+      }
+      else
+      {
+        Appointment = new Appointment
+        {
+          CreatedBy = user.Username,
+          CreateDate = DateTime.UtcNow,
+          LastUpdatedBy = user.Username
+        };
 
+        Title = string.Empty;
+        Description = string.Empty;
+        Location = string.Empty;
+        Contact = string.Empty;
+        Type = string.Empty;
+        URL = string.Empty;
+        Start = DateTime.MinValue;
+        End = DateTime.MinValue;
+        CustomerSelected = null;
+      }
+
+      CRUDCommand = new AppointmentCRUDCommand(this);
+      SearchCustomers = new SearchCustomersCommand(this);
     }
 
     /// <summary>

@@ -105,6 +105,9 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     public string WindowLabel => cudString + " Customer";
 
     private Address address;
+    /// <summary>
+    /// Address of the Customer
+    /// </summary>
     [Required(ErrorMessage = "Address is Required")]
     public Address AddressSelected
     {

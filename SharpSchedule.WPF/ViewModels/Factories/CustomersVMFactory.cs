@@ -10,7 +10,9 @@ namespace SharpSchedule.ViewModels.Factories
     private readonly IAddressRepository _addressRepository;
     private readonly IAuthService _authService;
 
-    public CustomersVMFactory(ICustomerRepository repository, IAddressRepository addressRepository, IAuthService authService)
+    public CustomersVMFactory(ICustomerRepository repository, 
+      IAddressRepository addressRepository, 
+      IAuthService authService)
     {
       _repository = repository;
       _addressRepository = addressRepository;
