@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SharpSchedule.Data.Validation;
 
 namespace SharpSchedule.Data.EntityModels.Scheduling
 {
@@ -94,12 +95,14 @@ namespace SharpSchedule.Data.EntityModels.Scheduling
     /// Start Time of the Appointment
     /// </summary>
     [Column("start")]
+    [StartDate(nameof(Start), nameof(End))]
     public DateTime Start { get; set; }
 
     /// <summary>
     /// End Time of the Appointment
     /// </summary>
     [Column("end")]
+    [EndDate(nameof(End), nameof(Start))]
     public DateTime End { get; set; }
 
     /// <summary>

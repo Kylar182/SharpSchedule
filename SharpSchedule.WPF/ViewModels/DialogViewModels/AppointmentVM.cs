@@ -9,6 +9,7 @@ using SharpSchedule.Commands.CustomersVMCommands;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Repositories.Scheduling;
+using SharpSchedule.Data.Validation;
 using SharpSchedule.Models;
 using SharpSchedule.ViewModels.Validation;
 
@@ -67,6 +68,9 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(Title));
         OnPropChanged(nameof(TitleText));
         OnPropChanged(nameof(TitleValid));
+
+        if (TitleValid)
+          Appointment.Title = value;
       }
     }
 
@@ -100,6 +104,9 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(Description));
         OnPropChanged(nameof(DescriptionText));
         OnPropChanged(nameof(DescriptionValid));
+
+        if (DescriptionValid)
+          Appointment.Description = value;
       }
     }
 
@@ -133,6 +140,9 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(Location));
         OnPropChanged(nameof(LocationText));
         OnPropChanged(nameof(LocationValid));
+
+        if (LocationValid)
+          Appointment.Location = value;
       }
     }
 
@@ -166,6 +176,9 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(Contact));
         OnPropChanged(nameof(ContactText));
         OnPropChanged(nameof(ContactValid));
+
+        if (ContactValid)
+          Appointment.Contact = value;
       }
     }
 
@@ -199,6 +212,9 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(Type));
         OnPropChanged(nameof(TypeText));
         OnPropChanged(nameof(TypeValid));
+
+        if (TypeValid)
+          Appointment.Type = value;
       }
     }
 
@@ -233,6 +249,9 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(URL));
         OnPropChanged(nameof(URLText));
         OnPropChanged(nameof(URLValid));
+
+        if (URLValid)
+          Appointment.URL = value;
       }
     }
 
@@ -255,6 +274,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     /// <summary>
     /// Start Time of the Appointment
     /// </summary>
+    [StartDate(nameof(Start), nameof(End))]
     public DateTime Start
     {
       get => start;
@@ -265,6 +285,9 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(Start));
         OnPropChanged(nameof(StartText));
         OnPropChanged(nameof(StartValid));
+
+        if (StartValid)
+          Appointment.Start = value;
       }
     }
 
@@ -287,6 +310,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     /// <summary>
     /// End Time of the Appointment
     /// </summary>
+    [EndDate(nameof(End), nameof(Start))]
     public DateTime End
     {
       get => end;
@@ -297,6 +321,9 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(End));
         OnPropChanged(nameof(EndText));
         OnPropChanged(nameof(EndValid));
+
+        if (EndValid)
+          Appointment.End = value;
       }
     }
 

@@ -233,5 +233,18 @@ namespace SharpSchedule.Data.Extensions
         return long.Parse(number);
       }
     }
+
+    /// <summary>
+    /// Splits at Caps to turn Pascal into a single word
+    /// </summary>
+    public static string SplitPascalCase(this string str)
+    {
+      if (str.IsEmpty())
+        return str;
+      else if (str.TrimFix().Length == 1)
+        return str.TrimFix().ToUpper();
+      else
+        return Regex.Replace(str.TrimFix(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ").TrimEnd();
+    }
   }
 }

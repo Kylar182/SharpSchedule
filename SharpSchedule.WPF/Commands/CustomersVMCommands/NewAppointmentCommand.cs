@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
 using SharpSchedule.Data.EntityModels;
-using SharpSchedule.Data.Repositories.Location;
 using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.Models;
 using SharpSchedule.ViewModels;
