@@ -75,6 +75,9 @@
     <Page Update="Views\CustomersView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Dialogs\AppointmentDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Dialogs\CustomerDialog.xaml">
       <SubType>Designer</SubType>
     </Page>

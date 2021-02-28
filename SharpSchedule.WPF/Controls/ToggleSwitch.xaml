@@ -11,8 +11,9 @@
       <RowDefinition Height="auto" />
     </Grid.RowDefinitions>
 
-    <local:ToggleBase x:Name="inputBind" />
+    <local:ToggleBase x:Name="inputBind" Checked="InputBind_Checked"
+                      Unchecked="InputBind_Unchecked" />
     <TextBlock Grid.Row="1" x:Name="helperText" Foreground="{StaticResource WGU}" 
-               HorizontalAlignment="Center" />
+               HorizontalAlignment="Center" Margin="0,5,0,0" />
   </Grid>
 </UserControl>

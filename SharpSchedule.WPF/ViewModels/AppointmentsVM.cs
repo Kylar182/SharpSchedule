@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Repositories.Scheduling;
 
@@ -12,29 +14,37 @@ namespace SharpSchedule.ViewModels
     private readonly IAppointmentRepository _repository;
 
     /// <summary>
-    /// All appiontments currently in the System
+    /// Filtered Appiontments
     /// </summary>
-    public ObservableCollection<Appointment> Appointments { get; set; }
+    public ObservableCollection<Appointment> Appointments { get; set; } = new ObservableCollection<Appointment>();
+
+    /// <summary>
+    /// All Appointments currently in the System
+    /// </summary>
+    public List<Appointment> AllAppointments { get; set; } = new List<Appointment>();
 
     public AppointmentsVM(
       IAppointmentRepository repository)
     {
       _repository = repository;
       Appointments = new ObservableCollection<Appointment>();
-      Load();
+      Load().ConfigureAwait(true);
     }
 
-    private void Load()
+    private async Task Load()
     {
-      _repository.GetAll().ContinueWith(a =>
+      await _repository.GetAll().ContinueWith(t =>
       {
-        if (a.Exception == null)
+        if (t.Exception == null)
         {
+          AllAppointments = t.Result;
+
           Appointments.Clear();
-          foreach (Appointment appointment in a.Result)
+
+          foreach (Appointment appointment in AllAppointments)
             Appointments.Add(appointment);
         }
-      });
+      }).ConfigureAwait(true);
     }
   }
 }

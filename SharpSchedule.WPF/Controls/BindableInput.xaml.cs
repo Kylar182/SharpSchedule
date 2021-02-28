@@ -57,6 +57,22 @@ namespace SharpSchedule.Controls
         inputBind.UpdateValidColor();
     }
 
+    public bool TextArea
+    {
+      get { return (bool)GetValue(TextAreaProperty); }
+      set { SetValue(TextAreaProperty, value); }
+    }
+
+    public static readonly DependencyProperty TextAreaProperty =
+        DependencyProperty.Register(nameof(TextArea), typeof(bool), typeof(BindableInput), 
+          new PropertyMetadata(false, TextAreaPropChanged));
+
+    private static void TextAreaPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+      if (d is BindableInput inputBind)
+        inputBind.TextAreaInput();
+    }
+
     public bool Enabled
     {
       get { return (bool)GetValue(DisabledProperty); }
@@ -99,6 +115,13 @@ namespace SharpSchedule.Controls
     {
       helperText.Foreground = Valid ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF002F51")) :
         new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF840028"));
+    }
+
+    private void TextAreaInput()
+    {
+      inputBind.TextWrapping = TextWrapping.Wrap;
+      inputBind.AcceptsReturn = true;
+      inputBind.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
     }
 
     private void DisableInput()

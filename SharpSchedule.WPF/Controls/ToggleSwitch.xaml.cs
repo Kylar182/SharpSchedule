@@ -16,7 +16,7 @@ namespace SharpSchedule.Controls
 
     public static readonly DependencyProperty InputProperty =
         DependencyProperty.Register(nameof(Input), typeof(bool), typeof(ToggleSwitch),
-          new PropertyMetadata(true, InputPropChanged));
+          new PropertyMetadata(false, InputPropChanged));
 
     private static void InputPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -43,6 +43,18 @@ namespace SharpSchedule.Controls
     public ToggleSwitch()
     {
       InitializeComponent();
+    }
+
+    private void InputBind_Checked(object sender, RoutedEventArgs e)
+    {
+      if (inputBind.IsChecked.HasValue)
+        Input = inputBind.IsChecked.Value;
+    }
+
+    private void InputBind_Unchecked(object sender, RoutedEventArgs e)
+    {
+      if (inputBind.IsChecked.HasValue)
+        Input = inputBind.IsChecked.Value;
     }
 
     private void UpdateInput()

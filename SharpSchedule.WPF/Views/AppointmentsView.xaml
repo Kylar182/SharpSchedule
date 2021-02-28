@@ -5,8 +5,55 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SharpSchedule.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-  <Grid>
-    <TextBlock Text="Appointments" />  
+             d:DesignHeight="880" d:DesignWidth="1920">
+
+  <Grid Background="{StaticResource Grey60}">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width=".3*" />
+      <ColumnDefinition Width="6*" />
+      <ColumnDefinition Width="1.5*" />
+      <ColumnDefinition Width=".3*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height=".75*" />
+      <RowDefinition Height="4*" />
+      <RowDefinition Height=".75*" />
+    </Grid.RowDefinitions>
+    <Label Grid.Column="1" Content="Appointments" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+           FontSize="30" Margin="0, 5"/>
+
+    <Button Grid.Column="1" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchAppointments}" />
+
+    <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" AutoGenerateColumns="False" 
+              x:Name="AppointmentGrid" IsReadOnly="True" SelectionMode="Single"
+              ItemsSource="{Binding Appointments}" ScrollViewer.CanContentScroll="True"
+              ScrollViewer.VerticalScrollBarVisibility="Auto" MaxHeight="640"
+              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+              SelectedItem="{Binding AppointmentSelected, Mode=TwoWay}">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="ID" Width=".25*" Binding="{Binding Id}" />
+        <DataGridTextColumn Header="Title" Width=".5*" Binding="{Binding Title}" />
+        <DataGridTextColumn Header="Location" Width=".5*" Binding="{Binding Location}" />
+        <DataGridTextColumn Header="Customer" Width=".5*" Binding="{Binding Customer.Name}" />
+        <DataGridTextColumn Header="Contact" Width=".5*" Binding="{Binding Contact}" />
+        <DataGridTextColumn Header="Date" Width=".35*" Binding="{Binding Start}" />
+      </DataGrid.Columns>
+    </DataGrid>
+
+    <Grid Grid.Column="2" Grid.Row="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Button Grid.Column="0" Content="CREATE" Command="{Binding NewAppointment}" />
+
+      <Button Grid.Column="1" Content="UPDATE" 
+              Command="{Binding UpdateAppointment, UpdateSourceTrigger=PropertyChanged}" />
+
+      <Button Grid.Column="2" Grid.Row="3" Content="DELETE" 
+              Command="{Binding DeleteAppointment, UpdateSourceTrigger=PropertyChanged}" />
+    </Grid>
   </Grid>
 </UserControl>

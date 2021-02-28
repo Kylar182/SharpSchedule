@@ -7,7 +7,7 @@ namespace SharpSchedule.Controls
   {
     static ToggleBase()
     {
-      DefaultStyleKeyProperty.OverrideMetadata(typeof(ToggleBase), 
+      DefaultStyleKeyProperty.OverrideMetadata(typeof(ToggleBase),
                                 new FrameworkPropertyMetadata(typeof(ToggleBase)));
 
 
