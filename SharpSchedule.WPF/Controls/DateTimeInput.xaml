@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="SharpSchedule.Controls.DateTimeInput"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SharpSchedule.Controls"
+             mc:Ignorable="d">
+
+  <Validation.ErrorTemplate>
+    <ControlTemplate />
+  </Validation.ErrorTemplate>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <DatePicker x:Name="inputDateBind" SelectedDateFormat="Short" Grid.ColumnSpan="2"
+                SelectedDateChanged="inputDateBind_SelectedDateChanged" />
+    <ComboBox x:Name="inputHourBind" Grid.Row="1" Margin="0,5,0,0"
+              SelectionChanged="inputHourBind_SelectionChanged" />
+    <ComboBox x:Name="inputMinuteBind" Grid.Row="1" Grid.Column="1" Margin="0,5,0,0"
+              SelectionChanged="inputMinuteBind_SelectionChanged" />
+    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" x:Name="helperText" Margin="0,5,0,0" />
+  </Grid>
+</UserControl>

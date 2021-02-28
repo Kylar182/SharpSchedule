@@ -11,6 +11,7 @@
         <ResourceDictionary Source="/Styles/Shared.xaml" />
         <ResourceDictionary Source="/Styles/LoginStyle.xaml" />
         <ResourceDictionary Source="/Styles/InputStyle.xaml" />
+        <ResourceDictionary Source="/Styles/DatePickerStyle.xaml" />
         <ResourceDictionary Source="/Styles/NavBarStyle.xaml" />
         <ResourceDictionary Source="/Themes/Generic.xaml" />
       </ResourceDictionary.MergedDictionaries>

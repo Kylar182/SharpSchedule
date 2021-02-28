@@ -13,6 +13,9 @@
     <Compile Update="Controls\BindablePasswordInput.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\DateTimeInput.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\NavBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -42,6 +45,9 @@
     <Page Update="Controls\BindablePasswordInput.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Controls\DateTimeInput.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\NavBar.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -49,6 +55,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\DatePickerStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\LoginStyle.xaml">
