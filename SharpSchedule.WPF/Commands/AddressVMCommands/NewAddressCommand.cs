@@ -4,6 +4,7 @@ using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.Repositories.Location;
 using SharpSchedule.Models;
 using SharpSchedule.ViewModels;
+using SharpSchedule.ViewModels.DialogViewModels;
 using SharpSchedule.Views.Dialogs;
 
 namespace SharpSchedule.Commands.AddressVMCommands

@@ -13,7 +13,7 @@ using SharpSchedule.Data.Repositories.Location;
 using SharpSchedule.Models;
 using SharpSchedule.ViewModels.Validation;
 
-namespace SharpSchedule.ViewModels
+namespace SharpSchedule.ViewModels.DialogViewModels
 {
   /// <summary>
   /// View Model for City CRUD in the City Dialog

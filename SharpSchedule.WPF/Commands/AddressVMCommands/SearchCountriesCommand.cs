@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Input;
 using SharpSchedule.Data.EntityModels.Locations;
-using SharpSchedule.ViewModels;
+using SharpSchedule.ViewModels.DialogViewModels;
 
 namespace SharpSchedule.Commands.AddressVMCommands
 {

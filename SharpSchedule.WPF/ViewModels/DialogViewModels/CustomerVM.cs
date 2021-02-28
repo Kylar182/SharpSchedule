@@ -15,7 +15,7 @@ using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.Models;
 using SharpSchedule.ViewModels.Validation;
 
-namespace SharpSchedule.ViewModels
+namespace SharpSchedule.ViewModels.DialogViewModels
 {
   /// <summary>
   /// View Model for Customer CRUD in the Customer Dialog

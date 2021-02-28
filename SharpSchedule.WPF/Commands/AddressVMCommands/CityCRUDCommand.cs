@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Input;
-using SharpSchedule.ViewModels;
+using SharpSchedule.ViewModels.DialogViewModels;
 
 namespace SharpSchedule.Commands.AddressVMCommands
 {

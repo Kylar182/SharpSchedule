@@ -37,6 +37,7 @@ namespace SharpSchedule.Data.EntityModels.Scheduling
     /// </remarks>
     /// [MaxLength(500)]
     [Column("description")]
+    [Required]
     public string Description { get; set; }
 
     /// <summary>
@@ -50,6 +51,7 @@ namespace SharpSchedule.Data.EntityModels.Scheduling
     /// </remarks>
     /// [MaxLength(150)]
     [Column("location")]
+    [Required]
     public string Location { get; set; }
 
     /// <summary>
@@ -63,6 +65,7 @@ namespace SharpSchedule.Data.EntityModels.Scheduling
     /// </remarks>
     /// [MaxLength(50)]
     [Column("contact")]
+    [Required]
     public string Contact { get; set; }
 
     /// <summary>
@@ -76,12 +79,14 @@ namespace SharpSchedule.Data.EntityModels.Scheduling
     /// </remarks>
     /// [MaxLength(50)]
     [Column("type")]
+    [Required]
     public string Type { get; set; }
 
     /// <summary>
     /// Hotlink to info on the appointment or it's attendees
     /// </summary>
     [Column("url")]
+    [Required]
     [MaxLength(255, ErrorMessage = "Max Length 255 Characters")]
     public string URL { get; set; }
 

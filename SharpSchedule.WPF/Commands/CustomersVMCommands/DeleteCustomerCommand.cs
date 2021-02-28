@@ -6,6 +6,7 @@ using SharpSchedule.Data.Repositories.Location;
 using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.Models;
 using SharpSchedule.ViewModels;
+using SharpSchedule.ViewModels.DialogViewModels;
 using SharpSchedule.Views.Dialogs;
 
 namespace SharpSchedule.Commands.CustomersVMCommands

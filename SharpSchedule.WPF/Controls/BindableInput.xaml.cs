@@ -64,7 +64,7 @@ namespace SharpSchedule.Controls
     }
 
     public static readonly DependencyProperty TextAreaProperty =
-        DependencyProperty.Register(nameof(TextArea), typeof(bool), typeof(BindableInput), 
+        DependencyProperty.Register(nameof(TextArea), typeof(bool), typeof(BindableInput),
           new PropertyMetadata(false, TextAreaPropChanged));
 
     private static void TextAreaPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
