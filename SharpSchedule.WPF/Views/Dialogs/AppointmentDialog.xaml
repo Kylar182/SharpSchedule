@@ -13,6 +13,7 @@
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width=".05*" />
       <ColumnDefinition Width=".5*" />
+      <ColumnDefinition Width=".05*" />
       <ColumnDefinition Width=".65*" />
       <ColumnDefinition Width=".05*" />
     </Grid.ColumnDefinitions>
@@ -97,10 +98,17 @@
         IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:BindableInput>
 
-      <controls:DateTimeInput Margin="25,25,25,5" Grid.Row="4"
+      <controls:DateTimeInput Margin="5,25,5,5" Grid.Row="4"
         Input="{Binding Start, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding StartText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
         Valid="{Binding StartValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+      </controls:DateTimeInput>
+
+      <controls:DateTimeInput Margin="5,25,5,5" Grid.Row="4" Grid.Column="1"
+        Input="{Binding End, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        HelperText="{Binding EndText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+        Valid="{Binding EndValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
         IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:DateTimeInput>
 
@@ -118,25 +126,25 @@
       </Grid>
     </Grid>
 
-    <Button Grid.Column="2" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchCustomers}"
+    <Button Grid.Column="3" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchCustomers}"
             CommandParameter="{Binding Text, ElementName=Customer_Search}"
             IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 
-    <TextBox Name="Customer_Search" Grid.Column="2" Margin="75, 5, 0, 5" FontSize="16" 
+    <TextBox Name="Customer_Search" Grid.Column="3" Margin="75, 5, 0, 5" FontSize="16" 
              HorizontalAlignment="Center" Width="200"
              IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 
-    <Label Grid.Column="2" Content="Customers" HorizontalAlignment="Left" 
+    <Label Grid.Column="3" Content="Customers" HorizontalAlignment="Left" 
            VerticalAlignment="Bottom" FontSize="24" Margin="0, 5" />
 
-    <DataGrid Grid.Row="1" Grid.Column="2" AutoGenerateColumns="False" 
+    <DataGrid Grid.Row="1" Grid.Column="3" AutoGenerateColumns="False" 
               x:Name="CustomerGrid" IsReadOnly="True" SelectionMode="Single"
               ItemsSource="{Binding Customers}" ScrollViewer.CanContentScroll="True"
               ScrollViewer.VerticalScrollBarVisibility="Auto" MaxHeight="600"
               ScrollViewer.HorizontalScrollBarVisibility="Auto"
               SelectedItem="{Binding CustomerSelected, Mode=TwoWay}">
       <DataGrid.Columns>
-        <DataGridTextColumn Header="ID" Width=".25*" Binding="{Binding Id}" />
+        <DataGridTextColumn Header="ID" Width=".3*" Binding="{Binding Id}" />
         <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" />
         <DataGridTextColumn Header="City" Width=".75*" Binding="{Binding Address.City.Name}" />
         <DataGridTextColumn Header="Country" Width=".75*" Binding="{Binding Address.City.Country.Name}" />

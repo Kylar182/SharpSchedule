@@ -78,7 +78,11 @@ namespace SharpSchedule.ViewModels
           Appointments.Clear();
 
           foreach (Appointment appointment in AllAppointments)
+          {
+            appointment.Start = appointment.Start.ToLocalTime();
+            appointment.End = appointment.End.ToLocalTime();
             Appointments.Add(appointment);
+          }
         }
       }).ConfigureAwait(true);
     }

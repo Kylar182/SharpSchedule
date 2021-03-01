@@ -12,6 +12,16 @@
     <Setter Property="Padding" Value="2" />
   </Style>
 
+  <Style TargetType="ComboBox">
+    <Setter Property="Background" Value="White" />
+    <Setter Property="BorderThickness" Value="0, 0, 0 , 2.5" />
+    <Setter Property="BorderBrush" Value="{StaticResource AppGrey}" />
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="Padding" Value="2" />
+  </Style>
+
   <Style TargetType="TextBlock" x:Key="helperText">
     <Setter Property="HorizontalAlignment" Value="Center" />
   </Style>

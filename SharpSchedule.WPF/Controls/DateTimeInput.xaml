@@ -22,11 +22,11 @@
     </Grid.ColumnDefinitions>
 
     <DatePicker x:Name="inputDateBind" SelectedDateFormat="Short" Grid.ColumnSpan="2"
-                SelectedDateChanged="inputDateBind_SelectedDateChanged" />
-    <ComboBox x:Name="inputHourBind" Grid.Row="1" Margin="0,5,0,0"
+                SelectedDateChanged="inputDateBind_SelectedDateChanged" Padding="2" />
+    <ComboBox x:Name="inputHourBind" Grid.Row="1" Margin="0,5,0,0" Padding="2"
               SelectionChanged="inputHourBind_SelectionChanged" />
     <ComboBox x:Name="inputMinuteBind" Grid.Row="1" Grid.Column="1" Margin="0,5,0,0"
-              SelectionChanged="inputMinuteBind_SelectionChanged" />
+              SelectionChanged="inputMinuteBind_SelectionChanged" Padding="2" />
     <TextBlock Grid.Row="2" Grid.ColumnSpan="2" x:Name="helperText" Margin="0,5,0,0" />
   </Grid>
 </UserControl>

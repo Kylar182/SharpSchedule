@@ -78,7 +78,6 @@ namespace SharpSchedule.Controls
     {
       InitializeComponent();
 
-
       int hour = 0;
       while (hour < 24)
       {
@@ -99,42 +98,47 @@ namespace SharpSchedule.Controls
       if (inputDateBind.SelectedDate.HasValue)
       {
         DateTime? date = Input;
-        if (date.HasValue)
-          date = Input.Value.ToLocalTime();
-        if (date != inputDateBind.SelectedDate)
+        if (date.HasValue && date.Value.Date != inputDateBind.SelectedDate.Value.Date)
         {
-          if (Input.HasValue && Input.Value.ToLocalTime().Date != inputDateBind.SelectedDate.Value.Date)
-            Input = inputDateBind.SelectedDate.Value.Date;
-          if (date.HasValue)
-          {
-            Input.Value.AddHours(date.Value.Hour);
-            Input.Value.AddMinutes(date.Value.Minute);
-          }
+          date = inputDateBind.SelectedDate.Value.Date;
+
+          date = date.Value.AddHours(Input.Value.Hour);
+          date = date.Value.AddMinutes(Input.Value.Minute);
+
+          Input = date;
         }
       }
+      else
+        Input = null;
     }
 
     private void inputHourBind_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      DateTime? date = Input.Value.Date;
-      if (date.HasValue && Input.Value.Hour != inputHourBind.SelectedIndex)
+      if (Input.HasValue)
       {
+        DateTime date = Input.Value.Date;
+
         if (inputHourBind.SelectedIndex >= 0)
-          Input.Value.AddHours(inputHourBind.SelectedIndex);
-        if (inputMinuteBind.SelectedIndex >= 0)
-          Input.Value.AddMinutes(inputMinuteBind.SelectedIndex);
+          date = date.AddHours(inputHourBind.SelectedIndex);
+        
+        date = date.AddMinutes(Input.Value.Minute);
+
+        Input = date;
       }
     }
 
     private void inputMinuteBind_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      DateTime? date = Input.Value.Date;
-      if (date.HasValue && Input.Value.Minute != inputMinuteBind.SelectedIndex)
+      if (Input.HasValue)
       {
-        if (inputHourBind.SelectedIndex >= 0)
-          Input.Value.AddHours(inputHourBind.SelectedIndex);
+        DateTime date = Input.Value.Date;
+
+        date = date.AddHours(Input.Value.Hour);
+
         if (inputMinuteBind.SelectedIndex >= 0)
-          Input.Value.AddMinutes(inputMinuteBind.SelectedIndex);
+          date = date.AddMinutes(inputMinuteBind.SelectedIndex);
+
+        Input = date;
       }
     }
 
@@ -142,9 +146,9 @@ namespace SharpSchedule.Controls
     {
       if (Input.HasValue)
       {
-        inputDateBind.Text = Input.Value.ToLocalTime().ToShortDateString();
-        inputHourBind.SelectedIndex = Input.Value.ToLocalTime().Hour;
-        inputMinuteBind.SelectedIndex = Input.Value.ToLocalTime().Minute;
+        inputDateBind.Text = Input.Value.ToShortDateString();
+        inputHourBind.SelectedIndex = Input.Value.Hour;
+        inputMinuteBind.SelectedIndex = Input.Value.Minute;
       }
       else
         inputDateBind.Text = string.Empty;
