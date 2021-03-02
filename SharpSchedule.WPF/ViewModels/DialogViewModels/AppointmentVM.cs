@@ -286,6 +286,10 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(StartText));
         OnPropChanged(nameof(StartValid));
 
+        OnPropChanged(nameof(End));
+        OnPropChanged(nameof(EndText));
+        OnPropChanged(nameof(EndValid));
+
         if (StartValid)
           Appointment.Start = value.ToUniversalTime();
       }
@@ -321,6 +325,10 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(End));
         OnPropChanged(nameof(EndText));
         OnPropChanged(nameof(EndValid));
+
+        OnPropChanged(nameof(Start));
+        OnPropChanged(nameof(StartText));
+        OnPropChanged(nameof(StartValid));
 
         if (EndValid)
           Appointment.End = value.ToUniversalTime();
@@ -408,6 +416,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         URL = Appointment.URL;
         Start = Appointment.Start;
         End = Appointment.End;
+        Start = Appointment.Start;
         CustomerSelected = AllCustomers.Where(pr => pr.Id == appointment.CustomerId).First();
       }
       else
@@ -425,20 +434,11 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         Contact = string.Empty;
         Type = string.Empty;
         URL = string.Empty;
+        Start = DateTime.Now;
         End = DateTime.Now.AddHours(1);
         Start = DateTime.Now;
         CustomerSelected = null;
       }
-
-      ValidateProp(Start, nameof(Start));
-      OnPropChanged(nameof(Start));
-      OnPropChanged(nameof(StartText));
-      OnPropChanged(nameof(StartValid));
-
-      ValidateProp(End, nameof(End));
-      OnPropChanged(nameof(End));
-      OnPropChanged(nameof(EndText));
-      OnPropChanged(nameof(EndValid));
 
       CRUDCommand = new AppointmentCRUDCommand(this);
       SearchCustomers = new SearchCustomersCommand(this);

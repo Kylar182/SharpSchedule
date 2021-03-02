@@ -30,8 +30,7 @@ namespace SharpSchedule.Data.Validation
 
       if (value is null)
       {
-        ErrorMessage ??=
-          $"{Name} is Required";
+        ErrorMessage ??= $"{Name} is Required";
         return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
       }
 
@@ -49,36 +48,31 @@ namespace SharpSchedule.Data.Validation
       {
         if (max.Value.Date != val.Date)
         {
-          ErrorMessage ??=
-            $"{Name} must be on the same day as {MaxName.SplitPascalCase()}";
+          ErrorMessage ??= $"{Name} must be on the same day as {MaxName.SplitPascalCase()}";
           return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
         }
 
         if (val > max)
         {
-          ErrorMessage ??=
-            $"{Name} must be less than {MaxName.SplitPascalCase()}";
+          ErrorMessage ??= $"{Name} must be less than {MaxName.SplitPascalCase()}";
           return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
         }
 
         if (val.Hour > 17)
         {
-          ErrorMessage ??=
-            $"{Name} is outside of Business hours";
+          ErrorMessage ??= $"{Name} is outside of Business hours";
           return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
         }
         else if (val.Hour < 8)
         {
-          ErrorMessage ??=
-            $"{Name} is outside of Business hours";
+          ErrorMessage ??= $"{Name} is outside of Business hours";
           return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
         }
         else
           return ValidationResult.Success;
       }
       else
-        ErrorMessage ??=
-          $"{Name} is Required";
+        ErrorMessage ??= $"{Name} is Required";
       return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
     }
   }

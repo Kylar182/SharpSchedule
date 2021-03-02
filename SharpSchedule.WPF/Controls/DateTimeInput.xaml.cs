@@ -78,11 +78,12 @@ namespace SharpSchedule.Controls
     {
       InitializeComponent();
 
-      int hour = 0;
-      while (hour < 24)
+      int iHour = 0;
+      while (iHour < 24)
       {
+        int hour = iHour > 12 ? iHour - 12 : iHour;
         inputHourBind.Items.Add($"{hour:00}");
-        hour++;
+        iHour++;
       }
 
       int minute = 0;
@@ -120,7 +121,7 @@ namespace SharpSchedule.Controls
 
         if (inputHourBind.SelectedIndex >= 0)
           date = date.AddHours(inputHourBind.SelectedIndex);
-        
+
         date = date.AddMinutes(Input.Value.Minute);
 
         Input = date;

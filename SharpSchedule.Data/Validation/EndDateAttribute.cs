@@ -30,8 +30,7 @@ namespace SharpSchedule.Data.Validation
 
       if (value is null)
       {
-        ErrorMessage ??=
-          $"{Name} is Required";
+        ErrorMessage ??= $"{Name} is Required";
         return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
       }
 
@@ -49,16 +48,14 @@ namespace SharpSchedule.Data.Validation
       {
         if (val < min)
         {
-          ErrorMessage ??=
-            $"{Name} must surpass {MinName.SplitPascalCase()}";
+          ErrorMessage ??= $"{Name} must surpass {MinName.SplitPascalCase()}";
           return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
         }
         else
           return ValidationResult.Success;
       }
       else
-        ErrorMessage ??=
-          $"{Name} is Required";
+        ErrorMessage ??= $"{Name} is Required";
       return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
     }
   }

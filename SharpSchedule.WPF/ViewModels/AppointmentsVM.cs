@@ -61,10 +61,10 @@ namespace SharpSchedule.ViewModels
 
       AppointmentSelected = null;
 
-      //SearchAppointments = new SearchAppointmentsCommand(this);
+      SearchAppointments = new SearchAppointmentsCommand(this);
       NewAppointment = new NewAppointmentCommand(this, _repository, _customerRepository, _user);
-      //UpdateAppointment = new UpdateAppointmentCommand(this, _repository, _customerRepository, _user);
-      //DeleteAppointment = new DeleteAppointmentCommand(this, _repository, _customerRepository, _user);
+      UpdateAppointment = new UpdateAppointmentCommand(this, _repository, _customerRepository, _user);
+      DeleteAppointment = new DeleteAppointmentCommand(this, _repository, _customerRepository, _user);
     }
 
     public async Task Load()
