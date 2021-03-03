@@ -286,9 +286,12 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(StartText));
         OnPropChanged(nameof(StartValid));
 
+        ValidateProp(End, nameof(End));
         OnPropChanged(nameof(End));
         OnPropChanged(nameof(EndText));
         OnPropChanged(nameof(EndValid));
+
+        ValidateProp(value);
 
         if (StartValid)
           Appointment.Start = value.ToUniversalTime();
@@ -326,9 +329,12 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(EndText));
         OnPropChanged(nameof(EndValid));
 
+        ValidateProp(Start, nameof(Start));
         OnPropChanged(nameof(Start));
         OnPropChanged(nameof(StartText));
         OnPropChanged(nameof(StartValid));
+
+        ValidateProp(value);
 
         if (EndValid)
           Appointment.End = value.ToUniversalTime();
@@ -425,7 +431,8 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         {
           CreatedBy = user.Username,
           CreateDate = DateTime.UtcNow,
-          LastUpdatedBy = user.Username
+          LastUpdatedBy = user.Username,
+          UserId = user.Id
         };
 
         Title = string.Empty;
@@ -462,6 +469,8 @@ namespace SharpSchedule.ViewModels.DialogViewModels
 
     public async Task DBUpdate()
     {
+      Appointment.Start = Start.ToUniversalTime();
+      Appointment.End = End.ToUniversalTime();
       Appointment.LastUpdate = DateTime.UtcNow;
       Appointment.Customer = null;
 

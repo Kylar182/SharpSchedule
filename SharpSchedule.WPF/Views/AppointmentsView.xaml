@@ -22,7 +22,10 @@
     <Label Grid.Column="1" Content="Appointments" HorizontalAlignment="Left" VerticalAlignment="Bottom"
            FontSize="30" Margin="0, 5"/>
 
-    <Button Grid.Column="1" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchAppointments}" />
+    <Button Grid.Column="1" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchAppointments}"
+            CommandParameter="{Binding Text, ElementName=Appointments_Search}" />
+    
+    <TextBox Name="Appointments_Search" Grid.Column="2" Margin="38" FontSize="32" />
 
     <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" AutoGenerateColumns="False" 
               x:Name="AppointmentGrid" IsReadOnly="True" SelectionMode="Single"

@@ -60,14 +60,6 @@
       </controls:BindableInput>
 
       <controls:BindableInput Margin="5,25,5,5" Grid.Row="1"
-        Input="{Binding Title, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-        HelperText="{Binding TitleText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        Valid="{Binding TitleValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        TextArea="True">
-      </controls:BindableInput>
-
-      <controls:BindableInput Margin="5,25,5,5" Grid.Column="1" Grid.Row="1"
         Input="{Binding Location, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding LocationText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
         Valid="{Binding LocationValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
@@ -75,7 +67,7 @@
         TextArea="True">
       </controls:BindableInput>
 
-      <controls:BindableInput Margin="5,25,5,5" Grid.Row="2"
+      <controls:BindableInput Margin="5,25,5,5" Grid.Column="1" Grid.Row="1"
         Input="{Binding Contact, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding ContactText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
         Valid="{Binding ContactValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
@@ -83,7 +75,7 @@
         TextArea="True">
       </controls:BindableInput>
 
-      <controls:BindableInput Margin="5,25,5,5" Grid.Column="1" Grid.Row="2"
+      <controls:BindableInput Margin="5,25,5,5" Grid.Row="2"
         Input="{Binding Type, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding TypeText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
         Valid="{Binding TypeValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
@@ -91,7 +83,7 @@
         TextArea="True">
       </controls:BindableInput>
 
-      <controls:BindableInput Margin="25,25,25,5" Grid.Row="3" Grid.ColumnSpan="2"
+      <controls:BindableInput Margin="5,25,5,5" Grid.Row="2" Grid.Column="1"
         Input="{Binding URL, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding URLText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
         Valid="{Binding URLValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
