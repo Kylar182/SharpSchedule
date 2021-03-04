@@ -72,8 +72,10 @@ namespace SharpSchedule.Data.Validation
           return ValidationResult.Success;
       }
       else
+      {
         ErrorMessage ??= $"{Name} is Required";
-      return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
+        return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
+      }
     }
   }
 }

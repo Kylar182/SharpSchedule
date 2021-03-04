@@ -1,4 +1,4 @@
-﻿<Window x:Class="SharpSchedule.Views.Dialogs.AppointmentDialog"
+﻿<Window x:Class="SharpSchedule.Views.Dialogs.AppointmentFilterDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -36,7 +36,8 @@
         <RowDefinition Height="auto" />
         <RowDefinition Height="auto" />
         <RowDefinition Height="*" />
-        <RowDefinition Height=".25*" />
+        <RowDefinition Height=".5*" />
+        <RowDefinition Height=".375*" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*" />
@@ -47,75 +48,66 @@
         Input="{Binding Title, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding TitleText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
         Valid="{Binding TitleValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        TextArea="True">
+        IsEnabled="True" TextArea="True">
       </controls:BindableInput>
 
       <controls:BindableInput Margin="5,25,5,5" Grid.Column="1"
         Input="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding DescriptionText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
         Valid="{Binding DescriptionValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        TextArea="True">
+        IsEnabled="True" TextArea="True">
       </controls:BindableInput>
 
       <controls:BindableInput Margin="5,25,5,5" Grid.Row="1"
         Input="{Binding Location, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding LocationText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
         Valid="{Binding LocationValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        TextArea="True">
+        IsEnabled="True" TextArea="True">
       </controls:BindableInput>
 
       <controls:BindableInput Margin="5,25,5,5" Grid.Column="1" Grid.Row="1"
         Input="{Binding Contact, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding ContactText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
         Valid="{Binding ContactValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        TextArea="True">
+        IsEnabled="True" TextArea="True">
       </controls:BindableInput>
 
       <controls:BindableInput Margin="5,25,5,5" Grid.Row="2"
         Input="{Binding Type, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding TypeText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
         Valid="{Binding TypeValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        TextArea="True">
+        IsEnabled="True" TextArea="True">
       </controls:BindableInput>
 
-      <controls:BindableInput Margin="5,25,5,5" Grid.Row="2" Grid.Column="1"
+      <controls:BindableInput Margin="5,25,5,5" Grid.Row="2" Grid.Column="1" IsEnabled="True"
         Input="{Binding URL, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding URLText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        Valid="{Binding URLValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+        Valid="{Binding URLValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:BindableInput>
 
       <controls:DateTimeInput Margin="5,25,5,5" Grid.Row="4" VerticalAlignment="Center"
-        Input="{Binding Start, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Input="{Binding Start, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsEnabled="True"
         HelperText="{Binding StartText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        Valid="{Binding StartValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+        Valid="{Binding StartValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:DateTimeInput>
 
       <controls:DateTimeInput Margin="5,25,5,5" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center"
-        Input="{Binding End, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Input="{Binding End, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsEnabled="True"
         HelperText="{Binding EndText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        Valid="{Binding EndValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-        IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+        Valid="{Binding EndValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:DateTimeInput>
 
-      <Grid Grid.Row="5" Grid.ColumnSpan="2">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+      <Button Grid.Row="5" HorizontalAlignment="Center" Content="MONTH" Click="Dialog_True"
+              Command="{Binding Month, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Button HorizontalAlignment="Center" Command="{Binding CRUDCommand, UpdateSourceTrigger=PropertyChanged}"
-                 Click="Dialog_True" Content="{Binding CUDString}" />
+      <Button Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" Content="WEEK" 
+              Command="{Binding Week, UpdateSourceTrigger=PropertyChanged}" Click="Dialog_True" />
 
-        <Button Grid.Column="1" HorizontalAlignment="Center" Content="CANCEL" 
-                Background="{StaticResource Light}" Click="Dialog_False" />
-      </Grid>
+      <Button Grid.Row="6" HorizontalAlignment="Center" Click="Dialog_True" Content="FILTER"
+              Command="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" />
+
+      <Button Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" Content="CANCEL" 
+              Background="{StaticResource Light}" Click="Dialog_False" />
     </Grid>
 
     <Button Grid.Column="3" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchCustomers}"

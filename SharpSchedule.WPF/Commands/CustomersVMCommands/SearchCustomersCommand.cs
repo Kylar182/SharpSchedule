@@ -11,6 +11,7 @@ namespace SharpSchedule.Commands.CustomersVMCommands
   {
     private readonly CustomersVM _customerVM;
     private readonly AppointmentVM _appointmentVM;
+    private readonly AppointmentFilterVM _filterVM;
 
     public SearchCustomersCommand(CustomersVM customerVM)
     {
@@ -20,6 +21,11 @@ namespace SharpSchedule.Commands.CustomersVMCommands
     public SearchCustomersCommand(AppointmentVM appointmentVM)
     {
       _appointmentVM = appointmentVM;
+    }
+
+    public SearchCustomersCommand(AppointmentFilterVM filterVM)
+    {
+      _filterVM = filterVM;
     }
 
     public event EventHandler CanExecuteChanged;
@@ -37,12 +43,19 @@ namespace SharpSchedule.Commands.CustomersVMCommands
           foreach (Customer customer in _customerVM.AllCustomers.Where(pr => pr.Name.Contains(name)))
             _customerVM.Customers.Add(customer);
         }
-        else
+        else if (_appointmentVM != null)
         {
           _appointmentVM.Customers.Clear();
 
           foreach (Customer customer in _appointmentVM.AllCustomers.Where(pr => pr.Name.Contains(name)))
             _appointmentVM.Customers.Add(customer);
+        }
+        else
+        {
+          _filterVM.Customers.Clear();
+
+          foreach (Customer customer in _filterVM.AllCustomers.Where(pr => pr.Name.Contains(name)))
+            _filterVM.Customers.Add(customer);
         }
       }
     }

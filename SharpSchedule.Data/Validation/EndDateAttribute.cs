@@ -29,10 +29,7 @@ namespace SharpSchedule.Data.Validation
         Name = validationContext.MemberName.SplitPascalCase();
 
       if (value is null)
-      {
-        ErrorMessage ??= $"{Name} is Required";
-        return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
-      }
+        return ValidationResult.Success;
 
       if (MinName.IsEmpty())
         return new ValidationResult("Min Value Required", new[] { validationContext.MemberName });
@@ -42,7 +39,7 @@ namespace SharpSchedule.Data.Validation
       min = propertyName.GetValue(validationContext.ObjectInstance, null) as DateTime?;
 
       if (min == null)
-        return new ValidationResult($"{MinName.SplitPascalCase()} Required", new[] { validationContext.MemberName });
+        return ValidationResult.Success;
 
       if (value != null && DateTime.TryParse(value.ToString(), out DateTime val))
       {
@@ -55,8 +52,10 @@ namespace SharpSchedule.Data.Validation
           return ValidationResult.Success;
       }
       else
-        ErrorMessage ??= $"{Name} is Required";
-      return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
+      {
+        ErrorMessage ??= $"{Name} is Invalid";
+        return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
+      }
     }
   }
 }

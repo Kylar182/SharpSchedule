@@ -29,10 +29,7 @@ namespace SharpSchedule.Data.Validation
         Name = validationContext.MemberName.SplitPascalCase();
 
       if (value is null)
-      {
-        ErrorMessage ??= $"{Name} is Required";
-        return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
-      }
+        return ValidationResult.Success;
 
       if (MaxName.IsEmpty())
         return new ValidationResult("Max Value Required", new[] { validationContext.MemberName });
@@ -42,7 +39,7 @@ namespace SharpSchedule.Data.Validation
       max = propertyName.GetValue(validationContext.ObjectInstance, null) as DateTime?;
 
       if (max == null)
-        return new ValidationResult($"{MaxName.SplitPascalCase()} Required", new[] { validationContext.MemberName });
+        return ValidationResult.Success;
 
       if (value != null && DateTime.TryParse(value.ToString(), out DateTime val))
       {
@@ -55,8 +52,10 @@ namespace SharpSchedule.Data.Validation
           return ValidationResult.Success;
       }
       else
+      {
         ErrorMessage ??= $"{Name} is Required";
-      return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
+        return new ValidationResult(ErrorMessage, new[] { validationContext.MemberName });
+      }
     }
   }
 }
