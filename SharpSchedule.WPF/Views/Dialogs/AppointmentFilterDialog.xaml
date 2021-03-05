@@ -97,26 +97,23 @@
         Valid="{Binding EndValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:DateTimeInput>
 
-      <Button Grid.Row="5" HorizontalAlignment="Center" Content="MONTH" Click="Dialog_True"
-              Command="{Binding Month, UpdateSourceTrigger=PropertyChanged}" />
+      <Button Grid.Row="5" HorizontalAlignment="Center" Content="MONTH"
+              Command="{Binding MonthFilter, UpdateSourceTrigger=PropertyChanged}" />
 
       <Button Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" Content="WEEK" 
-              Command="{Binding Week, UpdateSourceTrigger=PropertyChanged}" Click="Dialog_True" />
+              Command="{Binding WeekFilter, UpdateSourceTrigger=PropertyChanged}" />
 
-      <Button Grid.Row="6" HorizontalAlignment="Center" Click="Dialog_True" Content="FILTER"
-              Command="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" />
+      <Button Grid.Row="6" HorizontalAlignment="Center" Click="Dialog_True" Content="FILTER" />
 
       <Button Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" Content="CANCEL" 
               Background="{StaticResource Light}" Click="Dialog_False" />
     </Grid>
 
     <Button Grid.Column="3" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchCustomers}"
-            CommandParameter="{Binding Text, ElementName=Customer_Search}"
-            IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+            CommandParameter="{Binding Text, ElementName=Customer_Search}" />
 
     <TextBox Name="Customer_Search" Grid.Column="3" Margin="75, 5, 0, 5" FontSize="16" 
-             HorizontalAlignment="Center" Width="200"
-             IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+             HorizontalAlignment="Center" Width="200" />
 
     <Label Grid.Column="3" Content="Customers" HorizontalAlignment="Left" 
            VerticalAlignment="Bottom" FontSize="24" Margin="0, 5" />

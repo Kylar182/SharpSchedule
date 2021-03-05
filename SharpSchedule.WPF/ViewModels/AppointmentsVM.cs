@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using SharpSchedule.Commands.CustomersVMCommands;
+using SharpSchedule.Commands.AppointmentsVMCommands;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Repositories.Scheduling;
@@ -41,12 +41,21 @@ namespace SharpSchedule.ViewModels
     /// </summary>
     public List<Appointment> AllAppointments { get; set; } = new List<Appointment>();
 
-    public ICommand SearchAppointments { get; }
-
+    /// <summary>
+    /// Opens the Filter Appointment Dialog
+    /// </summary>
+    public ICommand FilterAppointments { get; }
+    /// <summary>
+    /// Opens the New Appointment Dialog
+    /// </summary>
     public ICommand NewAppointment { get; }
-
+    /// <summary>
+    /// Opens the Update Appointment Dialog
+    /// </summary>
     public ICommand UpdateAppointment { get; }
-
+    /// <summary>
+    /// Opens the Delete Appointment Dialog
+    /// </summary>
     public ICommand DeleteAppointment { get; }
 
     public AppointmentsVM(
@@ -61,12 +70,15 @@ namespace SharpSchedule.ViewModels
 
       AppointmentSelected = null;
 
-      SearchAppointments = new SearchAppointmentsCommand(this);
+      FilterAppointments = new FilterAppointmentsCommand(this, _customerRepository);
       NewAppointment = new NewAppointmentCommand(this, _repository, _customerRepository, _user);
       UpdateAppointment = new UpdateAppointmentCommand(this, _repository, _customerRepository, _user);
       DeleteAppointment = new DeleteAppointmentCommand(this, _repository, _customerRepository, _user);
     }
 
+    /// <summary>
+    /// Loads All Appointments and required related data
+    /// </summary>
     public async Task Load()
     {
       await _repository.GetAll().ContinueWith(t =>
@@ -85,6 +97,21 @@ namespace SharpSchedule.ViewModels
           }
         }
       }).ConfigureAwait(true);
+    }
+
+    /// <summary>
+    /// Refresh's the Appointments in the View
+    /// </summary>
+    public void Refresh()
+    {
+      Appointments.Clear();
+
+      foreach (Appointment appointment in AllAppointments)
+      {
+        appointment.Start = appointment.Start.ToLocalTime();
+        appointment.End = appointment.End.ToLocalTime();
+        Appointments.Add(appointment);
+      }
     }
   }
 }

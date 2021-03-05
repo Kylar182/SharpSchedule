@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using SharpSchedule.Commands.AppointmentsVMCommands;
 using SharpSchedule.Commands.CustomersVMCommands;
 using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Repositories.Scheduling;
@@ -40,7 +41,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(TitleValid));
 
         if (TitleValid)
-          Appointment.Title = value;
+          Filter.Title = value;
       }
     }
 
@@ -75,7 +76,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(DescriptionValid));
 
         if (DescriptionValid)
-          Appointment.Description = value;
+          Filter.Description = value;
       }
     }
 
@@ -110,7 +111,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(LocationValid));
 
         if (LocationValid)
-          Appointment.Location = value;
+          Filter.Location = value;
       }
     }
 
@@ -145,7 +146,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(ContactValid));
 
         if (ContactValid)
-          Appointment.Contact = value;
+          Filter.Contact = value;
       }
     }
 
@@ -180,7 +181,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(TypeValid));
 
         if (TypeValid)
-          Appointment.Type = value;
+          Filter.Type = value;
       }
     }
 
@@ -216,7 +217,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(URLValid));
 
         if (URLValid)
-          Appointment.URL = value;
+          Filter.URL = value;
       }
     }
 
@@ -261,10 +262,10 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         if (StartValid)
         {
           if (value != null)
-            Appointment.Start = value.Value.ToUniversalTime();
+            Filter.Start = value.Value;
         }
         else
-          Appointment.Start = null;
+          Filter.Start = null;
       }
     }
 
@@ -309,10 +310,10 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         if (EndValid)
         {
           if (value != null)
-            Appointment.End = value.Value.ToUniversalTime();
+            Filter.End = value.Value;
         }
         else
-          Appointment.End = null;
+          Filter.End = null;
       }
     }
 
@@ -345,16 +346,16 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(CustomerSelected));
 
         if (value != null)
-          Appointment.CustomerId = value.Id;
+          Filter.CustomerId = value.Id;
         else
-          Appointment.CustomerId = null;
+          Filter.CustomerId = null;
       }
     }
 
     /// <summary>
     /// The Appointment this VM is performing CRUD ops on
     /// </summary>
-    public AppointmentFilter Appointment { get; set; }
+    public AppointmentFilter Filter { get; set; } = new AppointmentFilter();
 
     /// <summary>
     /// Filtered Customers
@@ -368,12 +369,19 @@ namespace SharpSchedule.ViewModels.DialogViewModels
 
     public Action CloseAction { get; set; }
 
-    public ICommand Month { get; }
-
-    public ICommand Week { get; }
-
-    public ICommand Filter { get; }
-
+    /// <summary>
+    /// Command to Filter by Month as requested 
+    /// by Requirement D. in Customer Requirements
+    /// </summary>
+    public ICommand MonthFilter { get; }
+    /// <summary>
+    /// Command to Filter by Week as requested 
+    /// by Requirement D. in Customer Requirements
+    /// </summary>
+    public ICommand WeekFilter { get; }
+    /// <summary>
+    /// Searches Current Customers by their Name
+    /// </summary>
     public ICommand SearchCustomers { get; }
 
     public AppointmentFilterVM(ICustomerRepository customerRepository, Action action)
@@ -390,11 +398,13 @@ namespace SharpSchedule.ViewModels.DialogViewModels
       Contact = string.Empty;
       Type = string.Empty;
       URL = string.Empty;
-      Start = DateTime.Now;
-      End = DateTime.Now.AddHours(1);
-      Start = DateTime.Now;
+      Start = null;
+      End = null;
+      Start = null;
       CustomerSelected = null;
 
+      MonthFilter = new MonthFilterCommand(this);
+      WeekFilter = new WeekFilterCommand(this);
       SearchCustomers = new SearchCustomersCommand(this);
     }
 
@@ -408,8 +418,8 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         if (t.Exception == null)
         {
           AllCustomers = t.Result;
-          foreach (Customer address in AllCustomers)
-            Customers.Add(address);
+          foreach (Customer customer in AllCustomers)
+            Customers.Add(customer);
         }
       }).ConfigureAwait(true);
     }
@@ -417,11 +427,11 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     public AppointmentFilter DBFilter()
     {
       if (Start.HasValue && StartValid)
-        Appointment.Start = Start.Value.ToUniversalTime();
+        Filter.Start = Start.Value;
       if (End.HasValue && EndValid)
-        Appointment.End = End.Value.ToUniversalTime();
+        Filter.End = End.Value;
 
-      return Appointment;
+      return Filter;
     }
 
     public void Close()

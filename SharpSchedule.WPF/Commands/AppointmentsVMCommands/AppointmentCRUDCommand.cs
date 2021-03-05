@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using SharpSchedule.ViewModels.DialogViewModels;
 
-namespace SharpSchedule.Commands.CustomersVMCommands
+namespace SharpSchedule.Commands.AppointmentsVMCommands
 {
   public class AppointmentCRUDCommand : ICommand
   {

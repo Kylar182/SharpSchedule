@@ -8,7 +8,7 @@ using SharpSchedule.ViewModels;
 using SharpSchedule.ViewModels.DialogViewModels;
 using SharpSchedule.Views.Dialogs;
 
-namespace SharpSchedule.Commands.CustomersVMCommands
+namespace SharpSchedule.Commands.AppointmentsVMCommands
 {
   public class UpdateAppointmentCommand : ICommand
   {
@@ -50,7 +50,7 @@ namespace SharpSchedule.Commands.CustomersVMCommands
         if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
           _appointmentsVM.Load().ConfigureAwait(true);
 
-        _appointmentsVM.SearchAppointments.Execute(string.Empty);
+        _appointmentsVM.Refresh();
       }
     }
 

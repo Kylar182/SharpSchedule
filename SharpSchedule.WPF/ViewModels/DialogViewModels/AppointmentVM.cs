@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using SharpSchedule.Commands.AppointmentsVMCommands;
 using SharpSchedule.Commands.CustomersVMCommands;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Scheduling;
@@ -461,8 +462,8 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         if (t.Exception == null)
         {
           AllCustomers = t.Result;
-          foreach (Customer address in AllCustomers)
-            Customers.Add(address);
+          foreach (Customer customer in AllCustomers)
+            Customers.Add(customer);
         }
       }).ConfigureAwait(true);
     }

@@ -110,6 +110,8 @@ namespace SharpSchedule.Controls
 
           Input = date;
         }
+        else
+          Input = inputDateBind.SelectedDate;
       }
       else
         Input = null;
@@ -117,7 +119,7 @@ namespace SharpSchedule.Controls
 
     private void inputHourBind_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      if (Input.HasValue)
+      if (Input.HasValue && Input.Value.Hour != inputHourBind.SelectedIndex)
       {
         DateTime date = Input.Value.Date;
 
@@ -132,7 +134,7 @@ namespace SharpSchedule.Controls
 
     private void inputMinuteBind_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      if (Input.HasValue)
+      if (Input.HasValue && Input.Value.Minute != inputMinuteBind.SelectedIndex)
       {
         DateTime date = Input.Value.Date;
 
@@ -149,12 +151,13 @@ namespace SharpSchedule.Controls
     {
       if (Input.HasValue)
       {
-        inputDateBind.Text = Input.Value.ToShortDateString();
-        inputHourBind.SelectedIndex = Input.Value.Hour;
-        inputMinuteBind.SelectedIndex = Input.Value.Minute;
+        DateTime temp = Input.Value;
+        inputDateBind.SelectedDate = temp;
+        inputHourBind.SelectedIndex = temp.Hour;
+        inputMinuteBind.SelectedIndex = temp.Minute;
       }
       else
-        inputDateBind.Text = string.Empty;
+        inputDateBind.SelectedDate = null;
     }
 
     private void UpdateHelperText()
