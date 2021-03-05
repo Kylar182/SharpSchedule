@@ -110,7 +110,7 @@ namespace SharpSchedule.Controls
 
           Input = date;
         }
-        else
+        else if (!date.HasValue)
           Input = inputDateBind.SelectedDate;
       }
       else
