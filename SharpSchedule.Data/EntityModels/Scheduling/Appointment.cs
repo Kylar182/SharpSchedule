@@ -6,7 +6,7 @@ using SharpSchedule.Data.Validation;
 namespace SharpSchedule.Data.EntityModels.Scheduling
 {
   /// <summary>
-  /// Appointment that the user Schedules with Customers
+  /// Appointment that a user Schedules with Customers
   /// </summary>
   [Table("appointment")]
   public class Appointment : BaseModel

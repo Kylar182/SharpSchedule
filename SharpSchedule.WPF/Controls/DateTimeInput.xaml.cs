@@ -79,12 +79,17 @@ namespace SharpSchedule.Controls
       InitializeComponent();
       Valid = false;
       UpdateValidColor();
-
+      
       int iHour = 0;
       while (iHour < 24)
       {
         int hour = iHour > 12 ? iHour - 12 : iHour;
-        inputHourBind.Items.Add($"{hour:00}");
+
+        if (iHour == 0)
+          hour = 12;
+
+        string meridiem = iHour > 11 ? "pm" : "am";
+        inputHourBind.Items.Add($"{hour:0} {meridiem}");
         iHour++;
       }
 

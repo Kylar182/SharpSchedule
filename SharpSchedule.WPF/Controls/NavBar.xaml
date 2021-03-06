@@ -48,12 +48,12 @@
       <RadioButton Grid.Column="0" Content="Home" Command="{Binding UpdateCurrentVM}" 
                    CommandParameter="{x:Static nav:ViewType.Home}"  Padding="10, 10, 10, 5"
                    IsChecked="{Binding Navigator.CurrentVM, Mode=OneWay, Converter={StaticResource EqualTo}, ConverterParameter={x:Type vms:HomeVM}}" />
-      <RadioButton Grid.Column="1" Content="Customers" Command="{Binding UpdateCurrentVM}" 
-                   CommandParameter="{x:Static nav:ViewType.Customers}"  Padding="10, 10, 10, 5"
-                   IsChecked="{Binding Navigator.CurrentVM, Mode=OneWay, Converter={StaticResource EqualTo}, ConverterParameter={x:Type vms:CustomersVM}}" />
-      <RadioButton Grid.Column="2" Content="Appointments" Command="{Binding UpdateCurrentVM}" 
+      <RadioButton Grid.Column="1" Content="Appointments" Command="{Binding UpdateCurrentVM}" 
                    CommandParameter="{x:Static nav:ViewType.Appointments}"  Padding="10, 10, 10, 5"
                    IsChecked="{Binding Navigator.CurrentVM, Mode=OneWay, Converter={StaticResource EqualTo}, ConverterParameter={x:Type vms:AppointmentsVM}}" />
+      <RadioButton Grid.Column="2" Content="Customers" Command="{Binding UpdateCurrentVM}" 
+                   CommandParameter="{x:Static nav:ViewType.Customers}"  Padding="10, 10, 10, 5"
+                   IsChecked="{Binding Navigator.CurrentVM, Mode=OneWay, Converter={StaticResource EqualTo}, ConverterParameter={x:Type vms:CustomersVM}}" />
       <RadioButton Grid.Column="3" Content="Addresses" Command="{Binding UpdateCurrentVM}" 
                    CommandParameter="{x:Static nav:ViewType.Addresses}"  Padding="10, 10, 10, 5"
                    IsChecked="{Binding Navigator.CurrentVM, Mode=OneWay, Converter={StaticResource EqualTo}, ConverterParameter={x:Type vms:AddressesVM}}" />

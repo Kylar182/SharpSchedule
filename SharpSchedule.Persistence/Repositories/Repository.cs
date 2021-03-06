@@ -17,9 +17,9 @@ namespace SharpSchedule.Persistence.Repositories
   {
     protected DbContextFactory _contextFactory;
 
-    public Repository(DbContextFactory _contextFactor)
+    public Repository(DbContextFactory contextFactory)
     {
-      _contextFactory = _contextFactor;
+      _contextFactory = contextFactory;
     }
 
     public virtual async Task<List<T>> GetAll()

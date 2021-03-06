@@ -16,7 +16,9 @@ namespace SharpSchedule.ViewModels
     public ICommand UpdateCurrentVM { get; }
     public ICommand LogoutCommand { get; }
 
-    public MainVM(INavigator navigator, IAuthService authService, IRootVMFactory vmFactory)
+    public MainVM(INavigator navigator,
+      IAuthService authService,
+      IRootVMFactory vmFactory)
     {
       Navigator = navigator;
       AuthService = authService;

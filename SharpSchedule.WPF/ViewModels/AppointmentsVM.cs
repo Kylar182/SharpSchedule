@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using SharpSchedule.Commands.AppointmentsVMCommands;
+using SharpSchedule.Data.DTOs;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Repositories.Scheduling;
+using SharpSchedule.State;
 
 namespace SharpSchedule.ViewModels
 {
@@ -17,11 +21,12 @@ namespace SharpSchedule.ViewModels
   {
     private readonly IAppointmentRepository _repository;
     private readonly ICustomerRepository _customerRepository;
+    private readonly IStateManager<AppointmentDTO> _state;
     private readonly User _user;
 
-    private Appointment appointment;
+    private AppointmentDTO appointment;
     [Required(ErrorMessage = "Appointment is Required")]
-    public Appointment AppointmentSelected
+    public AppointmentDTO AppointmentSelected
     {
       get => appointment;
       set
@@ -34,13 +39,17 @@ namespace SharpSchedule.ViewModels
     /// <summary>
     /// Filtered Appiontments
     /// </summary>
-    public ObservableCollection<Appointment> Appointments { get; set; } = new ObservableCollection<Appointment>();
+    public ObservableCollection<AppointmentDTO> Appointments { get; set; } = new ObservableCollection<AppointmentDTO>();
 
     /// <summary>
     /// All Appointments currently in the System
     /// </summary>
-    public List<Appointment> AllAppointments { get; set; } = new List<Appointment>();
+    public List<AppointmentDTO> AllAppointments { get; set; } = new List<AppointmentDTO>();
 
+    /// <summary>
+    /// Refreshes the Appointments
+    /// </summary>
+    public ICommand SearchAppointments { get; }
     /// <summary>
     /// Opens the Filter Appointment Dialog
     /// </summary>
@@ -59,17 +68,21 @@ namespace SharpSchedule.ViewModels
     public ICommand DeleteAppointment { get; }
 
     public AppointmentsVM(
-      IAppointmentRepository repository, ICustomerRepository customerRepository, User user)
+      IAppointmentRepository repository,
+      ICustomerRepository customerRepository,
+      IStateManager<AppointmentDTO> state,
+      User user)
     {
       _repository = repository;
       _customerRepository = customerRepository;
+      _state = state;
       _user = user;
 
-      Appointments = new ObservableCollection<Appointment>();
       Load().ConfigureAwait(true);
 
       AppointmentSelected = null;
 
+      SearchAppointments = new SearchAppointmentsCommand(this);
       FilterAppointments = new FilterAppointmentsCommand(this, _customerRepository);
       NewAppointment = new NewAppointmentCommand(this, _repository, _customerRepository, _user);
       UpdateAppointment = new UpdateAppointmentCommand(this, _repository, _customerRepository, _user);
@@ -85,33 +98,24 @@ namespace SharpSchedule.ViewModels
       {
         if (t.Exception == null)
         {
-          AllAppointments = t.Result;
+          List<Appointment> transfer = t.Result;
 
           Appointments.Clear();
 
-          foreach (Appointment appointment in AllAppointments)
+          foreach (Appointment appointment in transfer)
           {
-            appointment.Start = appointment.Start.ToLocalTime();
-            appointment.End = appointment.End.ToLocalTime();
-            Appointments.Add(appointment);
+            AllAppointments.Add(new AppointmentDTO(appointment));
+
+            AppointmentDTO dto = new AppointmentDTO(appointment);
+            dto.Start = dto.Start.ToLocalTime();
+            dto.End = dto.End.ToLocalTime();
+
+            Appointments.Add(dto);
           }
+
+          _state.SetState(Appointments.Where(pr => pr.Start >= DateTime.Now).ToList());
         }
       }).ConfigureAwait(true);
-    }
-
-    /// <summary>
-    /// Refresh's the Appointments in the View
-    /// </summary>
-    public void Refresh()
-    {
-      Appointments.Clear();
-
-      foreach (Appointment appointment in AllAppointments)
-      {
-        appointment.Start = appointment.Start.ToLocalTime();
-        appointment.End = appointment.End.ToLocalTime();
-        Appointments.Add(appointment);
-      }
     }
   }
 }

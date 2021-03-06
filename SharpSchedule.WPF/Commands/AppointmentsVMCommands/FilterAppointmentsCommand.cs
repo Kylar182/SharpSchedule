@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using SharpSchedule.Data.DTOs;
 using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Extensions;
 using SharpSchedule.Data.Repositories.Scheduling;
@@ -40,7 +41,7 @@ namespace SharpSchedule.Commands.AppointmentsVMCommands
 
       if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
       {
-        List<Appointment> Filtered = _appointmentsVM.AllAppointments;
+        List<AppointmentDTO> Filtered = _appointmentsVM.AllAppointments;
 
         VM.Filter = VM.DBFilter();
 
@@ -63,21 +64,22 @@ namespace SharpSchedule.Commands.AppointmentsVMCommands
           Filtered = Filtered.Where(pr => pr.URL.Contains(VM.Filter.URL)).ToList();
 
         if (VM.Filter.Start.HasValue)
-          Filtered = Filtered.Where(pr => pr.Start >= VM.Filter.Start.Value).ToList();
+          Filtered = Filtered.Where(pr => pr.Start >= VM.Filter.Start.Value.ToUniversalTime()).ToList();
 
         if (VM.Filter.End.HasValue)
-          Filtered = Filtered.Where(pr => pr.End <= VM.Filter.End.Value).ToList();
+          Filtered = Filtered.Where(pr => pr.End <= VM.Filter.End.Value.ToUniversalTime()).ToList();
 
         if (VM.Filter.CustomerId != null)
           Filtered = Filtered.Where(pr => pr.CustomerId == VM.Filter.CustomerId).ToList();
 
         _appointmentsVM.Appointments.Clear();
 
-        foreach (Appointment appointment in Filtered)
+        foreach (AppointmentDTO dto in Filtered)
         {
-          appointment.Start = appointment.Start.ToLocalTime();
-          appointment.End = appointment.End.ToLocalTime();
-          _appointmentsVM.Appointments.Add(appointment);
+          AppointmentDTO transfer = dto;
+          transfer.Start = transfer.Start.ToLocalTime();
+          transfer.End = transfer.End.ToLocalTime();
+          _appointmentsVM.Appointments.Add(transfer);
         }
       }
     }

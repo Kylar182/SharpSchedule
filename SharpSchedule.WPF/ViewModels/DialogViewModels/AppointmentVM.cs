@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using SharpSchedule.Commands.AppointmentsVMCommands;
 using SharpSchedule.Commands.CustomersVMCommands;
+using SharpSchedule.Data.DTOs;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Repositories.Scheduling;
@@ -71,7 +72,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(TitleValid));
 
         if (TitleValid)
-          Appointment.Title = value;
+          DTO.Title = value;
       }
     }
 
@@ -107,7 +108,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(DescriptionValid));
 
         if (DescriptionValid)
-          Appointment.Description = value;
+          DTO.Description = value;
       }
     }
 
@@ -143,7 +144,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(LocationValid));
 
         if (LocationValid)
-          Appointment.Location = value;
+          DTO.Location = value;
       }
     }
 
@@ -179,7 +180,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(ContactValid));
 
         if (ContactValid)
-          Appointment.Contact = value;
+          DTO.Contact = value;
       }
     }
 
@@ -215,7 +216,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(TypeValid));
 
         if (TypeValid)
-          Appointment.Type = value;
+          DTO.Type = value;
       }
     }
 
@@ -252,7 +253,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(URLValid));
 
         if (URLValid)
-          Appointment.URL = value;
+          DTO.URL = value;
       }
     }
 
@@ -295,7 +296,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         ValidateProp(value);
 
         if (StartValid)
-          Appointment.Start = value.ToUniversalTime();
+          DTO.Start = value.ToUniversalTime();
       }
     }
 
@@ -338,7 +339,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         ValidateProp(value);
 
         if (EndValid)
-          Appointment.End = value.ToUniversalTime();
+          DTO.End = value.ToUniversalTime();
       }
     }
 
@@ -373,7 +374,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(CustomerSelected));
 
         if (!PropHasErrors(nameof(CustomerSelected)))
-          Appointment.CustomerId = value.Id;
+          DTO.CustomerId = value.Id;
       }
     }
 
@@ -394,12 +395,12 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     public ICommand SearchCustomers { get; }
 
     /// <summary>
-    /// The Appointment this VM is performing CRUD ops on
+    /// DTO for the Appointment this VM is performing CRUD ops on
     /// </summary>
-    public Appointment Appointment { get; set; }
+    public AppointmentDTO DTO { get; set; }
 
     public AppointmentVM(IAppointmentRepository repository, ICustomerRepository customerRepository,
-                    CUD cud, Action action, User user, Appointment appointment = null)
+                    CUD cud, Action action, User user, AppointmentDTO appointment = null)
     {
       _repository = repository;
       _customerRepository = customerRepository;
@@ -413,22 +414,22 @@ namespace SharpSchedule.ViewModels.DialogViewModels
 
       if (appointment != null)
       {
-        Appointment = appointment;
-        Appointment.LastUpdatedBy = user.Username;
-        Title = Appointment.Title;
-        Description = Appointment.Description;
-        Location = Appointment.Location;
-        Contact = Appointment.Contact;
-        Type = Appointment.Type;
-        URL = Appointment.URL;
-        Start = Appointment.Start;
-        End = Appointment.End;
-        Start = Appointment.Start;
+        DTO = appointment;
+        DTO.LastUpdatedBy = user.Username;
+        Title = DTO.Title;
+        Description = DTO.Description;
+        Location = DTO.Location;
+        Contact = DTO.Contact;
+        Type = DTO.Type;
+        URL = DTO.URL;
+        Start = DTO.Start;
+        End = DTO.End;
+        Start = DTO.Start;
         CustomerSelected = AllCustomers.Where(pr => pr.Id == appointment.CustomerId).First();
       }
       else
       {
-        Appointment = new Appointment
+        DTO = new AppointmentDTO
         {
           CreatedBy = user.Username,
           CreateDate = DateTime.UtcNow,
@@ -470,31 +471,26 @@ namespace SharpSchedule.ViewModels.DialogViewModels
 
     public async Task DBUpdate()
     {
-      Appointment.Start = Start.ToUniversalTime();
-      Appointment.End = End.ToUniversalTime();
-      Appointment.LastUpdate = DateTime.UtcNow;
-      Appointment.Customer = null;
+      DTO.Start = Start.ToUniversalTime();
+      DTO.End = End.ToUniversalTime();
+      DTO.LastUpdate = DateTime.UtcNow;
+      DTO.Customer = null;
 
       switch (_cud)
       {
         case CUD.Create:
-          await _repository.Create(Appointment).ConfigureAwait(true);
-          Close();
+          await _repository.Create(DTO.ToAppointment()).ConfigureAwait(true);
+          CloseAction?.Invoke();
           break;
         case CUD.Update:
-          await _repository.Update(Appointment).ConfigureAwait(true);
-          Close();
+          await _repository.Update(DTO.ToAppointment()).ConfigureAwait(true);
+          CloseAction?.Invoke();
           break;
         case CUD.Delete:
-          await _repository.Delete(Appointment.Id).ConfigureAwait(true);
-          Close();
+          await _repository.Delete(DTO.Id).ConfigureAwait(true);
+          CloseAction?.Invoke();
           break;
       };
-    }
-
-    public void Close()
-    {
-      CloseAction();
     }
   }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
+using SharpSchedule.Data.DTOs;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.Models;
@@ -43,9 +45,11 @@ namespace SharpSchedule.Commands.AppointmentsVMCommands
       bool? result = dialog.ShowDialog();
 
       if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
+      {
         _appointmentsVM.Load().ConfigureAwait(true);
 
-      _appointmentsVM.Refresh();
+        _appointmentsVM.SearchAppointments.Execute(string.Empty);
+      }
     }
   }
 }

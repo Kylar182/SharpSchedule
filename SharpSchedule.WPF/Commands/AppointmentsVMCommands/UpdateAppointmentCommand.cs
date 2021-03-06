@@ -48,9 +48,11 @@ namespace SharpSchedule.Commands.AppointmentsVMCommands
         bool? result = dialog.ShowDialog();
 
         if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
+        {
           _appointmentsVM.Load().ConfigureAwait(true);
 
-        _appointmentsVM.Refresh();
+          _appointmentsVM.SearchAppointments.Execute(string.Empty);
+        }
       }
     }
 

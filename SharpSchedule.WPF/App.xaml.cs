@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
+using SharpSchedule.Data.DTOs;
 using SharpSchedule.Data.EntityModels.Locations;
 using SharpSchedule.Data.Repositories;
 using SharpSchedule.Data.Repositories.Location;
@@ -11,6 +12,7 @@ using SharpSchedule.Persistence.Repositories.Location;
 using SharpSchedule.Persistence.Repositories.Scheduling;
 using SharpSchedule.Services;
 using SharpSchedule.Services.Interfaces;
+using SharpSchedule.State;
 using SharpSchedule.State.Navigators;
 using SharpSchedule.ViewModels;
 using SharpSchedule.ViewModels.Factories;
@@ -52,6 +54,7 @@ namespace SharpSchedule
       services.AddSingleton<IVMFactory<AddressesVM>, AddressesVMFactory>();
       services.AddSingleton<IVMFactory<LoginVM>, LoginVMFactory>();
 
+      services.AddSingleton<IStateManager<AppointmentDTO>, AppointmentState>();
       services.AddSingleton<IAuthService, AuthService>();
       services.AddScoped<INavigator, Navigator>();
       services.AddScoped<MainVM>();
