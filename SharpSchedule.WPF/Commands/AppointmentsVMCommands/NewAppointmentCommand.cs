@@ -47,8 +47,8 @@ namespace SharpSchedule.Commands.AppointmentsVMCommands
       List<User> users = await _userRepository.GetAll();
       List<Customer> customers = await _customerRepository.GetAll();
 
-      AppointmentVM VM = new AppointmentVM(_repository, CUD.Create,
-                              new Action(() => dialog.Close()), _user, users, customers);
+      AppointmentVM VM = new AppointmentVM(_repository, CUD.Create, new Action(() => dialog.Close()), 
+                                                  _user, users, customers, _appointmentsVM.AllAppointments);
       dialog.DataContext = VM;
       bool? result = dialog.ShowDialog();
 

@@ -271,18 +271,22 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     /// </summary>
     public bool URLValid => !PropHasErrors(nameof(URL));
 
+    public bool Conflict => TimeConflict();
+
     private DateTime start;
     /// <summary>
     /// Start Time of the Appointment
     /// </summary>
+    [TimeConflict(nameof(Start))]
     [MinBusinessHours(nameof(Start), nameof(End))]
     public DateTime Start
     {
       get => start;
       set
       {
-        ValidateProp(value);
         start = value;
+
+        ValidateProp(value);
         OnPropChanged(nameof(Start));
         OnPropChanged(nameof(StartText));
         OnPropChanged(nameof(StartValid));
@@ -293,6 +297,8 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(EndValid));
 
         ValidateProp(value);
+        OnPropChanged(nameof(StartText));
+        OnPropChanged(nameof(StartValid));
 
         if (StartValid)
           DTO.Start = value.ToUniversalTime();
@@ -318,14 +324,16 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     /// <summary>
     /// End Time of the Appointment
     /// </summary>
+    [TimeConflict(nameof(End))]
     [MaxBusinessHours(nameof(End), nameof(Start))]
     public DateTime End
     {
       get => end;
       set
       {
-        ValidateProp(value);
         end = value;
+
+        ValidateProp(value);
         OnPropChanged(nameof(End));
         OnPropChanged(nameof(EndText));
         OnPropChanged(nameof(EndValid));
@@ -336,6 +344,8 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(StartValid));
 
         ValidateProp(value);
+        OnPropChanged(nameof(EndText));
+        OnPropChanged(nameof(EndValid));
 
         if (EndValid)
           DTO.End = value.ToUniversalTime();
@@ -393,7 +403,19 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         OnPropChanged(nameof(ConsultantSelected));
 
         if (!PropHasErrors(nameof(ConsultantSelected)))
+        {
+          OnPropChanged(nameof(End));
+          ValidateProp(End, nameof(End));
+          OnPropChanged(nameof(EndText));
+          OnPropChanged(nameof(EndValid));
+
+          OnPropChanged(nameof(Start));
+          ValidateProp(Start, nameof(Start));
+          OnPropChanged(nameof(StartText));
+          OnPropChanged(nameof(StartValid));
+
           DTO.UserId = value.Id;
+        }
       }
     }
 
@@ -440,11 +462,18 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     /// </summary>
     public AppointmentDTO DTO { get; set; }
 
+    /// <summary>
+    /// List of All Appointments in the Database 
+    /// (other than this Appointment) as DTOs
+    /// </summary>
+    public List<AppointmentDTO> DTOs { get; set; }
+
     public AppointmentVM(
       IAppointmentRepository repository,
       CUD cud, Action action, User user,
       List<User> allUsers,
       List<Customer> allCustomers,
+      List<AppointmentDTO> dtos,
       AppointmentDTO appointment = null)
     {
       _repository = repository;
@@ -463,6 +492,8 @@ namespace SharpSchedule.ViewModels.DialogViewModels
 
       foreach (Customer customer in AllCustomers)
         Customers.Add(customer);
+
+      DTOs = dtos;
 
       if (appointment != null)
       {
@@ -505,6 +536,22 @@ namespace SharpSchedule.ViewModels.DialogViewModels
       CRUDCommand = new AppointmentCRUDCommand(this);
       SearchCustomers = new SearchCustomersCommand(this);
       SearchUsers = new SearchUsersCommand(this);
+    }
+
+    private bool TimeConflict()
+    {
+      if (ConsultantSelected == null) return false;
+
+      foreach (AppointmentDTO dto in DTOs.Where(pr => pr.UserId == ConsultantSelected.Id))
+      {
+        if (Start.ToUniversalTime().Ticks < dto.End.Ticks && Start.ToUniversalTime().Ticks > dto.Start.Ticks)
+          return true;
+
+        if (End.ToUniversalTime().Ticks > dto.Start.Ticks && End.ToUniversalTime().Ticks < dto.End.Ticks)
+          return true;
+      }
+
+      return false;
     }
 
     public async Task DBUpdate()
