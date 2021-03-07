@@ -14,18 +14,18 @@ namespace SharpSchedule.Commands
     private readonly LoginVM _loginVM;
     private readonly IAuthService _authService;
     private readonly INavigator _navigator;
-    private readonly IVMFactory<HomeVM> _homeFactory;
+    private readonly IVMFactory<AppointmentsVM> _appointmentVMFactory;
 
     public LoginCommand(
       LoginVM loginVM,
       IAuthService authService,
       INavigator navigator,
-      IVMFactory<HomeVM> homeFactory)
+      IVMFactory<AppointmentsVM> appointmentVMFactory)
     {
       _loginVM = loginVM;
       _authService = authService; ;
       _navigator = navigator;
-      _homeFactory = homeFactory;
+      _appointmentVMFactory = appointmentVMFactory;
 
       _loginVM.PropertyChanged += ErrorsChanged;
     }
@@ -53,7 +53,7 @@ namespace SharpSchedule.Commands
             break;
           case true:
             _loginVM.Message = "Success";
-            _navigator.CurrentVM = _homeFactory.CreateVM();
+            _navigator.CurrentVM = _appointmentVMFactory.CreateVM();
             break;
         }
       }

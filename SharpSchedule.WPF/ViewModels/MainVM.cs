@@ -1,6 +1,13 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using SharpSchedule.Commands;
+using SharpSchedule.Data.DTOs;
+using SharpSchedule.Data.EntityModels.Scheduling;
+using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.Services.Interfaces;
+using SharpSchedule.State;
 using SharpSchedule.State.Navigators;
 using SharpSchedule.ViewModels.Factories;
 
@@ -11,15 +18,22 @@ namespace SharpSchedule.ViewModels
   /// </summary>
   public class MainVM : ViewModelBase
   {
+    private readonly IStateManager<AppointmentDTO> _state;
+
     public INavigator Navigator { get; set; }
     public IAuthService AuthService { get; }
     public ICommand UpdateCurrentVM { get; }
     public ICommand LogoutCommand { get; }
 
-    public MainVM(INavigator navigator,
+    public MainVM(
+      IAppointmentRepository repository,
+      IStateManager<AppointmentDTO> state,
+      INavigator navigator,
       IAuthService authService,
       IRootVMFactory vmFactory)
     {
+      _state = state;
+
       Navigator = navigator;
       AuthService = authService;
 

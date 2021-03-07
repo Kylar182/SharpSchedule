@@ -14,36 +14,36 @@ namespace SharpSchedule.ViewModels
   /// </summary>
   public class HomeVM : ViewModelBase
   {
-    private readonly IAppointmentRepository _repository;
+    //private readonly IAppointmentRepository _repository;
     private readonly IStateManager<AppointmentDTO> _state;
 
     public HomeVM(
-      IAppointmentRepository repository,
+      //IAppointmentRepository repository,
       IStateManager<AppointmentDTO> state)
     {
-      _repository = repository;
+      //_repository = repository;
       _state = state;
 
-      LoadState().ConfigureAwait(true);
+      //LoadState().ConfigureAwait(true);
     }
 
-    private async Task LoadState()
-    {
-      List<AppointmentDTO> dtos = _state.GetState();
-      if (dtos == null || !dtos.Any())
-      {
-        List<Appointment> state = await _repository.Current();
+    //private async Task LoadState()
+    //{
+    //  List<AppointmentDTO> dtos = _state.GetState();
+    //  if (dtos == null || !dtos.Any())
+    //  {
+    //    List<Appointment> state = await _repository.Current();
 
-        foreach (Appointment appointment in state)
-        {
-          AppointmentDTO dto = new AppointmentDTO(appointment);
-          dto.Start = dto.Start.ToLocalTime();
-          dto.End = dto.End.ToLocalTime();
-          dtos.Add(dto);
-        }
+    //    foreach (Appointment appointment in state)
+    //    {
+    //      AppointmentDTO dto = new AppointmentDTO(appointment);
+    //      dto.Start = dto.Start.ToLocalTime();
+    //      dto.End = dto.End.ToLocalTime();
+    //      dtos.Add(dto);
+    //    }
 
-        _state.SetState(dtos);
-      }
-    }
+    //    _state.SetState(dtos);
+    //  }
+    //}
   }
 }

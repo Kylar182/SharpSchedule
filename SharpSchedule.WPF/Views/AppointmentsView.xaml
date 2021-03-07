@@ -45,7 +45,7 @@
         <DataGridTextColumn Header="Location" Width=".5*" Binding="{Binding Location}" />
         <DataGridTextColumn Header="Customer" Width=".5*" Binding="{Binding Customer.Name}" />
         <DataGridTextColumn Header="Contact" Width=".35*" Binding="{Binding Contact}" />
-        <DataGridTextColumn Header="Consultant" Width=".5*" Binding="{Binding User.Username}" />
+        <DataGridTextColumn Header="Consultant" Width=".35*" Binding="{Binding User.Username}" />
         <DataGridTextColumn Header="Date" Width=".35*" Binding="{Binding Start}" />
       </DataGrid.Columns>
     </DataGrid>

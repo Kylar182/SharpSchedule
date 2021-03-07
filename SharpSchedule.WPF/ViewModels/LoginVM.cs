@@ -96,20 +96,23 @@ namespace SharpSchedule.ViewModels
       }
     }
 
+    /// <summary>
+    /// Command to Attempt User Login
+    /// </summary>
     public ICommand LoginCommand { get; }
 
     private readonly IAuthService _authService;
     private readonly INavigator _navigator;
-    private readonly IVMFactory<HomeVM> _homeFactory;
+    private readonly IVMFactory<AppointmentsVM> _appointmentVMFactory;
 
-    public LoginVM(IAuthService authService, INavigator navigator, IVMFactory<HomeVM> homeFactory)
+    public LoginVM(IAuthService authService, INavigator navigator, IVMFactory<AppointmentsVM> appointmentVMFactory)
     {
       _authService = authService;
       _navigator = navigator;
-      _homeFactory = homeFactory;
+      _appointmentVMFactory = appointmentVMFactory;
       Username = string.Empty;
       Password = string.Empty;
-      LoginCommand = new LoginCommand(this, _authService, _navigator, _homeFactory);
+      LoginCommand = new LoginCommand(this, _authService, _navigator, _appointmentVMFactory);
 
       Message = "Login to start Scheduling";
     }
