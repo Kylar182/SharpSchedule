@@ -6,13 +6,16 @@
         xmlns:controls="clr-namespace:SharpSchedule.Controls"
         xmlns:local="clr-namespace:SharpSchedule.Views.Dialogs"
         mc:Ignorable="d" 
-        Height="500" Width="800"
+        Height="500" Width="850"
         Title="{Binding WindowLabel}">
 
   <Grid Background="{StaticResource Grey15}">
     <Grid.ColumnDefinitions>
+      <ColumnDefinition Width=".05*" />
       <ColumnDefinition Width="*" />
+      <ColumnDefinition Width=".05*" />
       <ColumnDefinition Width="2*" />
+      <ColumnDefinition Width=".05*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height=".75*" />
@@ -23,10 +26,10 @@
       <DropShadowEffect BlurRadius="15" Color="{StaticResource Grey15Color}" Direction="270" />
     </Grid.Effect>
 
-    <Label Content="{Binding WindowLabel}" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+    <Label Grid.Column="1" Content="{Binding WindowLabel}" HorizontalAlignment="Left" VerticalAlignment="Bottom"
            FontSize="24" Margin="0, 5" />
 
-    <Grid Grid.Row="1">
+    <Grid Grid.Column="1" Grid.Row="1">
       <Grid.RowDefinitions>
         <RowDefinition Height="auto" />
         <RowDefinition Height="*" />
@@ -53,18 +56,26 @@
       </Grid>
     </Grid>
 
-    <Button Grid.Column="1" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchCountries}"
+    <Grid Grid.Column="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Button Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchCountries}"
             CommandParameter="{Binding Text, ElementName=Country_Search}" 
             IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
 
-    <TextBox Name="Country_Search" Grid.Column="1" Margin="75, 5, 0, 5" FontSize="16" 
-             HorizontalAlignment="Center" Width="200"
-             IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+      <TextBox Grid.Column="1" Name="Country_Search" Margin="25, 5, 0, 5" FontSize="16"
+               HorizontalAlignment="Center" Width="200"
+               IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 
-    <Label Grid.Column="1" Content="Countries" HorizontalAlignment="Left" 
+    </Grid>
+
+    <Label Grid.Column="3" Content="Countries" HorizontalAlignment="Left" 
            VerticalAlignment="Bottom" FontSize="24" Margin="0, 5" />
 
-    <DataGrid Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" x:Name="CountryGrid" 
+    <DataGrid Grid.Row="1" Grid.Column="3" AutoGenerateColumns="False" x:Name="CountryGrid" 
               IsReadOnly="True" SelectionMode="Single" ItemsSource="{Binding Countries}"
               SelectedItem="{Binding CountrySelected, Mode=TwoWay}" 
               IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">

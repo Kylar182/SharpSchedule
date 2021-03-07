@@ -11,8 +11,10 @@
 
   <Grid Background="{StaticResource Grey15}">
     <Grid.ColumnDefinitions>
+      <ColumnDefinition Width=".05*" />
       <ColumnDefinition Width="*" />
       <ColumnDefinition Width="1.25*" />
+      <ColumnDefinition Width=".05*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height=".75*" />
@@ -23,10 +25,10 @@
       <DropShadowEffect BlurRadius="15" Color="{StaticResource Grey15Color}" Direction="270" />
     </Grid.Effect>
 
-    <Label Content="{Binding WindowLabel}" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+    <Label Grid.Column="1" Content="{Binding WindowLabel}" HorizontalAlignment="Left" VerticalAlignment="Bottom"
            FontSize="24" Margin="0, 5" />
 
-    <Grid Grid.Row="1">
+    <Grid Grid.Column="1" Grid.Row="1">
       <Grid.RowDefinitions>
         <RowDefinition Height="auto" />
         <RowDefinition Height="auto" />
@@ -44,7 +46,7 @@
         IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:BindableInput>
 
-      <controls:BindableInput Margin="25" Grid.Column="1"
+      <controls:BindableInput Margin="25" Grid.Column="2"
         Input="{Binding Address2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding Address2Text, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
         Valid="{Binding Address2Valid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
@@ -58,13 +60,12 @@
         IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:BindableInput>
 
-      <controls:BindableInput Margin="25" Grid.Column="1" Grid.Row="1"
+      <controls:BindableInput Margin="25" Grid.Column="2" Grid.Row="1"
         Input="{Binding Phone, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         HelperText="{Binding PhoneText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
         Valid="{Binding PhoneValid, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
         IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
       </controls:BindableInput>
-
 
       <Grid Grid.Row="4" Grid.ColumnSpan="2">
         <Grid.ColumnDefinitions>
@@ -80,18 +81,26 @@
       </Grid>
     </Grid>
 
-    <Button Grid.Column="1" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchCities}"
+    <Grid Grid.Column="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Button Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchCities}"
             CommandParameter="{Binding Text, ElementName=City_Search}"
             IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 
-    <TextBox Name="City_Search" Grid.Column="1" Margin="75, 5, 0, 5" FontSize="16" 
+      <TextBox Name="City_Search" Grid.Column="1" Margin="75, 5, 0, 5" FontSize="16" 
              HorizontalAlignment="Center" Width="200"
              IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
 
-    <Label Grid.Column="1" Content="Cities" HorizontalAlignment="Left" 
+    </Grid>
+
+    <Label Grid.Column="2" Content="Cities" HorizontalAlignment="Left" 
            VerticalAlignment="Bottom" FontSize="24" Margin="0, 5" />
 
-    <DataGrid Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" x:Name="CityGrid" 
+    <DataGrid Grid.Row="1" Grid.Column="2" AutoGenerateColumns="False" x:Name="CityGrid" 
               IsReadOnly="True" SelectionMode="Single" ItemsSource="{Binding Cities}"
               SelectedItem="{Binding CitySelected, Mode=TwoWay}"
               IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">

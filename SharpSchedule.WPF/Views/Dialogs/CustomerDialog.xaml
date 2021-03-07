@@ -65,14 +65,22 @@
       </Grid>
     </Grid>
 
-    <Button Grid.Column="2" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchAddresses}"
+    <Grid Grid.Column="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Button Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchAddresses}"
             CommandParameter="{Binding Text, ElementName=Address_Search}"
             IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 
-    <TextBox Name="Address_Search" Grid.Column="2" Margin="75, 5, 0, 5" FontSize="16" 
+      <TextBox Name="Address_Search" Grid.Column="2" Margin="75, 5, 0, 5" FontSize="16" 
              HorizontalAlignment="Center" Width="200"
              IsEnabled="{Binding Enabled, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 
+    </Grid>
+    
     <Label Grid.Column="2" Content="Addresses" HorizontalAlignment="Left" 
            VerticalAlignment="Bottom" FontSize="24" Margin="0, 5" />
 

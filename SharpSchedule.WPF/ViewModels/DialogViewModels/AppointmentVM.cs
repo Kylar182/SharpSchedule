@@ -358,6 +358,26 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     /// </summary>
     public bool EndValid => !PropHasErrors(nameof(End));
 
+    private User consultant;
+    /// <summary>
+    /// Consultant of the Appointment
+    /// </summary>
+    [Required(ErrorMessage = "Consultant is Required")]
+    public User ConsultantSelected
+    {
+      get => consultant;
+      set
+      {
+        ValidateProp(value);
+        consultant = value;
+
+        OnPropChanged(nameof(ConsultantSelected));
+
+        if (!PropHasErrors(nameof(ConsultantSelected)))
+          DTO.UserId = value.Id;
+      }
+    }
+
     private Customer customer;
     /// <summary>
     /// Customer of the Appointment
@@ -447,6 +467,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         End = DateTime.Now.AddHours(1);
         Start = DateTime.Now;
         CustomerSelected = null;
+        ConsultantSelected = user;
       }
 
       CRUDCommand = new AppointmentCRUDCommand(this);

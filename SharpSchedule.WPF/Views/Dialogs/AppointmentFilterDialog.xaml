@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:SharpSchedule.Controls"
         xmlns:local="clr-namespace:SharpSchedule.Views.Dialogs"
         mc:Ignorable="d" 
-        Height="700" Width="1200"
+        Height="700" Width="1600"
         Title="{Binding WindowLabel}">
 
   <Grid Background="{StaticResource Grey15}">
@@ -15,6 +15,8 @@
       <ColumnDefinition Width=".5*" />
       <ColumnDefinition Width=".05*" />
       <ColumnDefinition Width=".65*" />
+      <ColumnDefinition Width=".05*" />
+      <ColumnDefinition Width=".35*" />
       <ColumnDefinition Width=".05*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
@@ -109,11 +111,18 @@
               Background="{StaticResource Light}" Click="Dialog_False" />
     </Grid>
 
-    <Button Grid.Column="3" Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchCustomers}"
-            CommandParameter="{Binding Text, ElementName=Customer_Search}" />
+    <Grid Grid.Column="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
 
-    <TextBox Name="Customer_Search" Grid.Column="3" Margin="75, 5, 0, 5" FontSize="16" 
-             HorizontalAlignment="Center" Width="200" />
+      <Button Content="SEARCH" HorizontalAlignment="Right" Command="{Binding SearchCustomers}"
+              CommandParameter="{Binding Text, ElementName=Customer_Search}" />
+
+      <TextBox Grid.Column="1" Name="Customer_Search" Margin="75, 5, 0, 5" FontSize="16" 
+               HorizontalAlignment="Center" Width="200"/>
+    </Grid>
 
     <Label Grid.Column="3" Content="Customers" HorizontalAlignment="Left" 
            VerticalAlignment="Bottom" FontSize="24" Margin="0, 5" />
