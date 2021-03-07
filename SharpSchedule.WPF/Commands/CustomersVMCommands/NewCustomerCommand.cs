@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Windows.Input;
+using System.Threading.Tasks;
 using SharpSchedule.Data.EntityModels;
+using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Repositories.Location;
 using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.Models;
@@ -10,7 +11,7 @@ using SharpSchedule.Views.Dialogs;
 
 namespace SharpSchedule.Commands.CustomersVMCommands
 {
-  public class NewCustomerCommand : ICommand
+  public class NewCustomerCommand : CommandBase
   {
     private readonly CustomersVM _customerVM;
     private readonly ICustomerRepository _repository;
@@ -28,14 +29,7 @@ namespace SharpSchedule.Commands.CustomersVMCommands
       _user = user;
     }
 
-    public event EventHandler CanExecuteChanged;
-
-    public bool CanExecute(object parameter)
-    {
-      return true;
-    }
-
-    public void Execute(object parameter)
+    protected override async Task ExecuteAsync(object parameter)
     {
       CustomerDialog dialog = new CustomerDialog();
       CustomerVM VM = new CustomerVM(_repository, _addressRepository, CUD.Create,
@@ -45,9 +39,12 @@ namespace SharpSchedule.Commands.CustomersVMCommands
 
       if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
       {
-        _customerVM.Load().ConfigureAwait(true);
+        _customerVM.AllCustomers = await _customerVM.GetAll().ConfigureAwait(true);
 
-        _customerVM.SearchCustomers.Execute(string.Empty);
+        _customerVM.Customers.Clear();
+
+        foreach (Customer customer in _customerVM.AllCustomers)
+          _customerVM.Customers.Add(customer);
       }
     }
   }

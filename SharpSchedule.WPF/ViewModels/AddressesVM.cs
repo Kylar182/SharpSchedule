@@ -113,40 +113,59 @@ namespace SharpSchedule.ViewModels
 
     public async Task CityUpdate()
     {
-      ObservableCollection<City> cities = Cities;
+      AllCities = await GetAllCities().ConfigureAwait(true);
+
+      Cities.Clear();
+
+      foreach (City city in AllCities)
+        Cities.Add(city);
+    }
+
+    public async Task AddressUpdate()
+    {
+      AllAddresses = await GetAllAddresses().ConfigureAwait(true);
+
+      Addresses.Clear();
+
+      foreach (Address address in AllAddresses)
+        Addresses.Add(address);
+    }
+
+    /// <summary>
+    /// Gets All Cities from the DB
+    /// </summary>
+    public async Task<List<City>> GetAllCities()
+    {
+      List<City> transfer = new List<City>();
 
       await _cityRepository.GetAll().ContinueWith(t =>
       {
         if (t.Exception == null)
         {
-          AllCities = t.Result;
-
-          cities.Clear();
-          foreach (City city in AllCities)
-            cities.Add(city);
+          transfer = t.Result;
         }
       }).ConfigureAwait(true);
 
-      Cities = cities;
+      return transfer;
     }
 
-    public async Task AddressUpdate()
+    /// <summary>
+    /// Gets All Addresses from the DB
+    /// </summary>
+    public async Task<List<Address>> GetAllAddresses()
     {
-      ObservableCollection<Address> addresses = Addresses;
+      List<Address> transfer = new List<Address>();
 
       await _repository.GetAll().ContinueWith(t =>
       {
         if (t.Exception == null)
         {
-          AllAddresses = t.Result;
-
-          addresses.Clear();
-          foreach (Address address in AllAddresses)
-            addresses.Add(address);
+          transfer = t.Result;
         }
       }).ConfigureAwait(true);
 
-      Addresses = addresses;
+      return transfer;
     }
+
   }
 }

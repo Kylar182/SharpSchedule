@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Windows.Input;
+using System.Threading.Tasks;
 using SharpSchedule.Data.EntityModels;
+using SharpSchedule.Data.EntityModels.Locations;
 using SharpSchedule.Data.Repositories.Location;
 using SharpSchedule.Models;
 using SharpSchedule.ViewModels;
@@ -10,7 +11,7 @@ using SharpSchedule.Views.Dialogs;
 
 namespace SharpSchedule.Commands.AddressVMCommands
 {
-  public class UpdateAddressCommand : ICommand
+  public class UpdateAddressCommand : CommandBase
   {
     private readonly AddressesVM _addressVM;
     private readonly IAddressRepository _repository;
@@ -30,31 +31,33 @@ namespace SharpSchedule.Commands.AddressVMCommands
       _addressVM.PropertyChanged += AddressChanged;
     }
 
-    public event EventHandler CanExecuteChanged;
+    public override event EventHandler CanExecuteChanged;
 
-    public bool CanExecute(object parameter)
+    public override bool CanExecute(object parameter)
     {
       return _addressVM.AddressSelected != null;
     }
 
-    public void Execute(object parameter)
+    protected override async Task ExecuteAsync(object parameter)
     {
       if (_addressVM.AddressSelected != null)
       {
         AddressDialog dialog = new AddressDialog();
         AddressVM VM = new AddressVM(_repository, _cityRepository, CUD.Update,
                                 new Action(() => dialog.Close()), _user, _addressVM.AddressSelected);
+
         dialog.DataContext = VM;
         bool? result = dialog.ShowDialog();
 
         if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
         {
-          _addressVM.AddressUpdate().ConfigureAwait(true);
+          _addressVM.AllAddresses = await _addressVM.GetAllAddresses().ConfigureAwait(true);
 
-          _addressVM.SearchAddresses.Execute(string.Empty);
+          _addressVM.Addresses.Clear();
+
+          foreach (Address address in _addressVM.AllAddresses)
+            _addressVM.Addresses.Add(address);
         }
-
-        _addressVM.AddressSelected = null;
       }
     }
 

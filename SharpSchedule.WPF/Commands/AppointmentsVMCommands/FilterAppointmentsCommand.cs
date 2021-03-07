@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using SharpSchedule.Data.DTOs;
-using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Extensions;
 using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.ViewModels;

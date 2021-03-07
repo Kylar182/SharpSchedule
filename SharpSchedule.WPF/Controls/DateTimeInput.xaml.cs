@@ -79,7 +79,7 @@ namespace SharpSchedule.Controls
       InitializeComponent();
       Valid = false;
       UpdateValidColor();
-      
+
       int iHour = 0;
       while (iHour < 24)
       {

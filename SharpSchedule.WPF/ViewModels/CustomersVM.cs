@@ -69,15 +69,30 @@ namespace SharpSchedule.ViewModels
     /// </summary>
     public async Task Load()
     {
+      AllCustomers = await GetAll().ConfigureAwait(true);
+
+      Customers.Clear();
+
+      foreach (Customer customer in AllCustomers)
+        Customers.Add(customer);
+    }
+
+    /// <summary>
+    /// Gets All Customers from the DB
+    /// </summary>
+    public async Task<List<Customer>> GetAll()
+    {
+      List<Customer> transfer = new List<Customer>();
+
       await _repository.GetAll().ContinueWith(t =>
       {
         if (t.Exception == null)
         {
-          AllCustomers = t.Result;
-          foreach (Customer customer in AllCustomers)
-            Customers.Add(customer);
+          transfer = t.Result;
         }
       }).ConfigureAwait(true);
+
+      return transfer;
     }
   }
 }

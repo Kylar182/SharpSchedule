@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Windows.Input;
+using System.Threading.Tasks;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Locations;
 using SharpSchedule.Data.Repositories;
@@ -11,7 +11,7 @@ using SharpSchedule.Views.Dialogs;
 
 namespace SharpSchedule.Commands.AddressVMCommands
 {
-  public class NewCityCommand : ICommand
+  public class NewCityCommand : CommandBase
   {
     private readonly AddressesVM _addressVM;
     private readonly ICityRepository _cityRepository;
@@ -29,14 +29,7 @@ namespace SharpSchedule.Commands.AddressVMCommands
       _user = user;
     }
 
-    public event EventHandler CanExecuteChanged;
-
-    public bool CanExecute(object parameter)
-    {
-      return true;
-    }
-
-    public void Execute(object parameter)
+    protected override async Task ExecuteAsync(object parameter)
     {
       CityDialog dialog = new CityDialog();
       CityVM VM = new CityVM(_cityRepository, _countryRepository, CUD.Create,
@@ -46,9 +39,12 @@ namespace SharpSchedule.Commands.AddressVMCommands
 
       if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
       {
-        _addressVM.CityUpdate().ConfigureAwait(true);
+        _addressVM.AllCities = await _addressVM.GetAllCities().ConfigureAwait(true);
 
-        _addressVM.SearchCities.Execute(string.Empty);
+        _addressVM.Cities.Clear();
+
+        foreach (City city in _addressVM.AllCities)
+          _addressVM.Cities.Add(city);
       }
     }
   }

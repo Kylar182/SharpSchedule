@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Windows.Input;
+using System.Threading.Tasks;
 using SharpSchedule.Data.EntityModels;
+using SharpSchedule.Data.EntityModels.Locations;
 using SharpSchedule.Data.Repositories.Location;
 using SharpSchedule.Models;
 using SharpSchedule.ViewModels;
@@ -9,7 +10,7 @@ using SharpSchedule.Views.Dialogs;
 
 namespace SharpSchedule.Commands.AddressVMCommands
 {
-  public class NewAddressCommand : ICommand
+  public class NewAddressCommand : CommandBase
   {
     private readonly AddressesVM _addressVM;
     private readonly IAddressRepository _repository;
@@ -27,14 +28,7 @@ namespace SharpSchedule.Commands.AddressVMCommands
       _user = user;
     }
 
-    public event EventHandler CanExecuteChanged;
-
-    public bool CanExecute(object parameter)
-    {
-      return true;
-    }
-
-    public void Execute(object parameter)
+    protected override async Task ExecuteAsync(object parameter)
     {
       AddressDialog dialog = new AddressDialog();
       AddressVM VM = new AddressVM(_repository, _cityRepository, CUD.Create,
@@ -44,9 +38,12 @@ namespace SharpSchedule.Commands.AddressVMCommands
 
       if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
       {
-        _addressVM.AddressUpdate().ConfigureAwait(true);
+        _addressVM.AllAddresses = await _addressVM.GetAllAddresses().ConfigureAwait(true);
 
-        _addressVM.SearchAddresses.Execute(string.Empty);
+        _addressVM.Addresses.Clear();
+
+        foreach (Address address in _addressVM.AllAddresses)
+          _addressVM.Addresses.Add(address);
       }
     }
   }

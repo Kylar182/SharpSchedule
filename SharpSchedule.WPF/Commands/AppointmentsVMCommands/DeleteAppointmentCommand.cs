@@ -1,45 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows.Input;
+using System.Linq;
+using System.Threading.Tasks;
 using SharpSchedule.Data.DTOs;
 using SharpSchedule.Data.EntityModels;
+using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.Models;
+using SharpSchedule.State;
 using SharpSchedule.ViewModels;
 using SharpSchedule.ViewModels.DialogViewModels;
 using SharpSchedule.Views.Dialogs;
 
 namespace SharpSchedule.Commands.AppointmentsVMCommands
 {
-  public class DeleteAppointmentCommand : ICommand
+  public class DeleteAppointmentCommand : CommandBase
   {
     private readonly AppointmentsVM _appointmentsVM;
     private readonly IAppointmentRepository _repository;
     private readonly ICustomerRepository _customerRepository;
+    private readonly IStateManager<AppointmentDTO> _state;
     private readonly User _user;
 
     public DeleteAppointmentCommand(AppointmentsVM appointmentsVM,
       IAppointmentRepository repository,
       ICustomerRepository customerRepository,
+      IStateManager<AppointmentDTO> state,
       User user)
     {
       _appointmentsVM = appointmentsVM;
       _repository = repository;
       _customerRepository = customerRepository;
+      _state = state;
       _user = user;
 
       _appointmentsVM.PropertyChanged += AppointmentChanged;
     }
 
-    public event EventHandler CanExecuteChanged;
+    public override event EventHandler CanExecuteChanged;
 
-    public bool CanExecute(object parameter)
+    public override bool CanExecute(object parameter)
     {
       return _appointmentsVM.AppointmentSelected != null;
     }
 
-    public void Execute(object parameter)
+    protected override async Task ExecuteAsync(object parameter)
     {
       if (_appointmentsVM.AppointmentSelected != null)
       {
@@ -51,9 +57,22 @@ namespace SharpSchedule.Commands.AppointmentsVMCommands
 
         if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
         {
-          _appointmentsVM.Load().ConfigureAwait(true);
+          List<Appointment> transfer = await _appointmentsVM.GetAll().ConfigureAwait(true);
 
-          _appointmentsVM.SearchAppointments.Execute(string.Empty);
+          _appointmentsVM.Appointments.Clear();
+
+          foreach (Appointment appointment in transfer)
+          {
+            _appointmentsVM.AllAppointments.Add(new AppointmentDTO(appointment));
+
+            AppointmentDTO dto = new AppointmentDTO(appointment);
+            dto.Start = dto.Start.ToLocalTime();
+            dto.End = dto.End.ToLocalTime();
+
+            _appointmentsVM.Appointments.Add(dto);
+          }
+
+          _state.SetState(_appointmentsVM.Appointments.Where(pr => pr.Start >= DateTime.Now).ToList());
         }
       }
     }

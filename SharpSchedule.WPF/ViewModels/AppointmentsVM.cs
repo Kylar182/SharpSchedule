@@ -47,10 +47,6 @@ namespace SharpSchedule.ViewModels
     public List<AppointmentDTO> AllAppointments { get; set; } = new List<AppointmentDTO>();
 
     /// <summary>
-    /// Refreshes the Appointments
-    /// </summary>
-    public ICommand SearchAppointments { get; }
-    /// <summary>
     /// Opens the Filter Appointment Dialog
     /// </summary>
     public ICommand FilterAppointments { get; }
@@ -82,11 +78,10 @@ namespace SharpSchedule.ViewModels
 
       AppointmentSelected = null;
 
-      SearchAppointments = new SearchAppointmentsCommand(this);
       FilterAppointments = new FilterAppointmentsCommand(this, _customerRepository);
-      NewAppointment = new NewAppointmentCommand(this, _repository, _customerRepository, _user);
-      UpdateAppointment = new UpdateAppointmentCommand(this, _repository, _customerRepository, _user);
-      DeleteAppointment = new DeleteAppointmentCommand(this, _repository, _customerRepository, _user);
+      NewAppointment = new NewAppointmentCommand(this, _repository, _customerRepository, _state, _user);
+      UpdateAppointment = new UpdateAppointmentCommand(this, _repository, _customerRepository, _state, _user);
+      DeleteAppointment = new DeleteAppointmentCommand(this, _repository, _customerRepository, _state, _user);
     }
 
     /// <summary>
@@ -94,28 +89,37 @@ namespace SharpSchedule.ViewModels
     /// </summary>
     public async Task Load()
     {
+      List<Appointment> transfer = await GetAll().ConfigureAwait(true);
+
+      Appointments.Clear();
+
+      foreach (Appointment appointment in transfer)
+      {
+        AllAppointments.Add(new AppointmentDTO(appointment));
+
+        AppointmentDTO dto = new AppointmentDTO(appointment);
+        dto.Start = dto.Start.ToLocalTime();
+        dto.End = dto.End.ToLocalTime();
+
+        Appointments.Add(dto);
+      }
+
+      _state.SetState(Appointments.Where(pr => pr.Start >= DateTime.Now).ToList());
+    }
+
+    public async Task<List<Appointment>> GetAll()
+    {
+      List<Appointment> transfer = new List<Appointment>();
+
       await _repository.GetAll().ContinueWith(t =>
       {
         if (t.Exception == null)
         {
-          List<Appointment> transfer = t.Result;
-
-          Appointments.Clear();
-
-          foreach (Appointment appointment in transfer)
-          {
-            AllAppointments.Add(new AppointmentDTO(appointment));
-
-            AppointmentDTO dto = new AppointmentDTO(appointment);
-            dto.Start = dto.Start.ToLocalTime();
-            dto.End = dto.End.ToLocalTime();
-
-            Appointments.Add(dto);
-          }
-
-          _state.SetState(Appointments.Where(pr => pr.Start >= DateTime.Now).ToList());
+          transfer = t.Result;
         }
       }).ConfigureAwait(true);
+
+      return transfer;
     }
   }
 }
