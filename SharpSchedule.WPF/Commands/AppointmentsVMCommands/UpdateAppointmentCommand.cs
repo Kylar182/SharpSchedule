@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SharpSchedule.Data.DTOs;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Scheduling;
+using SharpSchedule.Data.Repositories;
 using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.Models;
 using SharpSchedule.State;
@@ -19,18 +20,22 @@ namespace SharpSchedule.Commands.AppointmentsVMCommands
   {
     private readonly AppointmentsVM _appointmentsVM;
     private readonly IAppointmentRepository _repository;
+    private readonly IUserRepository _userRepository;
     private readonly ICustomerRepository _customerRepository;
     private readonly IStateManager<AppointmentDTO> _state;
     private readonly User _user;
 
-    public UpdateAppointmentCommand(AppointmentsVM appointmentsVM,
+    public UpdateAppointmentCommand(
+      AppointmentsVM appointmentsVM,
       IAppointmentRepository repository,
+      IUserRepository userRepository,
       ICustomerRepository customerRepository,
       IStateManager<AppointmentDTO> state,
       User user)
     {
       _appointmentsVM = appointmentsVM;
       _repository = repository;
+      _userRepository = userRepository;
       _customerRepository = customerRepository;
       _state = state;
       _user = user;
@@ -50,8 +55,12 @@ namespace SharpSchedule.Commands.AppointmentsVMCommands
       if (_appointmentsVM.AppointmentSelected != null)
       {
         AppointmentDialog dialog = new AppointmentDialog();
-        AppointmentVM VM = new AppointmentVM(_repository, _customerRepository, CUD.Update,
-                                new Action(() => dialog.Close()), _user, _appointmentsVM.AppointmentSelected);
+
+        List<User> users = await _userRepository.GetAll();
+        List<Customer> customers = await _customerRepository.GetAll();
+
+        AppointmentVM VM = new AppointmentVM(_repository, CUD.Update, new Action(() => dialog.Close()),
+                                                _user, users, customers, _appointmentsVM.AppointmentSelected);
         dialog.DataContext = VM;
         bool? result = dialog.ShowDialog();
 

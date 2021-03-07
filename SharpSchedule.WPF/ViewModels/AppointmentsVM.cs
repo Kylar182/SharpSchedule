@@ -9,6 +9,7 @@ using SharpSchedule.Commands.AppointmentsVMCommands;
 using SharpSchedule.Data.DTOs;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Scheduling;
+using SharpSchedule.Data.Repositories;
 using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.State;
 
@@ -20,6 +21,7 @@ namespace SharpSchedule.ViewModels
   public class AppointmentsVM : ViewModelBase
   {
     private readonly IAppointmentRepository _repository;
+    private readonly IUserRepository _userRepository;
     private readonly ICustomerRepository _customerRepository;
     private readonly IStateManager<AppointmentDTO> _state;
     private readonly User _user;
@@ -65,11 +67,13 @@ namespace SharpSchedule.ViewModels
 
     public AppointmentsVM(
       IAppointmentRepository repository,
+      IUserRepository userRepository,
       ICustomerRepository customerRepository,
       IStateManager<AppointmentDTO> state,
       User user)
     {
       _repository = repository;
+      _userRepository = userRepository;
       _customerRepository = customerRepository;
       _state = state;
       _user = user;
@@ -78,10 +82,13 @@ namespace SharpSchedule.ViewModels
 
       AppointmentSelected = null;
 
-      FilterAppointments = new FilterAppointmentsCommand(this, _customerRepository);
-      NewAppointment = new NewAppointmentCommand(this, _repository, _customerRepository, _state, _user);
-      UpdateAppointment = new UpdateAppointmentCommand(this, _repository, _customerRepository, _state, _user);
-      DeleteAppointment = new DeleteAppointmentCommand(this, _repository, _customerRepository, _state, _user);
+      FilterAppointments = new FilterAppointmentsCommand(this, _userRepository, _customerRepository);
+      NewAppointment = new NewAppointmentCommand(this, _repository, _userRepository,
+                                                                  _customerRepository, _state, _user);
+      UpdateAppointment = new UpdateAppointmentCommand(this, _repository, _userRepository,
+                                                                  _customerRepository, _state, _user);
+      DeleteAppointment = new DeleteAppointmentCommand(this, _repository, _userRepository,
+                                                                  _customerRepository, _state, _user);
     }
 
     /// <summary>

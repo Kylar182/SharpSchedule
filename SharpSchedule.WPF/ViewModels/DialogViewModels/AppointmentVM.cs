@@ -23,7 +23,6 @@ namespace SharpSchedule.ViewModels.DialogViewModels
   public class AppointmentVM : ValidationBase
   {
     private readonly IAppointmentRepository _repository;
-    private readonly ICustomerRepository _customerRepository;
     private readonly CUD _cud;
 
     private bool enabled;
@@ -358,26 +357,6 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     /// </summary>
     public bool EndValid => !PropHasErrors(nameof(End));
 
-    private User consultant;
-    /// <summary>
-    /// Consultant of the Appointment
-    /// </summary>
-    [Required(ErrorMessage = "Consultant is Required")]
-    public User ConsultantSelected
-    {
-      get => consultant;
-      set
-      {
-        ValidateProp(value);
-        consultant = value;
-
-        OnPropChanged(nameof(ConsultantSelected));
-
-        if (!PropHasErrors(nameof(ConsultantSelected)))
-          DTO.UserId = value.Id;
-      }
-    }
-
     private Customer customer;
     /// <summary>
     /// Customer of the Appointment
@@ -398,6 +377,26 @@ namespace SharpSchedule.ViewModels.DialogViewModels
       }
     }
 
+    private User consultant;
+    /// <summary>
+    /// Consultant of the Appointment
+    /// </summary>
+    [Required(ErrorMessage = "Consultant is Required")]
+    public User ConsultantSelected
+    {
+      get => consultant;
+      set
+      {
+        ValidateProp(value);
+        consultant = value;
+
+        OnPropChanged(nameof(ConsultantSelected));
+
+        if (!PropHasErrors(nameof(ConsultantSelected)))
+          DTO.UserId = value.Id;
+      }
+    }
+
     /// <summary>
     /// Filtered Customers
     /// </summary>
@@ -408,29 +407,62 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     /// </summary>
     public List<Customer> AllCustomers { get; set; } = new List<Customer>();
 
+    /// <summary>
+    /// Filtered Users
+    /// </summary>
+    public ObservableCollection<User> Users { get; set; } = new ObservableCollection<User>();
+
+    /// <summary>
+    /// All Users currently in the System
+    /// </summary>
+    public List<User> AllUsers { get; set; } = new List<User>();
+
+    /// <summary>
+    /// Action to Relay message to the Dialog and let it know to Close
+    /// </summary>
     public Action CloseAction { get; set; }
 
+    /// <summary>
+    /// Command to Perform CRUD Operation on this Model
+    /// </summary>
     public ICommand CRUDCommand { get; }
-
+    /// <summary>
+    /// Command to Search all Customers in the System by Name
+    /// </summary>
     public ICommand SearchCustomers { get; }
+    /// <summary>
+    /// Command to Search all Users in the System by Username
+    /// </summary>
+    public ICommand SearchUsers { get; }
 
     /// <summary>
     /// DTO for the Appointment this VM is performing CRUD ops on
     /// </summary>
     public AppointmentDTO DTO { get; set; }
 
-    public AppointmentVM(IAppointmentRepository repository, ICustomerRepository customerRepository,
-                    CUD cud, Action action, User user, AppointmentDTO appointment = null)
+    public AppointmentVM(
+      IAppointmentRepository repository,
+      CUD cud, Action action, User user,
+      List<User> allUsers,
+      List<Customer> allCustomers,
+      AppointmentDTO appointment = null)
     {
       _repository = repository;
-      _customerRepository = customerRepository;
 
       _cud = cud;
       Enabled = cud != CUD.Delete;
       CUDString = cud.ToString();
       CloseAction = action;
 
-      Load().ConfigureAwait(true);
+      AllUsers = allUsers;
+
+      foreach (User consultantUser in AllUsers)
+        Users.Add(consultantUser);
+
+      AllCustomers = allCustomers;
+
+      foreach (Customer customer in AllCustomers)
+        Customers.Add(customer);
 
       if (appointment != null)
       {
@@ -446,6 +478,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         End = DTO.End;
         Start = DTO.Start;
         CustomerSelected = AllCustomers.Where(pr => pr.Id == appointment.CustomerId).First();
+        ConsultantSelected = AllUsers.Where(pr => pr.Id == appointment.UserId).First();
       }
       else
       {
@@ -453,8 +486,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         {
           CreatedBy = user.Username,
           CreateDate = DateTime.UtcNow,
-          LastUpdatedBy = user.Username,
-          UserId = user.Id
+          LastUpdatedBy = user.Username
         };
 
         Title = string.Empty;
@@ -467,27 +499,12 @@ namespace SharpSchedule.ViewModels.DialogViewModels
         End = DateTime.Now.AddHours(1);
         Start = DateTime.Now;
         CustomerSelected = null;
-        ConsultantSelected = user;
+        ConsultantSelected = null;
       }
 
       CRUDCommand = new AppointmentCRUDCommand(this);
       SearchCustomers = new SearchCustomersCommand(this);
-    }
-
-    /// <summary>
-    /// Loads DB Data for Dialog
-    /// </summary>
-    private async Task Load()
-    {
-      await _customerRepository.GetAll().ContinueWith(t =>
-      {
-        if (t.Exception == null)
-        {
-          AllCustomers = t.Result;
-          foreach (Customer customer in AllCustomers)
-            Customers.Add(customer);
-        }
-      }).ConfigureAwait(true);
+      SearchUsers = new SearchUsersCommand(this);
     }
 
     public async Task DBUpdate()

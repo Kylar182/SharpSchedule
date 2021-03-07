@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using SharpSchedule.Commands.AppointmentsVMCommands;
 using SharpSchedule.Commands.CustomersVMCommands;
+using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Scheduling;
-using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.Data.Validation;
 using SharpSchedule.Models;
 using SharpSchedule.ViewModels.Validation;
@@ -20,8 +19,6 @@ namespace SharpSchedule.ViewModels.DialogViewModels
   /// </summary>
   public class AppointmentFilterVM : ValidationBase
   {
-    private readonly ICustomerRepository _customerRepository;
-
     public static string WindowLabel => "Filter Appointments";
 
     private string title;
@@ -352,6 +349,27 @@ namespace SharpSchedule.ViewModels.DialogViewModels
       }
     }
 
+    private User consultant;
+    /// <summary>
+    /// Consultant of the Appointment
+    /// </summary>
+    public User ConsultantSelected
+    {
+      get => consultant;
+      set
+      {
+        ValidateProp(value);
+        consultant = value;
+
+        OnPropChanged(nameof(ConsultantSelected));
+
+        if (value != null)
+          Filter.UserId = value.Id;
+        else
+          Filter.UserId = null;
+      }
+    }
+
     /// <summary>
     /// The Appointment this VM is performing CRUD ops on
     /// </summary>
@@ -366,6 +384,16 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     /// All Customers currently in the System
     /// </summary>
     public List<Customer> AllCustomers { get; set; } = new List<Customer>();
+
+    /// <summary>
+    /// Filtered Users
+    /// </summary>
+    public ObservableCollection<User> Users { get; set; } = new ObservableCollection<User>();
+
+    /// <summary>
+    /// All Users currently in the System
+    /// </summary>
+    public List<User> AllUsers { get; set; } = new List<User>();
 
     public Action CloseAction { get; set; }
 
@@ -383,14 +411,27 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     /// Searches Current Customers by their Name
     /// </summary>
     public ICommand SearchCustomers { get; }
+    /// <summary>
+    /// Command to Search all Users in the System by Username
+    /// </summary>
+    public ICommand SearchUsers { get; }
 
-    public AppointmentFilterVM(ICustomerRepository customerRepository, Action action)
+    public AppointmentFilterVM(
+      List<User> allUsers,
+      List<Customer> allCustomers,
+      Action action)
     {
-      _customerRepository = customerRepository;
-
       CloseAction = action;
 
-      Load().ConfigureAwait(true);
+      AllUsers = allUsers;
+
+      foreach (User consultantUser in AllUsers)
+        Users.Add(consultantUser);
+
+      AllCustomers = allCustomers;
+
+      foreach (Customer customer in AllCustomers)
+        Customers.Add(customer);
 
       Title = string.Empty;
       Description = string.Empty;
@@ -402,26 +443,12 @@ namespace SharpSchedule.ViewModels.DialogViewModels
       End = null;
       Start = null;
       CustomerSelected = null;
+      ConsultantSelected = null;
 
       MonthFilter = new MonthFilterCommand(this);
       WeekFilter = new WeekFilterCommand(this);
       SearchCustomers = new SearchCustomersCommand(this);
-    }
-
-    /// <summary>
-    /// Loads DB Data for Dialog
-    /// </summary>
-    private async Task Load()
-    {
-      await _customerRepository.GetAll().ContinueWith(t =>
-      {
-        if (t.Exception == null)
-        {
-          AllCustomers = t.Result;
-          foreach (Customer customer in AllCustomers)
-            Customers.Add(customer);
-        }
-      }).ConfigureAwait(true);
+      SearchUsers = new SearchUsersCommand(this);
     }
 
     public AppointmentFilter DBFilter()

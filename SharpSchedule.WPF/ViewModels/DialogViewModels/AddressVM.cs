@@ -8,7 +8,6 @@ using System.Windows.Input;
 using SharpSchedule.Commands.AddressVMCommands;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Locations;
-using SharpSchedule.Data.Repositories;
 using SharpSchedule.Data.Repositories.Location;
 using SharpSchedule.Models;
 using SharpSchedule.ViewModels.Validation;
@@ -21,7 +20,6 @@ namespace SharpSchedule.ViewModels.DialogViewModels
   public class AddressVM : ValidationBase
   {
     private readonly IAddressRepository _repository;
-    private readonly IRepository<City> _cityRepository;
     private readonly CUD _cud;
 
     private bool enabled;
@@ -237,18 +235,20 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     /// </summary>
     public Address Address { get; set; }
 
-    public AddressVM(IAddressRepository repository, ICityRepository cityRepository,
+    public AddressVM(IAddressRepository repository, List<City> allCities,
                     CUD cud, Action action, User user, Address address = null)
     {
       _repository = repository;
-      _cityRepository = cityRepository;
+
+      AllCities = allCities;
+
+      foreach (City city in AllCities)
+        Cities.Add(city);
 
       _cud = cud;
       Enabled = cud != CUD.Delete;
       CUDString = cud.ToString();
       CloseAction = action;
-
-      Load().ConfigureAwait(true);
 
       if (address != null)
       {
@@ -279,22 +279,6 @@ namespace SharpSchedule.ViewModels.DialogViewModels
 
       CRUDCommand = new AddressCRUDCommand(this);
       SearchCities = new SearchCitiesCommand(this);
-    }
-
-    /// <summary>
-    /// Loads DB Data for Dialog
-    /// </summary>
-    private async Task Load()
-    {
-      await _cityRepository.GetAll().ContinueWith(t =>
-      {
-        if (t.Exception == null)
-        {
-          AllCities = t.Result;
-          foreach (City city in AllCities)
-            Cities.Add(city);
-        }
-      }).ConfigureAwait(true);
     }
 
     public async Task DBUpdate()

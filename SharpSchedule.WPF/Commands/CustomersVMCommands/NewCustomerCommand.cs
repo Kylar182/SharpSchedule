@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SharpSchedule.Data.EntityModels;
+using SharpSchedule.Data.EntityModels.Locations;
 using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Repositories.Location;
 using SharpSchedule.Data.Repositories.Scheduling;
@@ -32,7 +34,10 @@ namespace SharpSchedule.Commands.CustomersVMCommands
     protected override async Task ExecuteAsync(object parameter)
     {
       CustomerDialog dialog = new CustomerDialog();
-      CustomerVM VM = new CustomerVM(_repository, _addressRepository, CUD.Create,
+
+      List<Address> allAddresses = await _addressRepository.GetAll().ConfigureAwait(true);
+
+      CustomerVM VM = new CustomerVM(_repository, allAddresses, CUD.Create,
                               new Action(() => dialog.Close()), _user);
       dialog.DataContext = VM;
       bool? result = dialog.ShowDialog();

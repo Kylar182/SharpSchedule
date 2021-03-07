@@ -6,18 +6,18 @@
         xmlns:controls="clr-namespace:SharpSchedule.Controls"
         xmlns:local="clr-namespace:SharpSchedule.Views.Dialogs"
         mc:Ignorable="d" 
-        Height="700" Width="1600"
+        Height="700" Width="1800"
         Title="{Binding WindowLabel}">
 
   <Grid Background="{StaticResource Grey15}">
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width=".05*" />
+      <ColumnDefinition Width=".045*" />
       <ColumnDefinition Width=".5*" />
       <ColumnDefinition Width=".05*" />
       <ColumnDefinition Width=".65*" />
-      <ColumnDefinition Width=".05*" />
-      <ColumnDefinition Width=".35*" />
-      <ColumnDefinition Width=".05*" />
+      <ColumnDefinition Width=".045*" />
+      <ColumnDefinition Width=".5*" />
+      <ColumnDefinition Width=".045*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height=".75*" />
@@ -140,6 +140,35 @@
         <DataGridTextColumn Header="Country" Width=".75*" Binding="{Binding Address.City.Country.Name}" />
       </DataGrid.Columns>
     </DataGrid>
+
+    <Grid Grid.Column="5">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Button Content="SEARCH" Grid.ColumnSpan="2" HorizontalAlignment="Center" 
+              Command="{Binding SearchUsers}" CommandParameter="{Binding Text, ElementName=User_Search}" />
+
+      <TextBox Grid.Column="1" Name="User_Search" Margin="75, 5, 0, 5" FontSize="16" 
+               HorizontalAlignment="Center" Width="200"/>
+    </Grid>
+
+    <Label Grid.Column="5" Content="Consultants" HorizontalAlignment="Left" 
+           VerticalAlignment="Bottom" FontSize="24" Margin="0, 5" />
+
+    <DataGrid Grid.Row="1" Grid.Column="5" AutoGenerateColumns="False" 
+              x:Name="ConsultantGrid" IsReadOnly="True" SelectionMode="Single"
+              ItemsSource="{Binding Users}" ScrollViewer.CanContentScroll="True"
+              ScrollViewer.VerticalScrollBarVisibility="Auto" MaxHeight="600"
+              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+              SelectedItem="{Binding ConsultantSelected, Mode=TwoWay}">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="ID" Width=".3*" Binding="{Binding Id}" />
+        <DataGridTextColumn Header="Username" Width="*" Binding="{Binding Username}" />
+      </DataGrid.Columns>
+    </DataGrid>
+
 
   </Grid>
 </Window>

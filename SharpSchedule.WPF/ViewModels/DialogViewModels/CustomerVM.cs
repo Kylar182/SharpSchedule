@@ -10,7 +10,6 @@ using SharpSchedule.Commands.CustomersVMCommands;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Locations;
 using SharpSchedule.Data.EntityModels.Scheduling;
-using SharpSchedule.Data.Repositories.Location;
 using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.Models;
 using SharpSchedule.ViewModels.Validation;
@@ -23,7 +22,6 @@ namespace SharpSchedule.ViewModels.DialogViewModels
   public class CustomerVM : ValidationBase
   {
     private readonly ICustomerRepository _repository;
-    private readonly IAddressRepository _addressRepository;
     private readonly CUD _cud;
 
     private bool enabled;
@@ -150,18 +148,20 @@ namespace SharpSchedule.ViewModels.DialogViewModels
     /// </summary>
     public Customer Customer { get; set; }
 
-    public CustomerVM(ICustomerRepository customerRepository, IAddressRepository addressRepository,
-                    CUD cud, Action action, User user, Customer customer = null)
+    public CustomerVM(ICustomerRepository customerRepository, List<Address> allAddresses,
+      CUD cud, Action action, User user, Customer customer = null)
     {
       _repository = customerRepository;
-      _addressRepository = addressRepository;
+
+      AllAddresses = allAddresses;
+
+      foreach (Address address in AllAddresses)
+        Addresses.Add(address);
 
       _cud = cud;
       Enabled = cud != CUD.Delete;
       CUDString = cud.ToString();
       CloseAction = action;
-
-      Load().ConfigureAwait(true);
 
       if (customer != null)
       {
@@ -189,22 +189,6 @@ namespace SharpSchedule.ViewModels.DialogViewModels
 
       CRUDCommand = new CustomerCRUDCommand(this);
       SearchAddresses = new SearchAddressesCommand(this);
-    }
-
-    /// <summary>
-    /// Loads DB Data for Dialog
-    /// </summary>
-    private async Task Load()
-    {
-      await _addressRepository.GetAll().ContinueWith(t =>
-      {
-        if (t.Exception == null)
-        {
-          AllAddresses = t.Result;
-          foreach (Address address in AllAddresses)
-            Addresses.Add(address);
-        }
-      }).ConfigureAwait(true);
     }
 
     public async Task DBUpdate()

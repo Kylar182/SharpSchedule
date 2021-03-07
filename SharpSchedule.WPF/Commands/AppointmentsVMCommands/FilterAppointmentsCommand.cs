@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
+using System.Threading.Tasks;
 using SharpSchedule.Data.DTOs;
+using SharpSchedule.Data.EntityModels;
+using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Extensions;
+using SharpSchedule.Data.Repositories;
 using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.ViewModels;
 using SharpSchedule.ViewModels.DialogViewModels;
@@ -11,29 +14,30 @@ using SharpSchedule.Views.Dialogs;
 
 namespace SharpSchedule.Commands.AppointmentsVMCommands
 {
-  public class FilterAppointmentsCommand : ICommand
+  public class FilterAppointmentsCommand : CommandBase
   {
     private readonly AppointmentsVM _appointmentsVM;
+    private readonly IUserRepository _userRepository;
     private readonly ICustomerRepository _customerRepository;
 
-    public FilterAppointmentsCommand(AppointmentsVM appointmentsVM,
+    public FilterAppointmentsCommand(
+      AppointmentsVM appointmentsVM,
+      IUserRepository userRepository,
       ICustomerRepository customerRepository)
     {
       _appointmentsVM = appointmentsVM;
+      _userRepository = userRepository;
       _customerRepository = customerRepository;
     }
 
-    public event EventHandler CanExecuteChanged;
-
-    public bool CanExecute(object parameter)
-    {
-      return true;
-    }
-
-    public void Execute(object parameter)
+    protected override async Task ExecuteAsync(object parameter)
     {
       AppointmentFilterDialog dialog = new AppointmentFilterDialog();
-      AppointmentFilterVM VM = new AppointmentFilterVM(_customerRepository,
+
+      List<User> users = await _userRepository.GetAll();
+      List<Customer> customers = await _customerRepository.GetAll();
+
+      AppointmentFilterVM VM = new AppointmentFilterVM(users, customers,
                                                           new Action(() => dialog.Close()));
       dialog.DataContext = VM;
       bool? result = dialog.ShowDialog();
@@ -70,6 +74,9 @@ namespace SharpSchedule.Commands.AppointmentsVMCommands
 
         if (VM.Filter.CustomerId != null)
           Filtered = Filtered.Where(pr => pr.CustomerId == VM.Filter.CustomerId).ToList();
+
+        if (VM.Filter.UserId != null)
+          Filtered = Filtered.Where(pr => pr.UserId == VM.Filter.UserId).ToList();
 
         _appointmentsVM.Appointments.Clear();
 

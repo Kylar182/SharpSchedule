@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using SharpSchedule.Data.DTOs;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Scheduling;
+using SharpSchedule.Data.Repositories;
 using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.Models;
 using SharpSchedule.State;
@@ -18,18 +19,22 @@ namespace SharpSchedule.Commands.AppointmentsVMCommands
   {
     private readonly AppointmentsVM _appointmentsVM;
     private readonly IAppointmentRepository _repository;
+    private readonly IUserRepository _userRepository;
     private readonly ICustomerRepository _customerRepository;
     private readonly IStateManager<AppointmentDTO> _state;
     private readonly User _user;
 
-    public NewAppointmentCommand(AppointmentsVM appointmentsVM,
+    public NewAppointmentCommand(
+      AppointmentsVM appointmentsVM,
       IAppointmentRepository repository,
+      IUserRepository userRepository,
       ICustomerRepository customerRepository,
       IStateManager<AppointmentDTO> state,
       User user)
     {
       _appointmentsVM = appointmentsVM;
       _repository = repository;
+      _userRepository = userRepository;
       _customerRepository = customerRepository;
       _state = state;
       _user = user;
@@ -37,33 +42,34 @@ namespace SharpSchedule.Commands.AppointmentsVMCommands
 
     protected override async Task ExecuteAsync(object parameter)
     {
-      if (_appointmentsVM.AppointmentSelected != null)
+      AppointmentDialog dialog = new AppointmentDialog();
+
+      List<User> users = await _userRepository.GetAll();
+      List<Customer> customers = await _customerRepository.GetAll();
+
+      AppointmentVM VM = new AppointmentVM(_repository, CUD.Create,
+                              new Action(() => dialog.Close()), _user, users, customers);
+      dialog.DataContext = VM;
+      bool? result = dialog.ShowDialog();
+
+      if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
       {
-        AppointmentDialog dialog = new AppointmentDialog();
-        AppointmentVM VM = new AppointmentVM(_repository, _customerRepository, CUD.Create,
-                                new Action(() => dialog.Close()), _user);
-        dialog.DataContext = VM;
-        bool? result = dialog.ShowDialog();
+        List<Appointment> transfer = await _appointmentsVM.GetAll().ConfigureAwait(true);
 
-        if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
+        _appointmentsVM.Appointments.Clear();
+
+        foreach (Appointment appointment in transfer)
         {
-          List<Appointment> transfer = await _appointmentsVM.GetAll().ConfigureAwait(true);
+          _appointmentsVM.AllAppointments.Add(new AppointmentDTO(appointment));
 
-          _appointmentsVM.Appointments.Clear();
+          AppointmentDTO dto = new AppointmentDTO(appointment);
+          dto.Start = dto.Start.ToLocalTime();
+          dto.End = dto.End.ToLocalTime();
 
-          foreach (Appointment appointment in transfer)
-          {
-            _appointmentsVM.AllAppointments.Add(new AppointmentDTO(appointment));
-
-            AppointmentDTO dto = new AppointmentDTO(appointment);
-            dto.Start = dto.Start.ToLocalTime();
-            dto.End = dto.End.ToLocalTime();
-
-            _appointmentsVM.Appointments.Add(dto);
-          }
-
-          _state.SetState(_appointmentsVM.Appointments.Where(pr => pr.Start >= DateTime.Now).ToList());
+          _appointmentsVM.Appointments.Add(dto);
         }
+
+        _state.SetState(_appointmentsVM.Appointments.Where(pr => pr.Start >= DateTime.Now).ToList());
       }
     }
   }

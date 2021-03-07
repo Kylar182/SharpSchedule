@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using SharpSchedule.Data.EntityModels;
+using SharpSchedule.Data.EntityModels.Locations;
 using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Repositories.Location;
 using SharpSchedule.Data.Repositories.Scheduling;
@@ -44,7 +46,10 @@ namespace SharpSchedule.Commands.CustomersVMCommands
       if (_customerVM.CustomerSelected != null)
       {
         CustomerDialog dialog = new CustomerDialog();
-        CustomerVM VM = new CustomerVM(_repository, _addressRepository, CUD.Delete,
+
+        List<Address> allAddresses = await _addressRepository.GetAll().ConfigureAwait(true);
+
+        CustomerVM VM = new CustomerVM(_repository, allAddresses, CUD.Delete,
                                 new Action(() => dialog.Close()), _user, _customerVM.CustomerSelected);
         dialog.DataContext = VM;
         bool? result = dialog.ShowDialog();

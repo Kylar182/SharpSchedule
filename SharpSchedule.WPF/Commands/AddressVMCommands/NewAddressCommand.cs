@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SharpSchedule.Data.EntityModels;
 using SharpSchedule.Data.EntityModels.Locations;
@@ -31,7 +32,10 @@ namespace SharpSchedule.Commands.AddressVMCommands
     protected override async Task ExecuteAsync(object parameter)
     {
       AddressDialog dialog = new AddressDialog();
-      AddressVM VM = new AddressVM(_repository, _cityRepository, CUD.Create,
+
+      List<City> allCities = await _cityRepository.GetAll().ConfigureAwait(true);
+
+      AddressVM VM = new AddressVM(_repository, allCities, CUD.Create,
                               new Action(() => dialog.Close()), _user);
       dialog.DataContext = VM;
       bool? result = dialog.ShowDialog();

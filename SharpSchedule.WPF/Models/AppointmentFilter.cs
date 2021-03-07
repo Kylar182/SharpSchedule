@@ -65,26 +65,31 @@ namespace SharpSchedule.Models
     public string Type { get; set; }
 
     /// <summary>
-    /// Hotlink to info on the appointment or it's attendees
+    /// Hotlink to info on the appointments or their's attendees
     /// </summary>
     [MaxLength(255, ErrorMessage = "Max Length 255 Characters")]
     public string URL { get; set; }
 
     /// <summary>
-    /// Start Time of the Appointment
+    /// Start Time of the Appointments
     /// </summary>
     [StartDate(nameof(Start), nameof(End))]
     public DateTime? Start { get; set; }
 
     /// <summary>
-    /// End Time of the Appointment
+    /// End Time of the Appointments
     /// </summary>
     [EndDate(nameof(End), nameof(Start))]
     public DateTime? End { get; set; }
 
     /// <summary>
-    /// FKey to the Customer that this Appointment is with
+    /// FKey to the Customer that these Appointments are with
     /// </summary>
     public int? CustomerId { get; set; }
+
+    /// <summary>
+    /// FKey to the User that is the Consultant for these Appointments
+    /// </summary>
+    public int? UserId { get; set; }
   }
 }

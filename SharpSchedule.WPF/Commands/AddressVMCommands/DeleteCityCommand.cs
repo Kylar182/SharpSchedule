@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using SharpSchedule.Data.EntityModels;
@@ -44,7 +45,10 @@ namespace SharpSchedule.Commands.AddressVMCommands
       if (_addressVM.CitySelected != null)
       {
         CityDialog dialog = new CityDialog();
-        CityVM VM = new CityVM(_cityRepository, _countryRepository, CUD.Delete,
+
+        List<Country> allCountries = await _countryRepository.GetAll().ConfigureAwait(true);
+
+        CityVM VM = new CityVM(_cityRepository, allCountries, CUD.Delete,
                                 new Action(() => dialog.Close()), _user, _addressVM.CitySelected);
         dialog.DataContext = VM;
         bool? result = dialog.ShowDialog();
