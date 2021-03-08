@@ -51,7 +51,7 @@ namespace SharpSchedule.ViewModels.DialogViewModels
       }
     }
 
-    public string WindowLabel => cudString + " Appointment";
+    public string WindowLabel => CUDString + " Appointment";
 
     private string title;
     /// <summary>

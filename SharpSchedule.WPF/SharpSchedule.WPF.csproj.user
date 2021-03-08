@@ -39,6 +39,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Styles\AnalogClockStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\BindableInput.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -58,6 +61,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\DatePickerStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\DigitalClockStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\LoginStyle.xaml">
@@ -88,6 +94,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Dialogs\AppointmentDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\AlarmDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Dialogs\CustomerDialog.xaml">

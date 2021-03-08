@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using SharpSchedule.Data.DTOs;
-using SharpSchedule.Data.EntityModels.Scheduling;
-using SharpSchedule.Data.Repositories.Scheduling;
+﻿using SharpSchedule.Data.DTOs;
 using SharpSchedule.State;
 
 namespace SharpSchedule.ViewModels

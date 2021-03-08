@@ -16,5 +16,6 @@
 
   <SolidColorBrush x:Key="WGU" Color="{StaticResource WGUBlue}" />
   <SolidColorBrush x:Key="Light" Color="{StaticResource WGULight}" />
+  <SolidColorBrush x:Key="AlarmRed" Color="{StaticResource WGURed}" />
 
 </ResourceDictionary>

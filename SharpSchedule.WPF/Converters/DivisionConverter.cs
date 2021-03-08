@@ -4,18 +4,14 @@ using System.Windows.Data;
 
 namespace SharpSchedule.Converters
 {
-  /// <summary>
-  /// Converter to test if value as a String 
-  /// is the same as the Parameter as a String
-  /// </summary>
-  public class EqualToParamConverter : IValueConverter
+  public class DivisionConverter : IValueConverter
   {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      if (value != null && parameter != null)
-        return value.ToString() == parameter.ToString();
-      else
-        return false;
+      return double.TryParse(value.ToString(), out double numerator) &&
+          double.TryParse(parameter.ToString(), out double denominator) &&
+          denominator != 0 ?
+          numerator / denominator : 0;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

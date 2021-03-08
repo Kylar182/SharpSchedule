@@ -12,6 +12,8 @@
         <ResourceDictionary Source="/Styles/LoginStyle.xaml" />
         <ResourceDictionary Source="/Styles/InputStyle.xaml" />
         <ResourceDictionary Source="/Styles/DatePickerStyle.xaml" />
+        <ResourceDictionary Source="/Styles/AnalogClockStyle.xaml" />
+        <ResourceDictionary Source="/Styles/DigitalClockStyle.xaml" />
         <ResourceDictionary Source="/Styles/NavBarStyle.xaml" />
         <ResourceDictionary Source="/Themes/Generic.xaml" />
       </ResourceDictionary.MergedDictionaries>

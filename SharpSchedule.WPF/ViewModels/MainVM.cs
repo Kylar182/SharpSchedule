@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using SharpSchedule.Commands;
 using SharpSchedule.Data.DTOs;
-using SharpSchedule.Data.EntityModels.Scheduling;
 using SharpSchedule.Data.Repositories.Scheduling;
 using SharpSchedule.Services.Interfaces;
 using SharpSchedule.State;

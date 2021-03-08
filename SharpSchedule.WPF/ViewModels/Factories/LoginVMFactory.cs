@@ -10,8 +10,8 @@ namespace SharpSchedule.ViewModels.Factories
     private readonly IVMFactory<AppointmentsVM> _appointmentVMFactory;
 
     public LoginVMFactory(
-      IAuthService authService, 
-      INavigator navigator, 
+      IAuthService authService,
+      INavigator navigator,
       IVMFactory<AppointmentsVM> appointmentVMFactory)
     {
       _authService = authService;

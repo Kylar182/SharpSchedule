@@ -10,7 +10,7 @@ namespace SharpSchedule.Views.Dialogs
     public AppointmentFilterDialog()
     {
       InitializeComponent();
-      WindowStartupLocation = WindowStartupLocation.CenterScreen;
+      WindowStartupLocation = WindowStartupLocation.CenterOwner;
     }
 
     private void Dialog_True(object sender, RoutedEventArgs e)

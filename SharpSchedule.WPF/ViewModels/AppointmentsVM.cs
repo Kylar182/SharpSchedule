@@ -111,7 +111,7 @@ namespace SharpSchedule.ViewModels
         Appointments.Add(dto);
       }
 
-      _state.SetState(Appointments.Where(pr => pr.Start >= DateTime.Now).ToList());
+      _state.SetState(Appointments.Where(pr => pr.Start >= DateTime.UtcNow).ToList());
     }
 
     public async Task<List<Appointment>> GetAll()
