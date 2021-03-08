@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Globalization;
+using System.Threading;
 using System.Windows;
+using System.Windows.Markup;
 using Microsoft.Extensions.DependencyInjection;
 using SharpSchedule.Data.DTOs;
 using SharpSchedule.Data.EntityModels.Locations;
@@ -27,6 +30,19 @@ namespace SharpSchedule
   {
     protected override void OnStartup(StartupEventArgs e)
     {
+      CultureInfo info = new CultureInfo("ja-JP");
+      Thread.CurrentThread.CurrentCulture = info;
+      Thread.CurrentThread.CurrentUICulture = info;
+
+      FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
+        new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.Name)));
+
+      FlowDirection direction = CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ?
+        FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+
+      FrameworkElement.FlowDirectionProperty.OverrideMetadata(typeof(FrameworkElement),
+        new FrameworkPropertyMetadata(direction));
+
       IServiceProvider serviceProvider = CreateServiceProvider();
 
       Window window = serviceProvider.GetRequiredService<MainWindow>();
