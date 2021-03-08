@@ -44,9 +44,6 @@
         <ColumnDefinition Width="auto" />
       </Grid.ColumnDefinitions>
 
-      <!--<RadioButton Grid.Column="0" Content="Home" Command="{Binding UpdateCurrentVM}" 
-                   CommandParameter="{x:Static nav:ViewType.Home}"  Padding="10, 10, 10, 5"
-                   IsChecked="{Binding Navigator.CurrentVM, Mode=OneWay, Converter={StaticResource EqualTo}, ConverterParameter={x:Type vms:HomeVM}}" />-->
       <RadioButton Grid.Column="0" Content="Appointments" Command="{Binding UpdateCurrentVM}" 
                    CommandParameter="{x:Static nav:ViewType.Appointments}"  Padding="10, 10, 10, 5"
                    IsChecked="{Binding Navigator.CurrentVM, Mode=OneWay, Converter={StaticResource EqualTo}, ConverterParameter={x:Type vms:AppointmentsVM}}" />
@@ -56,6 +53,8 @@
       <RadioButton Grid.Column="2" Content="Addresses" Command="{Binding UpdateCurrentVM}" 
                    CommandParameter="{x:Static nav:ViewType.Addresses}"  Padding="10, 10, 10, 5"
                    IsChecked="{Binding Navigator.CurrentVM, Mode=OneWay, Converter={StaticResource EqualTo}, ConverterParameter={x:Type vms:AddressesVM}}" />
+      <local:DigitalClock Grid.Column="3" HorizontalAlignment="Center" FontSize="24" Margin="0, 0, 235, 0"
+                          Foreground="{StaticResource WGU}" VerticalAlignment="Center" />
       <Button Grid.Column="4" Content="LOGOUT" Command="{Binding LogoutCommand}" Margin="5" />
     </Grid>
   </Grid>

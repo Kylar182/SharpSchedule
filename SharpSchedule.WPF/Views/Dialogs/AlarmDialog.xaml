@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:SharpSchedule.Controls"
         xmlns:local="clr-namespace:SharpSchedule.Views.Dialogs"
         mc:Ignorable="d" 
-        Height="600" Width="600"
+        Height="500" Width="600"
         Title="{Binding WindowLabel}">
 
   <Grid Background="{StaticResource Grey15}">
@@ -17,9 +17,13 @@
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height=".75*" />
-      <RowDefinition Height="2.75*" />
-      <RowDefinition Height="*" />
       <RowDefinition Height=".5*" />
+      <RowDefinition Height=".5*" />
+      <RowDefinition Height=".5*" />
+      <RowDefinition Height=".5*" />
+      <RowDefinition Height=".5*" />
+      <RowDefinition Height=".5*" />
+      <RowDefinition Height=".25*" />
     </Grid.RowDefinitions>
     <Grid.Effect>
       <DropShadowEffect BlurRadius="15" Color="{StaticResource Grey15Color}" Direction="270" />
@@ -28,10 +32,19 @@
     <Label Grid.Column="1" Content="{Binding WindowLabel}" HorizontalAlignment="Left" 
            VerticalAlignment="Bottom" FontSize="24" Margin="0, 5" />
 
-    
-    <controls:DigitalClock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center"
-                           VerticalAlignment="Center" FontSize="24" Alarm="{Binding AlarmOn}" />
-    
-    
+    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding CustomerName}" HorizontalAlignment="Left" 
+               FontSize="22" Foreground="{StaticResource WGU}" />
+
+    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Location}" HorizontalAlignment="Left" 
+               FontSize="18" Foreground="{StaticResource WGU}" />
+
+    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Contact}" HorizontalAlignment="Left" 
+               FontSize="18" Foreground="{StaticResource WGU}" />
+
+    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Type}" HorizontalAlignment="Left" 
+               FontSize="18" Foreground="{StaticResource WGU}" />
+
+    <controls:DigitalClock Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" FontSize="48" Foreground="{StaticResource AlarmRed}" />
   </Grid>
 </Window>

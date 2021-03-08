@@ -559,7 +559,6 @@ namespace SharpSchedule.ViewModels.DialogViewModels
       DTO.Start = Start.ToUniversalTime();
       DTO.End = End.ToUniversalTime();
       DTO.LastUpdate = DateTime.UtcNow;
-      DTO.Customer = null;
 
       switch (_cud)
       {

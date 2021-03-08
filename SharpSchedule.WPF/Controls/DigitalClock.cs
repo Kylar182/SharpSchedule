@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace SharpSchedule.Controls
 {
@@ -24,22 +23,6 @@ namespace SharpSchedule.Controls
       set { SetValue(ColonBlinkProperty, value); }
     }
 
-    public bool Alarm
-    {
-      get { return (bool)GetValue(AlarmProperty); }
-      set { SetValue(AlarmProperty, value); }
-    }
-
-    public static readonly DependencyProperty AlarmProperty =
-        DependencyProperty.Register(nameof(Alarm), typeof(bool), typeof(DigitalClock),
-          new PropertyMetadata(false, AlarmPropChanged));
-
-    private static void AlarmPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-      if (d is DigitalClock alarmBind)
-        alarmBind.AlarmColor();
-    }
-
     static DigitalClock()
     {
       DefaultStyleKeyProperty.OverrideMetadata(typeof(DigitalClock),
@@ -48,9 +31,6 @@ namespace SharpSchedule.Controls
 
     public override void OnApplyTemplate()
     {
-      Alarm = false;
-      AlarmColor();
-
       hour = Template.FindName("PART_Hour", this) as TextBlock;
       colon = Template.FindName("PART_Colon", this) as UIElement;
       minute = Template.FindName("PART_Minute", this) as TextBlock;
@@ -90,21 +70,6 @@ namespace SharpSchedule.Controls
       }
 
       base.OnTimeChanged(newTime);
-    }
-
-    private void AlarmColor()
-    {
-      if (hour != null)
-      {
-        hour.Foreground = Alarm ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF002F51")) :
-        new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF840028"));
-      }
-
-      if (minute != null)
-      {
-        minute.Foreground = Alarm ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF002F51")) :
-        new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF840028"));
-      }
     }
   }
 }
