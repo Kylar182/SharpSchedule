@@ -39,9 +39,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Styles\AnalogClockStyle.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Controls\BindableInput.xaml">
       <SubType>Designer</SubType>
     </Page>
