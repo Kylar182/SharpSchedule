@@ -41,7 +41,7 @@
     <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Contact}" HorizontalAlignment="Left" 
                FontSize="18" Foreground="{StaticResource WGU}" />
 
-    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Type}" HorizontalAlignment="Left" 
+    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Type}" HorizontalAlignment="Left" 
                FontSize="18" Foreground="{StaticResource WGU}" />
 
     <controls:DigitalClock Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center"

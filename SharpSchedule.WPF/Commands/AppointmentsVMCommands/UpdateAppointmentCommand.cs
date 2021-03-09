@@ -71,6 +71,8 @@ namespace SharpSchedule.Commands.AppointmentsVMCommands
         {
           List<Appointment> transfer = await _appointmentsVM.GetAll().ConfigureAwait(true);
 
+          _appointmentsVM.AllAppointments.Clear();
+
           _appointmentsVM.Appointments.Clear();
 
           foreach (Appointment appointment in transfer)

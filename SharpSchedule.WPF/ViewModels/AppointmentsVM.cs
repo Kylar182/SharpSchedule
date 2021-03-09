@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using SharpSchedule.Commands;
 using SharpSchedule.Commands.AppointmentsVMCommands;
 using SharpSchedule.Data.DTOs;
 using SharpSchedule.Data.EntityModels;
@@ -112,6 +113,18 @@ namespace SharpSchedule.ViewModels
       }
 
       _state.SetState(Appointments.Where(pr => pr.Start >= DateTime.UtcNow).ToList());
+
+      if (Appointments != null && Appointments.Any())
+      {
+        AppointmentDTO dto = Appointments.Where
+                  (pr => pr.Start.Date == DateTime.Now.Date && pr.Start.Hour == DateTime.Now.Hour
+                    && (DateTime.Now.Minute - pr.Start.Minute) <= 15).FirstOrDefault();
+        if (dto != null)
+        {
+          ShowAlarmCommand command = new ShowAlarmCommand(dto);
+          command.Execute(string.Empty);
+        }
+      }
     }
 
     public async Task<List<Appointment>> GetAll()

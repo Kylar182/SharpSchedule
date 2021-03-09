@@ -24,7 +24,6 @@ namespace SharpSchedule.Services
       _contextFactory = contextFactory;
     }
 
-
     public async Task<bool?> Login(LoginDTO dto)
     {
       try

@@ -84,7 +84,7 @@ namespace SharpSchedule.ViewModels
 
     private string message;
     /// <summary>
-    /// Password of the User
+    /// Message return on Login Attempt
     /// </summary>
     public string Message
     {
@@ -105,7 +105,10 @@ namespace SharpSchedule.ViewModels
     private readonly INavigator _navigator;
     private readonly IVMFactory<AppointmentsVM> _appointmentVMFactory;
 
-    public LoginVM(IAuthService authService, INavigator navigator, IVMFactory<AppointmentsVM> appointmentVMFactory)
+    public LoginVM
+      (IAuthService authService,
+      INavigator navigator,
+      IVMFactory<AppointmentsVM> appointmentVMFactory)
     {
       _authService = authService;
       _navigator = navigator;
