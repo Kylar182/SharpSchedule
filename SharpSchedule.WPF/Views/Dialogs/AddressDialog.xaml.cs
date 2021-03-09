@@ -10,7 +10,7 @@ namespace SharpSchedule.Views.Dialogs
     public AddressDialog()
     {
       InitializeComponent();
-      WindowStartupLocation = WindowStartupLocation.CenterOwner;
+      WindowStartupLocation = WindowStartupLocation.CenterScreen;
     }
 
     private void Dialog_True(object sender, RoutedEventArgs e)

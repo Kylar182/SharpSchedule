@@ -10,7 +10,7 @@ namespace SharpSchedule.Views.Dialogs
     public AlarmDialog()
     {
       InitializeComponent();
-      WindowStartupLocation = WindowStartupLocation.CenterOwner;
+      WindowStartupLocation = WindowStartupLocation.CenterScreen;
     }
   }
 }

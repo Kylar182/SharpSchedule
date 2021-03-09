@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
 using SharpSchedule.Commands;
+using SharpSchedule.Data.Validation;
 using SharpSchedule.Services.Interfaces;
 using SharpSchedule.State.Navigators;
 using SharpSchedule.ViewModels.Factories;
@@ -18,8 +19,8 @@ namespace SharpSchedule.ViewModels
     /// <summary>
     /// Username of the User
     /// </summary>
-    [Required(ErrorMessage = "A Username is required")]
-    [MaxLength(50, ErrorMessage = "Max Length 50 Characters")]
+    [RequiredInfo(ErrorMessage = "Un nom d'utilisateur est requis")]
+    [MaxInfo(50, ErrorMessage = "Longueur max 50 caractères")]
     public string Username
     {
       get => username;
@@ -41,7 +42,8 @@ namespace SharpSchedule.ViewModels
     /// otherwise it returns the designated Helpertext
     /// </remarks>
     public string UsernameText => PropHasErrors(nameof(Username)) ?
-      GetErrors(nameof(Username)).OfType<string>().First() : "Input Username";
+      GetErrors(nameof(Username)).OfType<string>().First() :
+        Info == "en" ? "Input Username" : "Nom d'utilisateur d'entrée";
 
     /// <summary>
     /// Bool to determine if Username is Valid or not
@@ -52,8 +54,8 @@ namespace SharpSchedule.ViewModels
     /// <summary>
     /// Password of the User
     /// </summary>
-    [Required(ErrorMessage = "A Password is required")]
-    [MaxLength(50, ErrorMessage = "Max Length 50 Characters")]
+    [RequiredInfo(ErrorMessage = "Un mot de passe est requis")]
+    [MaxInfo(50, ErrorMessage = "Longueur max 50 caractères")]
     public string Password
     {
       get => password;
@@ -75,7 +77,8 @@ namespace SharpSchedule.ViewModels
     /// otherwise it returns the designated Helpertext
     /// </remarks>
     public string PasswordText => PropHasErrors(nameof(Password)) ?
-      GetErrors(nameof(Password)).OfType<string>().First() : "Input Password";
+      GetErrors(nameof(Password)).OfType<string>().First() :
+        Info == "en" ? "Input Password" : "Saisir mot de passe";
 
     /// <summary>
     /// Bool to determine if Password is Valid or not
@@ -97,6 +100,11 @@ namespace SharpSchedule.ViewModels
     }
 
     /// <summary>
+    /// Culture Info
+    /// </summary>
+    public string Info { get; set; }
+
+    /// <summary>
     /// Command to Attempt User Login
     /// </summary>
     public ICommand LoginCommand { get; }
@@ -113,11 +121,14 @@ namespace SharpSchedule.ViewModels
       _authService = authService;
       _navigator = navigator;
       _appointmentVMFactory = appointmentVMFactory;
+
+      Info = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
       Username = string.Empty;
       Password = string.Empty;
       LoginCommand = new LoginCommand(this, _authService, _navigator, _appointmentVMFactory);
 
-      Message = "Login to start Scheduling";
+      Message = Info == "en" ? "Login to start Scheduling" : "Connectez-vous pour démarrer la planification";
     }
   }
 }

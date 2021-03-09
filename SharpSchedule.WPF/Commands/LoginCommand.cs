@@ -46,13 +46,15 @@ namespace SharpSchedule.Commands
         switch (login)
         {
           case false:
-            _loginVM.Message = "Incorrect Username or Password";
+            _loginVM.Message = _loginVM.Info == "en" ?
+              "Incorrect Username or Password" : "Identifiant ou mot de passe incorrect";
             break;
           case null:
-            _loginVM.Message = "Database could not be reached";
+            _loginVM.Message = _loginVM.Info == "en" ?
+              "Database could not be reached" : "La base de données n'a pas pu être atteinte";
             break;
           case true:
-            _loginVM.Message = "Success";
+            _loginVM.Message = _loginVM.Info == "en" ? "Success" : "Succès";
             _navigator.CurrentVM = _appointmentVMFactory.CreateVM();
             break;
         }

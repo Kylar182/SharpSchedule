@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:SharpSchedule.Controls"
              xmlns:local="clr-namespace:SharpSchedule.Views"
+             xmlns:language="clr-namespace:SharpSchedule.Resources"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
   
