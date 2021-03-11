@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using SharpSchedule.Data.DTOs;
 using SharpSchedule.Data.EntityModels;
@@ -28,18 +29,19 @@ namespace SharpSchedule.Services
     {
       try
       {
-        using (IUserRepository _repository = new UserRepository(_contextFactory))
+        using IUserRepository _repository = new UserRepository(_contextFactory);
+        User user = await _repository.Login(dto);
+        if (user != null)
         {
-          User user = await _repository.Login(dto);
-          if (user != null)
-          {
-            Current = user;
-            return true;
-          }
-          else
-          {
-            return false;
-          }
+          using StreamWriter file = new("userlog-ins.txt", append: true);
+          await file.WriteLineAsync($"{user.Username} - {DateTime.UtcNow:o}");
+
+          Current = user;
+          return true;
+        }
+        else
+        {
+          return false;
         }
       }
       catch (Exception)

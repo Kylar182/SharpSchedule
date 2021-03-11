@@ -29,7 +29,7 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <Button Grid.Column="2" Content="FILTER" Command="{Binding FilterAppointments}" />
+      <Button Grid.Column="2" Content="REPORT" Command="{Binding FilterAppointments}" />
       
     </Grid>
 
