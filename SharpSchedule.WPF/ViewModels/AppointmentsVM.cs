@@ -118,7 +118,7 @@ namespace SharpSchedule.ViewModels
       {
         AppointmentDTO dto = Appointments.Where
                   (pr => pr.Start.Date == DateTime.Now.Date && pr.Start.Hour == DateTime.Now.Hour
-                    && (DateTime.Now.Minute - pr.Start.Minute) <= 15).FirstOrDefault();
+                    && Math.Abs(DateTime.Now.Minute - pr.Start.Minute) <= 15).FirstOrDefault();
         if (dto != null)
         {
           ShowAlarmCommand command = new ShowAlarmCommand(dto);

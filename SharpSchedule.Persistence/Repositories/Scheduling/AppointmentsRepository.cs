@@ -15,6 +15,10 @@ namespace SharpSchedule.Persistence.Repositories.Scheduling
       _contextFactory = contextFactory;
     }
 
+    /// <summary>
+    /// To justify using LAMBDA expressions for Queries, LAMBDA expressions 
+    /// are faster and easier to write queries than not using them
+    /// </summary>
     public async Task<List<Appointment>> Current()
     {
       using SchedulingContext _context = _contextFactory.CreateDbContext();

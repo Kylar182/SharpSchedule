@@ -40,6 +40,10 @@ namespace SharpSchedule.Commands.AppointmentsVMCommands
       _user = user;
     }
 
+    /// <summary>
+    /// To justify using LAMBDA expressions to Filter Appointments, LAMBDA 
+    /// expressions are faster and easier to filter lists than not using them
+    /// </summary>
     protected override async Task ExecuteAsync(object parameter)
     {
       AppointmentDialog dialog = new AppointmentDialog();
